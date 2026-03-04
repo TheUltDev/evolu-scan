@@ -66,6 +66,7 @@ export const DataTable = ({
   onColumnWidthsChange,
   columnOrder,
   onColumnOrderChange,
+  columnTypes,
   onResetAll,
 }: {
   bodyRef: { current: HTMLDivElement | null };
@@ -81,6 +82,7 @@ export const DataTable = ({
   onColumnWidthsChange: (widths: Record<string, number>) => void;
   columnOrder: string[];
   onColumnOrderChange: (order: string[]) => void;
+  columnTypes: Record<string, string>;
   onResetAll: () => void;
 }) => {
   const [copiedCell, setCopiedCell] = useState<string | null>(null);
@@ -412,6 +414,7 @@ export const DataTable = ({
                     const formatted = formatCellValue(value);
                     const isNull = value === null || value === undefined;
                     const hasCustomWidth = col in columnWidths;
+                    const isDateCol = columnTypes[col] === 'DATE';
 
                     return (
                       <td
@@ -433,7 +436,10 @@ export const DataTable = ({
                                   ? 'text-[#ff7b72]'
                                   : 'text-neutral-300',
                         )}
-                        style={hasCustomWidth ? fixedWidthStyle(columnWidths[col]) : undefined}
+                        style={{
+                          ...(hasCustomWidth ? fixedWidthStyle(columnWidths[col]) : undefined),
+                          ...(isDateCol ? { direction: 'rtl', textAlign: 'left' } : undefined),
+                        }}
                         title={copiedCell === copyCellKey ? 'Copied!' : formatted}
                         onClick={() => copyToClipboard(copyCellKey, formatted)}
                       >

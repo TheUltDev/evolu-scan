@@ -263,6 +263,15 @@ export const EvoluDbViewer = () => {
     return snapshot.tables.filter((t) => !t.name.startsWith('evolu_'));
   }, [snapshot, hideEvoluTables]);
 
+  const columnTypes = useMemo(() => {
+    if (!currentTableInfo) return {};
+    const map: Record<string, string> = {};
+    for (const col of currentTableInfo.columns) {
+      map[col.name] = col.type;
+    }
+    return map;
+  }, [currentTableInfo]);
+
   if (error) {
     return (
       <div className="h-full w-full flex items-center justify-center">
@@ -362,6 +371,7 @@ export const EvoluDbViewer = () => {
             onColumnWidthsChange={setColumnWidths}
             columnOrder={columnOrder}
             onColumnOrderChange={setColumnOrder}
+            columnTypes={columnTypes}
             onResetAll={() => {
               setHiddenColumns(new Set());
               setSort(null);
