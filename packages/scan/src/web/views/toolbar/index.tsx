@@ -177,6 +177,11 @@ export const Toolbar = constant(() => {
                 };
                 return;
               }
+              case 'evolu':
+                signalWidgetViews.value = {
+                  view: 'none',
+                };
+                return;
               case 'none': {
                 const ids = new Set(events.map((event) => event.id));
                 setSeenEvents([...ids.values()]);
@@ -204,6 +209,10 @@ export const Toolbar = constant(() => {
         </button>
       </div>
 
+      {ReactScanInternals.options.value.evolu && (
+        <EvoluDbButton />
+      )}
+
       <Toggle
         checked={!ReactScanInternals.instrumentation?.isPaused.value}
         onChange={onToggleActive}
@@ -216,3 +225,32 @@ export const Toolbar = constant(() => {
     </div>
   );
 });
+
+function EvoluDbButton() {
+  const isActive = signalWidgetViews.value.view === 'evolu';
+
+  const onClick = useCallback(() => {
+    if (Store.inspectState.value.kind !== 'inspect-off') {
+      Store.inspectState.value = { kind: 'inspect-off' };
+    }
+    if (isActive) {
+      signalWidgetViews.value = { view: 'none' };
+    } else {
+      signalWidgetViews.value = { view: 'evolu' };
+    }
+  }, [isActive]);
+
+  return (
+    <div className="h-full flex items-center justify-center">
+      <button
+        type="button"
+        title={isActive ? 'Close Evolu database viewer' : 'Open Evolu database viewer'}
+        onClick={onClick}
+        className="button flex items-center justify-center h-full pl-2.5 pr-2.5"
+        style={{ color: isActive ? '#8e61e3' : '#999' }}
+      >
+        <Icon name="icon-database" />
+      </button>
+    </div>
+  );
+}

@@ -102,11 +102,15 @@ export type WidgetStates =
   | {
       view: "notifications";
       // extra params
-    };
+    }
 // | {
 //     view: 'summary';
 //     // extra params
 //   };
+  | {
+      view: "evolu";
+      // extra params
+    };
 export const signalWidgetViews = signal<WidgetStates>({
   view: "none",
 });

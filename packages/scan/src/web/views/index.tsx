@@ -1,12 +1,13 @@
 import { type ReadonlySignal, computed } from '@preact/signals';
 import type { ReactNode } from 'preact/compat';
-import { Store } from '~core/index';
+import { ReactScanInternals, Store } from '~core/index';
 import { signalWidgetViews } from '~web/state';
 import { cn } from '~web/utils/helpers';
 import { Header } from '~web/widget/header';
 import { ViewInspector } from './inspector';
 import { Toolbar } from './toolbar';
 import { NotificationWrapper } from './notifications/notifications';
+import { EvoluDbViewer } from './evolu-db';
 
 const isInspecting = computed(
   () => Store.inspectState.value.kind === 'inspecting',
@@ -30,6 +31,9 @@ const isInspectorViewOpen = computed(
 );
 const isNotificationsViewOpen = computed(
   () => signalWidgetViews.value.view === 'notifications',
+);
+const isEvoluViewOpen = computed(
+  () => signalWidgetViews.value.view === 'evolu',
 );
 
 export const Content = () => {
@@ -68,6 +72,12 @@ export const Content = () => {
           <ContentView isOpen={isNotificationsViewOpen}>
             <NotificationWrapper />
           </ContentView>
+
+          {ReactScanInternals.options.value.evolu && (
+            <ContentView isOpen={isEvoluViewOpen}>
+              <EvoluDbViewer />
+            </ContentView>
+          )}
         </div>
       </div>
       <Toolbar />

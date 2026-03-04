@@ -135,6 +135,12 @@ export interface Options {
    */
   _debug?: 'verbose' | false;
 
+  /**
+   * Evolu database instance. When provided, a database export button
+   * appears in the toolbar allowing one-click SQLite database download.
+   */
+  evolu?: { exportDatabase: () => Promise<Uint8Array> };
+
   onCommitStart?: () => void;
   onRender?: (fiber: Fiber, renders: Array<Render>) => void;
   onCommitFinish?: () => void;
@@ -250,7 +256,7 @@ if (IS_CLIENT && window.__REACT_SCAN_EXTENSION__) {
 
 export type LocalStorageOptions = Omit<
   Options,
-  'onCommitStart' | 'onRender' | 'onCommitFinish'
+  'onCommitStart' | 'onRender' | 'onCommitFinish' | 'evolu'
 >;
 
 const applyLocalStorageOptions = (options: Options): LocalStorageOptions => {
@@ -258,6 +264,7 @@ const applyLocalStorageOptions = (options: Options): LocalStorageOptions => {
     onCommitStart,
     onRender,
     onCommitFinish,
+    evolu,
     ...rest
   } = options;
   return rest;
@@ -314,6 +321,18 @@ const validateOptions = (options: Partial<Options>): Partial<Options> => {
             fiber: Fiber,
             renders: Array<Render>,
           ) => void;
+        }
+        break;
+      case 'evolu':
+        if (
+          value != null &&
+          typeof (value as Options['evolu'])?.exportDatabase === 'function'
+        ) {
+          validOptions.evolu = value as Options['evolu'];
+        } else if (value != null) {
+          errors.push(
+            `- evolu must have an exportDatabase() method. Got "${value}"`,
+          );
         }
         break;
       default:
