@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "presync": "cp ../scan/dist/auto.global.js ./public/auto.global.js",
+    "presync": "shx cp ../scan/dist/auto.global.js ./public/auto.global.js",
     "dev": "pnpm presync && next dev --turbopack",
     "build": "pnpm --filter react-scan build && pnpm presync && next build",
     "postbuild": "node ../../scripts/version-warning.mjs",
@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4"
+    "@types/react-dom": "^19.0.4",
+    "shx": "^0.4.0"
   }
 }
