@@ -3,7 +3,16 @@ import { formatCellValue } from './format-cell-value';
 import { FLASH_DURATION } from '../consts';
 import type { DbSnapshot } from '../types';
 
-export const useFlashChanges = (tableBodyRef: { current: HTMLDivElement | null }) => {
+export interface ChangeInfo {
+  tableName: string;
+  rowIndices: Set<number>;
+  columns: Set<string>;
+}
+
+export const useFlashChanges = (
+  tableBodyRef: { current: HTMLDivElement | null },
+  onChangesDetected?: (changes: ChangeInfo[]) => void,
+) => {
   const prevValuesRef = useRef<Map<string, Map<string, string>>>(new Map());
   const flashingCellsRef = useRef<Set<string>>(new Set());
 
@@ -36,6 +45,8 @@ export const useFlashChanges = (tableBodyRef: { current: HTMLDivElement | null }
   const detectChanges = useCallback(
     (prev: DbSnapshot, next: DbSnapshot) => {
       const newFlashing = new Set<string>();
+      const changedTables = new Map<string, { rows: Set<number>; cols: Set<string> }>();
+
       for (const [tableName, nextData] of next.tableData) {
         const prevData = prev.tableData.get(tableName);
         if (!prevData) continue;
@@ -50,11 +61,19 @@ export const useFlashChanges = (tableBodyRef: { current: HTMLDivElement | null }
             const prevVal = prevMap.get(cellKey);
             if (prevVal !== undefined && prevVal !== val) {
               newFlashing.add(`${tableName}:${cellKey}`);
+              let entry = changedTables.get(tableName);
+              if (!entry) {
+                entry = { rows: new Set(), cols: new Set() };
+                changedTables.set(tableName, entry);
+              }
+              entry.rows.add(rowIdx);
+              entry.cols.add(col);
             }
           }
         }
         prevValuesRef.current.set(tableName, nextMap);
       }
+
       if (newFlashing.size > 0) {
         flashingCellsRef.current = new Set([
           ...flashingCellsRef.current,
@@ -67,9 +86,21 @@ export const useFlashChanges = (tableBodyRef: { current: HTMLDivElement | null }
           }
           requestAnimationFrame(() => removeFlash(newFlashing));
         }, FLASH_DURATION);
+
+        if (onChangesDetected) {
+          const changes: ChangeInfo[] = [];
+          for (const [tableName, entry] of changedTables) {
+            changes.push({
+              tableName,
+              rowIndices: entry.rows,
+              columns: entry.cols,
+            });
+          }
+          onChangesDetected(changes);
+        }
       }
     },
-    [applyFlash, removeFlash],
+    [applyFlash, removeFlash, onChangesDetected],
   );
 
   return detectChanges;
