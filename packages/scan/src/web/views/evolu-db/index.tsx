@@ -220,14 +220,14 @@ const Header = ({
           title="Refresh"
           className="button rounded w-6 h-6 flex items-center justify-center text-neutral-500 hover:text-neutral-300"
         >
-          <Icon name="icon-replay" size={14} />
+          <Icon name="icon-refresh-cw" size={14} />
         </button>
         <button
           type="button"
           onClick={onExport}
           disabled={exportState === 'picking'}
           title={exportState === 'active' ? 'Stop exporting to file' : 'Export database to file'}
-          className="button rounded w-6 h-6 flex items-center justify-center hover:text-neutral-300"
+          className="button rounded w-6 h-6 flex items-center justify-center text-neutral-500 hover:text-neutral-300"
           style={{
             color:
               exportState === 'active'
