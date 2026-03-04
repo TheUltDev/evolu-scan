@@ -3,6 +3,52 @@ import type { DbSnapshot, TableData, TableInfo } from '../types';
 let cachedSqlite3: Awaited<ReturnType<typeof import('@evolu/sqlite-wasm').default>>;
 const internalTables = new Set(['sqlite_sequence', '__proto__']);
 
+const KNOWN_COLUMN_TYPES: Record<string, string> = {
+  createdAt: 'DATE',
+  updatedAt: 'DATE',
+  isDeleted: 'BOOL',
+  ownerId: 'TEXT',
+};
+
+function inferColumnType(
+  colName: string,
+  schemaType: string,
+  rows: Record<string, unknown>[],
+): string {
+  if (KNOWN_COLUMN_TYPES[colName]) return KNOWN_COLUMN_TYPES[colName];
+  const upper = schemaType.toUpperCase();
+  if (schemaType && upper !== 'ANY') return upper;
+
+  let onlyBoolInts = true;
+  let hasNonNull = false;
+
+  for (const row of rows) {
+    const val = row[colName];
+    if (val === null || val === undefined) continue;
+    hasNonNull = true;
+
+    if (typeof val === 'number') {
+      if (!Number.isInteger(val)) return 'REAL';
+      if (val !== 0 && val !== 1) {
+        onlyBoolInts = false;
+        return 'INT';
+      }
+      continue;
+    }
+    if (typeof val === 'bigint') return 'INT';
+    if (typeof val === 'boolean') return 'BOOL';
+    if (val instanceof Uint8Array) return 'BLOB';
+    if (typeof val === 'string') {
+      onlyBoolInts = false;
+      if (/^\d{4}-\d{2}-\d{2}(T|\s)\d{2}:\d{2}/.test(val)) return 'DATE';
+      return 'TEXT';
+    }
+  }
+
+  if (hasNonNull && onlyBoolInts) return 'BOOL';
+  return 'ANY';
+}
+
 export async function parseDatabase(bytes: Uint8Array): Promise<DbSnapshot> {
   const sql = await getSqliteWasm();
   const db = new sql.oo1.DB();
@@ -37,20 +83,22 @@ export async function parseDatabase(bytes: Uint8Array): Promise<DbSnapshot> {
       returnValue: 'resultRows',
       rowMode: 'object',
     }) as Record<string, unknown>[];
-    const columns = colRows.map((r) => ({
-      name: r.name as string,
-      type: (r.type as string) || 'any',
-    }));
     const countResult = db.exec(
       `SELECT COUNT(*) as c FROM "${tableName}"`,
       { returnValue: 'resultRows', rowMode: 'object' },
     ) as Record<string, unknown>[];
     const rowCount = countResult.length > 0 ? (countResult[0].c as number) : 0;
-    tables.push({ name: tableName, columns, rowCount });
     const dataRows = db.exec(`SELECT * FROM "${tableName}" LIMIT 500`, {
       returnValue: 'resultRows',
       rowMode: 'object',
     }) as Record<string, unknown>[];
+
+    const columns = colRows.map((r) => ({
+      name: r.name as string,
+      type: inferColumnType(r.name as string, r.type as string, dataRows),
+    }));
+
+    tables.push({ name: tableName, columns, rowCount });
     tableData.set(tableName, {
       columns: columns.map((c) => c.name),
       rows: dataRows,
@@ -59,7 +107,7 @@ export async function parseDatabase(bytes: Uint8Array): Promise<DbSnapshot> {
 
   db.close();
   return { tables, tableData };
-};
+}
 
 async function getSqliteWasm(): Promise<typeof cachedSqlite3> {
   if (cachedSqlite3) return cachedSqlite3;
