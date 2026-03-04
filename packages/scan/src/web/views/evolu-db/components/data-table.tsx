@@ -373,7 +373,7 @@ export const DataTable = ({
                       onPointerDown={(event) => handleResizeStart(col, event as unknown as PointerEvent)}
                       onClick={(event) => event.stopPropagation()}
                     >
-                      <div className="absolute right-0 top-1 bottom-1 w-px bg-neutral-500 opacity-40 group-hover/resize:opacity-100 transition-opacity" />
+                      <div className="absolute right-0 top-2 bottom-2 w-px bg-neutral-500 opacity-10 group-hover/resize:opacity-100 transition-opacity" />
                     </div>
                     {isDropTarget && dropSide === 'left' && (
                       <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-purple-500 z-30" />
