@@ -10,7 +10,7 @@ import { useFlashChanges } from './utils/use-flash-changes';
 import { useFollowChanges } from './utils/use-follow-changes';
 import { formatCellValue } from './utils/format-cell-value';
 import { Header } from './components/header';
-import { Sidebar } from './components/sidebar';
+import { Sidebar, DEFAULT_SIDEBAR_WIDTH } from './components/sidebar';
 import { SearchBar } from './components/search-bar';
 import { ColumnTypes } from './components/column-types';
 import { DataTable } from './components/data-table';
@@ -26,6 +26,7 @@ interface PersistedEvoluDbSettings {
   sort: Record<string, SortConfig>;
   columnWidths: Record<string, Record<string, number>>;
   columnOrder: Record<string, string[]>;
+  sidebarWidth: number;
 }
 
 const defaultSettings: PersistedEvoluDbSettings = {
@@ -36,6 +37,7 @@ const defaultSettings: PersistedEvoluDbSettings = {
   sort: {},
   columnWidths: {},
   columnOrder: {},
+  sidebarWidth: 0,
 };
 
 const loadSettings = (): PersistedEvoluDbSettings => {
@@ -74,6 +76,9 @@ export const EvoluDbViewer = () => {
   });
   const [columnOrder, setColumnOrder] = useState<string[]>(() => {
     return settingsRef.current.columnOrder[selectedTable ?? ''] ?? [];
+  });
+  const [sidebarWidth, setSidebarWidth] = useState(() => {
+    return settingsRef.current.sidebarWidth || DEFAULT_SIDEBAR_WIDTH;
   });
 
   const persist = useCallback((patch: Partial<PersistedEvoluDbSettings>) => {
@@ -138,6 +143,10 @@ export const EvoluDbViewer = () => {
       },
     });
   }, [columnOrder, selectedTable, persist]);
+
+  useEffect(() => {
+    persist({ sidebarWidth });
+  }, [sidebarWidth, persist]);
 
   const detectChanges = useFlashChanges(tableBodyRef, onChangesDetected);
 
@@ -300,6 +309,8 @@ export const EvoluDbViewer = () => {
         <Sidebar
           tables={visibleTables}
           selectedTable={selectedTable}
+          width={sidebarWidth}
+          onWidthChange={setSidebarWidth}
           onSelect={(name) => {
             setSelectedTable(name);
             setSearchQuery('');
