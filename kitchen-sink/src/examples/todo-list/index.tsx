@@ -1,54 +1,50 @@
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { scan, Store } from 'react-scan';
 import './styles.css';
 
+import {
+  Evolu,
+  EvoluProvider,
+  useQuery,
+  evolu,
+  formatTypeError,
+  todosQuery,
+  useEvolu,
+  type TodosRow,
+} from './evolu';
 
 Store.isInIframe.value = false;
 scan({
+  evolu,
   enabled: true,
   dangerouslyForceRunInProduction: true,
 });
 
-interface TodoItem {
-  id: number;
-  message: string;
-  done: boolean;
-}
+function TodoListItem({ row }: { row: TodosRow }) {
+  const { id, title, isCompleted } = row;
+  const { update } = useEvolu();
 
-interface TodoListItemProps {
-  setList: (action: (list: TodoItem[]) => TodoItem[]) => void;
-  item: TodoItem;
-}
-
-function TodoListItem({ item, setList }: TodoListItemProps): JSX.Element {
   return (
-    <div className={`todo-item ${item.done ? 'complete' : 'pending'}`}>
-      <div className="todo-item-content">{item.message}</div>
+    <div className={`todo-item ${isCompleted ? 'complete' : 'pending'}`}>
+      <div className="todo-item-content">{title}</div>
       <div className="todo-item-actions">
         <button
           type="button"
-          className={`todo-item-toggle ${item.done ? 'complete' : 'pending'}`}
+          className={`todo-item-toggle ${isCompleted ? 'complete' : 'pending'}`}
           onClick={(): void => {
-            setList(list =>
-              list.map(value => {
-                if (value === item) {
-                  return {
-                    ...value,
-                    done: !item.done,
-                  };
-                }
-                return value;
-              }),
-            );
+            update('todo', {
+              id,
+              isCompleted: Evolu.booleanToSqliteBoolean(!isCompleted),
+            });
           }}
         >
-          {item.done ? 'Completed' : 'Pending'}
+          {isCompleted ? 'Completed' : 'Pending'}
         </button>
         <button
           type="button"
           className="todo-item-delete"
           onClick={(): void => {
-            setList(list => list.filter(value => value.id !== item.id));
+            update('todo', { id, isDeleted: Evolu.sqliteTrue });
           }}
         >
           Delete
@@ -58,35 +54,23 @@ function TodoListItem({ item, setList }: TodoListItemProps): JSX.Element {
   );
 }
 
-interface TodoListFormProps {
-  index: number;
-  setIndex: (update: number) => void;
-  setList: (action: (list: TodoItem[]) => TodoItem[]) => void;
-}
-
-function TodoListForm({
-  setList,
-  index,
-  setIndex,
-}: TodoListFormProps): JSX.Element {
+function TodoListForm() {
   const [message, setMessage] = useState('');
+  const { insert } = useEvolu();
 
   return (
     <form
       className="todo-list-form"
       onSubmit={(e): void => {
         e.preventDefault();
-
-        setList(list => [
-          ...list,
-          {
-            done: false,
-            message,
-            id: index,
-          },
-        ]);
-        setIndex(index + 1);
-        setMessage('');
+        const result = insert(
+          'todo',
+          { title: message.trim() },
+          { onComplete: () => setMessage('') },
+        );
+        if (!result.ok) {
+          alert(formatTypeError(result.error));
+        }
       }}
     >
       <input
@@ -103,26 +87,28 @@ function TodoListForm({
   );
 }
 
-function TodoList(): JSX.Element {
-  const [list, setList] = useState<TodoItem[]>([]);
-  const [index, setIndex] = useState(0);
+function TodoList() {
+  const todos = useQuery(todosQuery);
+
   return (
-    <>
-      <TodoListForm setList={setList} index={index} setIndex={setIndex} />
-      <div className="todo-list">
-        {list.map(item => (
-          <TodoListItem key={item.id} item={item} setList={setList} />
-        ))}
-      </div>
-    </>
+    <div className="todo-list">
+      {todos.map((todo) => (
+        <TodoListItem key={todo.id} row={todo} />
+      ))}
+    </div>
   );
 }
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <div className="app">
-      <h1>Todo List</h1>
-      <TodoList />
+      <h1>Evolu List</h1>
+      <EvoluProvider value={evolu}>
+        <TodoListForm />
+        <Suspense>
+          <TodoList />
+        </Suspense>
+      </EvoluProvider>
     </div>
   );
 }
