@@ -14,14 +14,6 @@ First off, thanks for taking the time to contribute! ❤️
     - [Development Workflow](#development-workflow)
   - [Getting Help](#getting-help)
 
-## Project Structure
-
-This is a monorepo containing several packages:
-
-- `packages/scan` - Core Evolu Scan package
-- `packages/vite-plugin-evolu-scan` - Vite plugin for Evolu Scan
-- `packages/extension` - VS Code extension
-
 ## Development Setup
 
 1. **Clone and Install**

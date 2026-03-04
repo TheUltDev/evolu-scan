@@ -7,7 +7,7 @@ import * as esbuild from 'esbuild';
  */
 export const workerPlugin = {
   name: 'worker-plugin',
-  setup(build) {
+  setup(build: esbuild.PluginBuild) {
     const workerResult = esbuild.buildSync({
       entryPoints: ['src/new-outlines/offscreen-canvas.worker.ts'],
       bundle: true,

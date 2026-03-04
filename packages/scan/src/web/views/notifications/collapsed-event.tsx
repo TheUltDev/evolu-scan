@@ -175,7 +175,7 @@ export const CollapsedItem = ({
 
 const IndentedContent = ({
   children,
-}: { children: JSX.Element | JSX.Element[] }) => (
+}: { children: React.JSX.Element | React.JSX.Element[] }) => (
   <div className="relative pl-6 flex flex-col gap-y-1">
     <div className="absolute left-3 top-0 bottom-0 w-px bg-[#27272A]" />
     {children}

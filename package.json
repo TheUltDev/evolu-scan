@@ -27,12 +27,9 @@
     "rimraf": "^6.0.1",
     "tailwindcss": "^3.4.17",
     "typescript": "latest",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite-tsconfig-paths": "^6.1.1"
   },
   "packageManager": "pnpm@9.1.0",
-  "dependencies": {
-    "@vercel/speed-insights": "^1.1.0"
-  },
   "pnpm": {
     "overrides": {
       "@jridgewell/gen-mapping": "0.3.2",

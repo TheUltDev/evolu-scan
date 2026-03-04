@@ -6,9 +6,9 @@ import { Icon } from '../icon';
 interface CopyToClipboardProps {
   text: string;
   children?: (props: {
-    ClipboardIcon: JSX.Element;
+    ClipboardIcon: React.JSX.Element;
     onClick: (e: MouseEvent) => void;
-  }) => JSX.Element;
+  }) => React.JSX.Element;
   onCopy?: (success: boolean, text: string) => void;
   className?: string;
   iconSize?: number;
@@ -21,7 +21,7 @@ export const CopyToClipboard = /* @__PURE__ */ memo(
     onCopy,
     className,
     iconSize = 14,
-  }: CopyToClipboardProps): JSX.Element => {
+  }: CopyToClipboardProps): React.JSX.Element => {
     const [isCopied, setIsCopied] = useState(false);
 
     useEffect(() => {

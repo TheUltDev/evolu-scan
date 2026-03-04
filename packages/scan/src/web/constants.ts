@@ -7,7 +7,7 @@ export const MIN_SIZE = {
 
 export const MIN_CONTAINER_WIDTH = 240;
 
-export const LOCALSTORAGE_KEY = "evolu-scan-widget-settings-v2";
+export const LOCALSTORAGE_KEY = "evolu-scan-widget-settings-v1";
+export const LOCALSTORAGE_EVOLU_DB_KEY = "evolu-scan-evolu-db-settings-v1";
 export const LOCALSTORAGE_COLLAPSED_KEY = "evolu-scan-widget-collapsed-v1";
 export const LOCALSTORAGE_LAST_VIEW_KEY = "evolu-scan-widget-last-view-v1";
-export const LOCALSTORAGE_EVOLU_DB_KEY = "evolu-scan-evolu-db-settings-v1";
