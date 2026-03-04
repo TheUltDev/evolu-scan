@@ -113,6 +113,23 @@ export const EvoluDbViewer = () => {
     };
   }, [loadDb, signalWidgetViews.value.view]);
 
+  useEffect(() => {
+    setHiddenColumns((prev) => {
+      const has = prev.has('isDeleted');
+      if (showDeleted && !has) {
+        const next = new Set(prev);
+        next.add('isDeleted');
+        return next;
+      }
+      if (!showDeleted && has) {
+        const next = new Set(prev);
+        next.delete('isDeleted');
+        return next;
+      }
+      return prev;
+    });
+  }, [showDeleted]);
+
   const currentTableData = useMemo(() => {
     if (!snapshot || !selectedTable) return null;
     return snapshot.tableData.get(selectedTable) || null;
