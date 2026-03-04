@@ -7,18 +7,22 @@ export const Header = ({
   snapshot,
   exportState,
   followActive,
+  showDeleted,
   dbLoading,
   onRefresh,
   onExport,
   onFollowToggle,
+  onShowDeletedToggle,
 }: {
   snapshot: DbSnapshot;
   exportState: string;
   followActive: boolean;
+  showDeleted: boolean;
   dbLoading: Signal<boolean>;
   onRefresh: () => void;
   onExport: () => void;
   onFollowToggle: () => void;
+  onShowDeletedToggle: () => void;
 }) => (
   <div className={cn('w-full flex border-b border-[#27272A] min-h-[40px]')}>
     <div className="min-w-fit w-full flex items-center pl-3 pr-2 text-sm gap-x-3">
@@ -47,6 +51,15 @@ export const Header = ({
           style={{ color: followActive ? '#4ade80' : undefined }}
         >
           <Icon name="icon-crosshair" size={14} />
+        </button>
+        <button
+          type="button"
+          onClick={onShowDeletedToggle}
+          title={showDeleted ? 'Hide deleted rows' : 'Show deleted rows'}
+          className="button rounded w-6 h-6 flex items-center justify-center text-neutral-500 hover:text-neutral-300"
+          style={{ color: showDeleted ? '#f87171' : undefined }}
+        >
+          <Icon name="icon-trash" size={14} />
         </button>
         <button
           type="button"

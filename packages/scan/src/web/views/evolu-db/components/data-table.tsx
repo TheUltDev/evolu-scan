@@ -7,12 +7,14 @@ export const DataTable = ({
   rows,
   selectedTable,
   isEmpty,
+  showDeleted,
 }: {
   bodyRef: { current: HTMLDivElement | null };
   columns: string[];
   rows: Array<Record<string, unknown>>;
   selectedTable: string | null;
   isEmpty: boolean;
+  showDeleted: boolean;
 }) => (
   <div ref={bodyRef} className="flex-1 overflow-auto">
     {isEmpty ? (
@@ -37,43 +39,49 @@ export const DataTable = ({
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, rowIdx) => (
-            <tr
-              key={rowIdx}
-              className="border-b border-[#1a1a1a] hover:bg-[#5f3f9a]/10 transition-colors"
-            >
-              <td className="px-2 py-1 text-neutral-600 tabular-nums">{rowIdx}</td>
-              {columns.map((col) => {
-                const cellKey = `${selectedTable}:${rowIdx}:${col}`;
-                const value = row[col];
-                const formatted = formatCellValue(value);
-                const isNull = value === null || value === undefined;
+          {rows.map((row, rowIdx) => {
+            const isDeleted = showDeleted && !!row.isDeleted;
+            return (
+              <tr
+                key={rowIdx}
+                className={cn(
+                  'border-b border-[#1a1a1a] hover:bg-[#5f3f9a]/10 transition-colors',
+                  isDeleted && 'opacity-40',
+                )}
+              >
+                <td className="px-2 py-1 text-neutral-600 tabular-nums">{rowIdx}</td>
+                {columns.map((col) => {
+                  const cellKey = `${selectedTable}:${rowIdx}:${col}`;
+                  const value = row[col];
+                  const formatted = formatCellValue(value);
+                  const isNull = value === null || value === undefined;
 
-                return (
-                  <td
-                    key={col}
-                    data-cell-key={cellKey}
-                    className={cn(
-                      'px-2 py-1 max-w-[200px] truncate',
-                      'transition-colors duration-300',
-                      isNull
-                        ? 'text-neutral-600 italic'
-                        : typeof value === 'number' || typeof value === 'bigint'
-                          ? 'text-[#79c0ff]'
-                          : typeof value === 'boolean' ||
-                              formatted === 'true' ||
-                              formatted === 'false'
-                            ? 'text-[#ff7b72]'
-                            : 'text-neutral-300',
-                    )}
-                    title={formatted}
-                  >
-                    {formatted}
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
+                  return (
+                    <td
+                      key={col}
+                      data-cell-key={cellKey}
+                      className={cn(
+                        'px-2 py-1 max-w-[200px] truncate',
+                        'transition-colors duration-300',
+                        isNull
+                          ? 'text-neutral-600 italic'
+                          : typeof value === 'number' || typeof value === 'bigint'
+                            ? 'text-[#79c0ff]'
+                            : typeof value === 'boolean' ||
+                                formatted === 'true' ||
+                                formatted === 'false'
+                              ? 'text-[#ff7b72]'
+                              : 'text-neutral-300',
+                      )}
+                      title={formatted}
+                    >
+                      {formatted}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     )}

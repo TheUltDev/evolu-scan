@@ -28,6 +28,7 @@ export const EvoluDbViewer = () => {
   const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const exportHandleRef = useRef<FileSystemFileHandle | null>(null);
   const [exportState, setExportState] = useState<'idle' | 'picking' | 'active'>('idle');
+  const [showDeleted, setShowDeleted] = useState(false);
 
   const { followActive, toggleFollow, onChangesDetected, syncSelectedTable } =
     useFollowChanges(tableBodyRef, setSelectedTable, setSearchQuery);
@@ -115,14 +116,18 @@ export const EvoluDbViewer = () => {
 
   const filteredRows = useMemo(() => {
     if (!currentTableData) return [];
-    if (!searchQuery.trim()) return currentTableData.rows;
+    let rows = currentTableData.rows;
+    if (!showDeleted && currentTableData.columns.includes('isDeleted')) {
+      rows = rows.filter((row) => !row.isDeleted);
+    }
+    if (!searchQuery.trim()) return rows;
     const q = searchQuery.toLowerCase();
-    return currentTableData.rows.filter((row) =>
+    return rows.filter((row) =>
       Object.values(row).some((v) =>
         formatCellValue(v).toLowerCase().includes(q),
       ),
     );
-  }, [currentTableData, searchQuery]);
+  }, [currentTableData, searchQuery, showDeleted]);
 
   const currentTableInfo = useMemo(() => {
     if (!snapshot || !selectedTable) return null;
@@ -161,10 +166,12 @@ export const EvoluDbViewer = () => {
         snapshot={snapshot}
         exportState={exportState}
         followActive={followActive}
+        showDeleted={showDeleted}
         dbLoading={signalDbLoading}
         onRefresh={loadDb}
         onExport={onExportClick}
         onFollowToggle={toggleFollow}
+        onShowDeletedToggle={() => setShowDeleted((v) => !v)}
       />
 
       <div className="flex flex-1 overflow-hidden">
@@ -195,6 +202,7 @@ export const EvoluDbViewer = () => {
             rows={filteredRows}
             selectedTable={selectedTable}
             isEmpty={!currentTableData || currentTableData.rows.length === 0}
+            showDeleted={showDeleted}
           />
         </div>
       </div>
