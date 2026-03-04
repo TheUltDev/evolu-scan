@@ -440,10 +440,10 @@ export const DataTable = ({
                           ...(hasCustomWidth ? fixedWidthStyle(columnWidths[col]) : undefined),
                           ...(isDateCol ? { direction: 'rtl', textAlign: 'left' } : undefined),
                         }}
-                        title={copiedCell === copyCellKey ? 'Copied!' : formatted}
+                        title={copiedCell === copyCellKey ? 'Copied' : formatted}
                         onClick={() => copyToClipboard(copyCellKey, formatted)}
                       >
-                        {copiedCell === copyCellKey ? 'Copied!' : formatted}
+                        {copiedCell === copyCellKey ? 'Copied' : formatted}
                       </td>
                     );
                   })}
