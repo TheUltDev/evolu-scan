@@ -70,35 +70,52 @@ export const DataTable = ({
     const el = scrollRef.current;
     if (!el) return;
 
+    const DRAG_THRESHOLD = 4;
+    let pending = false;
     let dragging = false;
     let startX = 0;
     let startY = 0;
     let scrollLeft = 0;
     let scrollTop = 0;
+    let pointerId = -1;
 
     const onPointerDown = (e: PointerEvent) => {
       if ((e.target as HTMLElement).closest('button, th')) return;
       e.stopPropagation();
-      dragging = true;
+      pending = true;
+      dragging = false;
       startX = e.clientX;
       startY = e.clientY;
       scrollLeft = el.scrollLeft;
       scrollTop = el.scrollTop;
-      el.setPointerCapture(e.pointerId);
-      el.style.cursor = 'grabbing';
+      pointerId = e.pointerId;
     };
 
     const onPointerMove = (e: PointerEvent) => {
-      if (!dragging) return;
-      el.scrollLeft = scrollLeft - (e.clientX - startX);
-      el.scrollTop = scrollTop - (e.clientY - startY);
+      if (!pending && !dragging) return;
+
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+
+      if (pending && !dragging) {
+        if (Math.abs(dx) < DRAG_THRESHOLD && Math.abs(dy) < DRAG_THRESHOLD) return;
+        dragging = true;
+        pending = false;
+        el.setPointerCapture(pointerId);
+        el.style.cursor = 'grabbing';
+      }
+
+      el.scrollLeft = scrollLeft - dx;
+      el.scrollTop = scrollTop - dy;
     };
 
     const onPointerUp = (e: PointerEvent) => {
-      if (!dragging) return;
+      if (dragging) {
+        el.releasePointerCapture(e.pointerId);
+        el.style.cursor = '';
+      }
+      pending = false;
       dragging = false;
-      el.releasePointerCapture(e.pointerId);
-      el.style.cursor = '';
     };
 
     el.addEventListener('pointerdown', onPointerDown);
