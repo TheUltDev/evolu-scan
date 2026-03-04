@@ -117,6 +117,7 @@ export const DataTable = ({
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // Drag to scroll table
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
@@ -131,6 +132,11 @@ export const DataTable = ({
     let pointerId = -1;
 
     const onPointerDown = (e: PointerEvent) => {
+
+      if (e.button !== 0) {
+        e.stopPropagation();
+        return;
+      }      
       if ((e.target as HTMLElement).closest('[data-resize-handle], button')) return;
       if ((e.target as HTMLElement).closest('th')) return;
       e.stopPropagation();
