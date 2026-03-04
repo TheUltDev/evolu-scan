@@ -20,10 +20,11 @@ export const Header = () => {
     };
   };
 
-  const isHeaderIsNotifications =
-    signalWidgetViews.value.view === 'notifications';
+  const isHeaderHidden =
+    signalWidgetViews.value.view === 'notifications' ||
+    signalWidgetViews.value.view === 'evolu';
 
-  if (isHeaderIsNotifications) {
+  if (isHeaderHidden) {
     return;
   }
 

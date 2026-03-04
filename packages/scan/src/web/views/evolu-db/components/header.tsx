@@ -1,5 +1,7 @@
 import { type Signal } from '@preact/signals';
+import { Store } from '~core/index';
 import { Icon } from '~web/components/icon';
+import { signalWidgetViews } from '~web/state';
 import { cn } from '~web/utils/helpers';
 import type { DbSnapshot } from '../types';
 
@@ -27,11 +29,17 @@ export const Header = ({
   onFollowToggle: () => void;
   onShowDeletedToggle: () => void;
   onHideEvoluTablesToggle: () => void;
-}) => (
+}) => {
+  const handleClose = () => {
+    signalWidgetViews.value = { view: 'none' };
+    Store.inspectState.value = { kind: 'inspect-off' };
+  };
+
+  return (
   <div className={cn('w-full flex border-b border-[#27272A] min-h-[40px]')}>
     <div className="min-w-fit w-full flex items-center pl-3 pr-2 text-sm gap-x-3">
       <Icon name="icon-database" size={14} className="text-[#8e61e3]" />
-      <span className="text-neutral-300 text-xs font-medium">Evolu Database</span>
+      <span className="text-neutral-300 text-xs font-medium">Database</span>
       <span className="text-[10px] text-neutral-500">
         {snapshot.tables.length} table{snapshot.tables.length !== 1 && 's'}
       </span>
@@ -42,7 +50,7 @@ export const Header = ({
         <button
           type="button"
           onClick={onRefresh}
-          title="Refresh"
+          title="Refresh database"
           className="button rounded w-6 h-6 flex items-center justify-center text-neutral-500 hover:text-neutral-300"
         >
           <Icon name="icon-refresh-cw" size={14} />
@@ -68,7 +76,7 @@ export const Header = ({
         <button
           type="button"
           onClick={onHideEvoluTablesToggle}
-          title={hideEvoluTables ? 'Show Evolu tables' : 'Hide Evolu tables'}
+          title={hideEvoluTables ? 'Show system tables' : 'Hide system tables'}
           className="button rounded w-6 h-6 flex items-center justify-center text-neutral-500 hover:text-neutral-300"
           style={{ color: !hideEvoluTables ? '#f59e0b' : undefined }}
         >
@@ -91,7 +99,17 @@ export const Header = ({
         >
           <Icon name="icon-download" size={14} />
         </button>
+        <div className="w-px h-4 bg-[#333]" />
+        <button
+          type="button"
+          onClick={handleClose}
+          title="Close"
+          className="button rounded w-6 h-6 flex items-center justify-center text-neutral-500 hover:text-neutral-300"
+        >
+          <Icon name="icon-close" size={14} />
+        </button>
       </div>
     </div>
   </div>
-);
+  );
+};
