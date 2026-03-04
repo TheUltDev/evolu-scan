@@ -115,7 +115,7 @@ function RapidUpdater() {
 
 export default function E2EFixture() {
   return (
-    <div style={{ padding: 24, fontFamily: 'sans-serif' }}>
+    <div style={{ padding: 24, fontFamily: 'sans-serif', background: '#111111', color: '#e5e5e5', minHeight: '100vh' }}>
       <h1 data-testid="heading">React Scan E2E Fixture</h1>
       <hr />
       <section>

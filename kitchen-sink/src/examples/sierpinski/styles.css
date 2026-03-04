@@ -1,5 +1,6 @@
 body {
-  background: #fff;
+  background: #111111;
+  color: #e5e5e5;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 15px;
   line-height: 1.7;
@@ -8,7 +9,7 @@ body {
 }
 
 a {
-  color: #4183c4;
+  color: #60a5fa;
   text-decoration: none;
 }
 
@@ -17,8 +18,8 @@ a:hover {
 }
 
 code {
-  background-color: #f8f8f8;
-  border: 1px solid #ddd;
+  background-color: #1e1e1e;
+  border: 1px solid #333;
   border-radius: 3px;
   font-family: "Bitstream Vera Sans Mono", Consolas, Courier, monospace;
   font-size: 12px;
@@ -33,7 +34,7 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #333;
   font-size: 2.5em;
   font-weight: bold;
   margin: 0 0 15px;
@@ -41,7 +42,7 @@ h1 {
 }
 
 h2 {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #2a2a2a;
   font-size: 2em;
 }
 
@@ -68,7 +69,7 @@ ul {
   top: 50%;
   width: 10px;
   height: 10px;
-  background: #eee;
+  background: #1a1a1a;
 }
 
 .dot {
