@@ -1,5 +1,5 @@
 import { useState, Suspense } from 'react';
-import { scan, Store } from 'react-scan';
+import { scan, Store } from '@evolu/scan';
 import './styles.css';
 
 import {

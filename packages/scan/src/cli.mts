@@ -80,18 +80,18 @@ const installPackages = (
 // --- Main ---
 
 const program = new Command()
-  .name('react-scan')
-  .description('React Scan CLI')
+  .name('evolu-scan')
+  .description('Evolu Scan CLI')
   .version(VERSION);
 
 program
   .command('init')
-  .description('Set up React Scan in your project')
+  .description('Set up Evolu Scan in your project')
   .option('-y, --yes', 'skip confirmation prompts', false)
   .option('-c, --cwd <cwd>', 'working directory', process.cwd())
   .option('--skip-install', 'skip package installation', false)
   .action(async (opts) => {
-    console.log(`\n${pc.magenta('[·]')} ${pc.bold('React Scan')} ${pc.dim(`v${VERSION}`)}\n`);
+    console.log(`\n${pc.magenta('[·]')} ${pc.bold('Evolu Scan')} ${pc.dim(`v${VERSION}`)}\n`);
 
     try {
       const cwd = resolve(opts.cwd);
@@ -112,8 +112,8 @@ program
 
       if (project.framework === 'unknown') {
         console.error(pc.red('  Could not detect a supported framework.'));
-        console.log(pc.dim('  React Scan supports Next.js, Vite, and Webpack projects.'));
-        console.log(pc.dim('  Visit https://github.com/aidenybai/react-scan#install for manual setup.\n'));
+        console.log(pc.dim('  Evolu Scan supports Next.js, Vite, and Webpack projects.'));
+        console.log(pc.dim('  Visit https://github.com/evoluhq/evolu-scan#install for manual setup.\n'));
         process.exit(1);
       }
 
@@ -125,7 +125,7 @@ program
       console.log();
 
       if (project.hasReactScan) {
-        console.log(pc.green('  React Scan is already installed in package.json.'));
+        console.log(pc.green('  Evolu Scan is already installed in package.json.'));
         console.log(pc.dim('  Checking if code setup is needed...\n'));
       }
 
@@ -165,8 +165,8 @@ program
       }
 
       if (!opts.skipInstall && !project.hasReactScan) {
-        console.log(pc.dim('\n  Installing react-scan...\n'));
-        installPackages(['react-scan'], project.packageManager, cwd);
+        console.log(pc.dim('\n  Installing @evolu/scan...\n'));
+        installPackages(['@evolu/scan'], project.packageManager, cwd);
         console.log();
       }
 
@@ -176,12 +176,12 @@ program
       }
 
       if (!hasCodeChanges && project.hasReactScan) {
-        console.log(pc.green('  React Scan is already set up in your project.\n'));
+        console.log(pc.green('  Evolu Scan is already set up in your project.\n'));
         process.exit(0);
       }
 
       console.log();
-      console.log(`${pc.green('  Success!')} React Scan has been installed.`);
+      console.log(`${pc.green('  Success!')} Evolu Scan has been installed.`);
       console.log(pc.dim('  You may now start your development server.\n'));
     } catch (error) {
       console.error(pc.red(`\n  Error: ${error instanceof Error ? error.message : String(error)}\n`));

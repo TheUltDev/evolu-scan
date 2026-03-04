@@ -9,13 +9,13 @@ const runCommand = (command, filters = []) => {
 };
 
 const buildAll = () => {
-  runCommand('build', ['react-scan']);
-  runCommand('build', ['./packages/*', '!react-scan']);
+  runCommand('build', ['@evolu/scan']);
+  runCommand('build', ['./packages/*', '!@evolu/scan']);
 };
 
 const devAll = () => {
   // Start scan build with pipe to capture output
-  const scanProcess = spawn('pnpm', ['--filter', 'react-scan', 'dev'], {
+  const scanProcess = spawn('pnpm', ['--filter', '@evolu/scan', 'dev'], {
     stdio: 'inherit', // Inherit all streams to preserve colors
     shell: true,
     env: { ...process.env, WORKSPACE_BUILD: '1' },
@@ -30,7 +30,7 @@ const devAll = () => {
         '--filter',
         '"./packages/*"',
         '--filter',
-        '"!react-scan"',
+        '"!@evolu/scan"',
         '--parallel',
         'dev',
       ],
@@ -50,8 +50,8 @@ const devAll = () => {
 };
 
 const packAll = () => {
-  runCommand('pack', ['react-scan']);
-  runCommand('--parallel pack', ['./packages/*', '!react-scan']);
+  runCommand('pack', ['@evolu/scan']);
+  runCommand('--parallel pack', ['./packages/*', '!@evolu/scan']);
 };
 
 // Parse command-line arguments

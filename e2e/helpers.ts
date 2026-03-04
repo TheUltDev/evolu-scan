@@ -5,7 +5,7 @@ export const FIXTURE_URL = '/?example=e2e-fixture';
 export async function gotoFixture(page: Page): Promise<void> {
   await page.goto(FIXTURE_URL);
   await page.waitForSelector('[data-testid="heading"]', { timeout: 10_000 });
-  // Wait for React Scan to boot and expose __REACT_SCAN__
+  // Wait for Evolu Scan to boot and expose __REACT_SCAN__
   await page.waitForFunction(
     () => typeof (window as any).__REACT_SCAN__?.ReactScanInternals !== 'undefined',
     { timeout: 15_000 },
@@ -75,6 +75,6 @@ export async function isReactScanActive(page: Page): Promise<boolean> {
 
 export async function hasShadowRoot(page: Page): Promise<boolean> {
   return page.evaluate(() => {
-    return document.getElementById('react-scan-root')?.shadowRoot != null;
+    return document.getElementById('evolu-scan-root')?.shadowRoot != null;
   });
 }

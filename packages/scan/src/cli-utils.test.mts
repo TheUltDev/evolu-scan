@@ -27,7 +27,7 @@ import {
 let tempDirectory: string;
 
 beforeEach(() => {
-  tempDirectory = mkdtempSync(join(tmpdir(), 'react-scan-cli-test-'));
+  tempDirectory = mkdtempSync(join(tmpdir(), 'evolu-scan-cli-test-'));
 });
 
 afterEach(() => {
@@ -189,13 +189,13 @@ describe('detectProject', () => {
   });
 
   it('detects hasReactScan from dependencies', () => {
-    writePackageJson(tempDirectory, { 'react-scan': '^0.4.0', vite: '^5.0.0' });
+    writePackageJson(tempDirectory, { '@evolu/scan': '^0.4.0', vite: '^5.0.0' });
     const project = detectProject(tempDirectory);
     expect(project.hasReactScan).toBe(true);
   });
 
   it('detects hasReactScan from devDependencies', () => {
-    writePackageJson(tempDirectory, { vite: '^5.0.0' }, { 'react-scan': '^0.4.0' });
+    writePackageJson(tempDirectory, { vite: '^5.0.0' }, { '@evolu/scan': '^0.4.0' });
     const project = detectProject(tempDirectory);
     expect(project.hasReactScan).toBe(true);
   });
@@ -211,8 +211,12 @@ describe('detectProject', () => {
 // --- hasReactScanCode ---
 
 describe('hasReactScanCode', () => {
-  it('detects react-scan in content', () => {
-    expect(hasReactScanCode('import("react-scan")')).toBe(true);
+  it('detects @evolu/scan in content', () => {
+    expect(hasReactScanCode('import("@evolu/scan")')).toBe(true);
+  });
+
+  it('detects evolu-scan in content (legacy)', () => {
+    expect(hasReactScanCode('import("evolu-scan")')).toBe(true);
   });
 
   it('detects react_scan in content', () => {
@@ -223,8 +227,8 @@ describe('hasReactScanCode', () => {
     expect(hasReactScanCode('import React from "react"')).toBe(false);
   });
 
-  it('detects react-scan in script tag', () => {
-    expect(hasReactScanCode('<script src="https://unpkg.com/react-scan/dist/auto.global.js"></script>')).toBe(true);
+  it('detects evolu-scan in script tag', () => {
+    expect(hasReactScanCode('<script src="https://unpkg.com/evolu-scan/dist/auto.global.js"></script>')).toBe(true);
   });
 });
 
@@ -384,15 +388,15 @@ describe('transformNextAppRouter', () => {
 
     const result = transformNextAppRouter(tempDirectory, 'app');
     expect(result.success).toBe(true);
-    expect(result.newContent).toContain('react-scan');
+    expect(result.newContent).toContain('evolu-scan');
     expect(result.newContent).toContain('<body>');
   });
 
-  it('reports already installed when react-scan is in content', () => {
+  it('reports already installed when evolu-scan is in content', () => {
     mkdirSync(join(tempDirectory, 'app'));
     writeFileSync(
       join(tempDirectory, 'app', 'layout.tsx'),
-      'import "react-scan";\n' + LAYOUT_WITH_BODY,
+      'import "evolu-scan";\n' + LAYOUT_WITH_BODY,
     );
 
     const result = transformNextAppRouter(tempDirectory, 'app');
@@ -439,15 +443,15 @@ export default function Document() {
 
     const result = transformNextPagesRouter(tempDirectory, 'pages');
     expect(result.success).toBe(true);
-    expect(result.newContent).toContain('react-scan');
+    expect(result.newContent).toContain('evolu-scan');
     expect(result.newContent).toContain('<Head>');
   });
 
-  it('reports already installed when react-scan is in content', () => {
+  it('reports already installed when evolu-scan is in content', () => {
     mkdirSync(join(tempDirectory, 'pages'));
     writeFileSync(
       join(tempDirectory, 'pages', '_document.tsx'),
-      DOCUMENT_WITH_HEAD.replace('<Head>', '<Head><script src="react-scan" />'),
+      DOCUMENT_WITH_HEAD.replace('<Head>', '<Head><script src="evolu-scan" />'),
     );
 
     const result = transformNextPagesRouter(tempDirectory, 'pages');
@@ -486,7 +490,7 @@ describe('transformVite', () => {
     expect(result.newContent).toContain('<head>');
   });
 
-  it('reports already installed when react-scan is in content', () => {
+  it('reports already installed when evolu-scan is in content', () => {
     writeFileSync(
       join(tempDirectory, 'index.html'),
       VITE_INDEX_HTML.replace('<head>', `<head>\n    ${VITE_SCRIPT}`),
@@ -567,7 +571,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`;
     mkdirSync(join(tempDirectory, 'src'));
     writeFileSync(
       join(tempDirectory, 'src', 'index.tsx'),
-      `import("react-scan");\n${WEBPACK_ENTRY}`,
+      `import("@evolu/scan");\n${WEBPACK_ENTRY}`,
     );
 
     const result = transformWebpack(tempDirectory);
@@ -588,7 +592,7 @@ describe('previewTransform', () => {
 
     const result = previewTransform(tempDirectory, 'next', 'app');
     expect(result.success).toBe(true);
-    expect(result.newContent).toContain('react-scan');
+    expect(result.newContent).toContain('evolu-scan');
   });
 
   it('routes to Next.js pages router transform', () => {
@@ -600,7 +604,7 @@ describe('previewTransform', () => {
 
     const result = previewTransform(tempDirectory, 'next', 'pages');
     expect(result.success).toBe(true);
-    expect(result.newContent).toContain('react-scan');
+    expect(result.newContent).toContain('evolu-scan');
   });
 
   it('routes to Vite transform', () => {
@@ -611,7 +615,7 @@ describe('previewTransform', () => {
 
     const result = previewTransform(tempDirectory, 'vite', 'unknown');
     expect(result.success).toBe(true);
-    expect(result.newContent).toContain('react-scan');
+    expect(result.newContent).toContain('evolu-scan');
   });
 
   it('routes to Webpack transform', () => {
@@ -623,7 +627,7 @@ describe('previewTransform', () => {
 
     const result = previewTransform(tempDirectory, 'webpack', 'unknown');
     expect(result.success).toBe(true);
-    expect(result.newContent).toContain('react-scan');
+    expect(result.newContent).toContain('evolu-scan');
   });
 
   it('returns failure for tanstack framework', () => {
@@ -690,11 +694,11 @@ describe('generateDiff', () => {
 
   it('handles multi-line additions in the middle', () => {
     const original = '<head>\n</head>';
-    const updated = '<head>\n  <script src="react-scan"></script>\n</head>';
+    const updated = '<head>\n  <script src="evolu-scan"></script>\n</head>';
     const diff = generateDiff(original, updated);
 
     const addedLines = diff.filter((diffLine) => diffLine.type === 'added');
     expect(addedLines.length).toBe(1);
-    expect(addedLines[0].content).toContain('react-scan');
+    expect(addedLines[0].content).toContain('evolu-scan');
   });
 });

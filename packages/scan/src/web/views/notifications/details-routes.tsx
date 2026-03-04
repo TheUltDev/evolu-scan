@@ -70,7 +70,7 @@ export const DetailsRoutes = () => {
               </p>
             )}
             <p className={cn(['text-zinc-600 text-xs'])}>
-              You don't need to keep this panel open for React Scan to record
+              You don't need to keep this panel open for Evolu Scan to record
               slowdowns
             </p>
             <p className={cn(['text-zinc-600 text-xs'])}>
@@ -87,7 +87,7 @@ export const DetailsRoutes = () => {
                     ) {
                       prev.audioNotificationsOptions.audioContext?.close();
                     }
-                    localStorage.setItem('react-scan-notifications-audio', 'false');
+                    localStorage.setItem('evolu-scan-notifications-audio', 'false');
                     return {
                       ...prev,
                       audioNotificationsOptions: {
@@ -98,7 +98,7 @@ export const DetailsRoutes = () => {
                   });
                   return;
                 }
-                localStorage.setItem('react-scan-notifications-audio', 'true');
+                localStorage.setItem('evolu-scan-notifications-audio', 'true');
                 const audioContext = new AudioContext();
                 playNotificationSound(audioContext);
                 setNotificationState((prev) => ({

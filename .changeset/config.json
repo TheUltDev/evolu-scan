@@ -3,9 +3,16 @@
   "changelog": "@changesets/cli/changelog",
   "commit": false,
   "fixed": [],
-  "linked": [["react-scan", "@react-scan/extension"]],
+  "linked": [
+    [
+      "evolu-scan",
+      "@evolu-scan/extension"
+    ]
+  ],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["@react-scan/website"]
+  "ignore": [
+    "@evolu-scan/website"
+  ]
 }

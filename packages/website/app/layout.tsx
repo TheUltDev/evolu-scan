@@ -19,26 +19,26 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "React Scan",
+  title: "Evolu Scan",
   description:
-    "React Scan automatically detects and highlights components that cause performance issues in your React app.",
+    "Evolu Scan automatically detects and highlights components that cause performance issues in your React app.",
   icons: {
     icon: "/logo.svg",
   },
   openGraph: {
     type: "website",
-    url: "https://react-scan.com",
-    title: "React Scan",
+    url: "https://evolu-scan.com",
+    title: "Evolu Scan",
     description:
-      "React Scan automatically detects and highlights components that cause performance issues in your React app.",
-    images: "https://react-scan.com/banner.png",
+      "Evolu Scan automatically detects and highlights components that cause performance issues in your React app.",
+    images: "https://evolu-scan.com/banner.png",
   },
   twitter: {
     card: "summary_large_image",
-    title: "React Scan",
+    title: "Evolu Scan",
     description:
-      "React Scan automatically detects and highlights components that cause performance issues in your React app.",
-    images: "https://react-scan.com/banner.png",
+      "Evolu Scan automatically detects and highlights components that cause performance issues in your React app.",
+    images: "https://evolu-scan.com/banner.png",
   },
 };
 
@@ -47,7 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head>
         <meta name="theme-color" content="#000000" />
-        <link rel="canonical" href="https://react-scan.com" />
+        <link rel="canonical" href="https://evolu-scan.com" />
         <Script
           src="/auto.global.js"
           strategy="beforeInteractive"

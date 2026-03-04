@@ -93,8 +93,8 @@ export const Toolbar = constant(() => {
     const isPaused = !ReactScanInternals.instrumentation.isPaused.value;
     ReactScanInternals.instrumentation.isPaused.value = isPaused;
     const existingLocalStorageOptions =
-      readLocalStorage<LocalStorageOptions>('react-scan-options');
-    saveLocalStorage('react-scan-options', {
+      readLocalStorage<LocalStorageOptions>('evolu-scan-options');
+    saveLocalStorage('evolu-scan-options', {
       ...existingLocalStorageOptions,
       enabled: !isPaused,
     });
@@ -137,7 +137,7 @@ export const Toolbar = constant(() => {
       <div className="h-full flex items-center min-w-fit">
         <button
           type="button"
-          id="react-scan-inspect-element"
+          id="evolu-scan-inspect-element"
           title="Inspect element"
           onClick={onToggleInspect}
           className="button flex items-center justify-center h-full w-full pl-3 pr-2.5"
@@ -150,7 +150,7 @@ export const Toolbar = constant(() => {
       <div className="h-full flex items-center justify-center">
         <button
           type="button"
-          id="react-scan-notifications"
+          id="evolu-scan-notifications"
           title="Notifications"
           onClick={() => {
             if (Store.inspectState.value.kind !== 'inspect-off') {

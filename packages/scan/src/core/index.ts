@@ -38,7 +38,7 @@ const initRootContainer = (): RootContainer => {
   }
 
   rootContainer = document.createElement('div');
-  rootContainer.id = 'react-scan-root';
+  rootContainer.id = 'evolu-scan-root';
 
   shadowRoot = rootContainer.attachShadow({ mode: 'open' });
 
@@ -64,7 +64,7 @@ export interface Options {
   enabled?: boolean;
 
   /**
-   * Force React Scan to run in production (not recommended)
+   * Force Evolu Scan to run in production (not recommended)
    *
    * @default false
    */
@@ -101,7 +101,7 @@ export interface Options {
    * corresponding dom subtree
    *
    *  @default false
-   *  @warning tracking unnecessary renders can add meaningful overhead to react-scan
+   *  @warning tracking unnecessary renders can add meaningful overhead to evolu-scan
    */
   trackUnnecessaryRenders?: boolean;
 
@@ -120,16 +120,16 @@ export interface Options {
   showNotificationCount?: boolean;
 
   /**
-   * Allow React Scan to run inside iframes
+   * Allow Evolu Scan to run inside iframes
    *
    * @default false
    */
   allowInIframe?: boolean;
 
   /**
-   * Should react scan log internal errors to the console.
+   * Should evolu scan log internal errors to the console.
    *
-   * Useful if react scan is not behaving expected and you want to provide information to maintainers when submitting an issue https://github.com/aidenybai/react-scan/issues
+   * Useful if evolu scan is not behaving expected and you want to provide information to maintainers when submitting an issue https://github.com/evoluhq/evolu-scan/issues
    *
    *  @default false
    */
@@ -342,7 +342,7 @@ const validateOptions = (options: Partial<Options>): Partial<Options> => {
 
   if (errors.length > 0) {
     // oxlint-disable-next-line no-console
-    console.warn(`[React Scan] Invalid options:\n${errors.join('\n')}`);
+    console.warn(`[Evolu Scan] Invalid options:\n${errors.join('\n')}`);
   }
 
   return validOptions;
@@ -387,7 +387,7 @@ export const setOptions = (userOptions: Partial<Options>) => {
     // we actually don't care about any other local storage option other than enabled, we should not be syncing those to local storage
     try {
       const existing = readLocalStorage<undefined | Record<string, unknown>>(
-        'react-scan-options',
+        'evolu-scan-options',
       )?.enabled;
 
       if (typeof existing === 'boolean') {
@@ -397,7 +397,7 @@ export const setOptions = (userOptions: Partial<Options>) => {
       if (ReactScanInternals.options.value._debug === 'verbose') {
         // oxlint-disable-next-line no-console
         console.error(
-          '[React Scan Internal Error]',
+          '[Evolu Scan Internal Error]',
           'Failed to create notifications outline canvas',
           e,
         );
@@ -406,7 +406,7 @@ export const setOptions = (userOptions: Partial<Options>) => {
     }
 
     saveLocalStorage<LocalStorageOptions>(
-      'react-scan-options',
+      'evolu-scan-options',
       applyLocalStorageOptions(newOptions),
     );
 
@@ -419,7 +419,7 @@ export const setOptions = (userOptions: Partial<Options>) => {
     if (ReactScanInternals.options.value._debug === 'verbose') {
       // oxlint-disable-next-line no-console
       console.error(
-        '[React Scan Internal Error]',
+        '[Evolu Scan Internal Error]',
         'Failed to create notifications outline canvas',
         e,
       );
@@ -462,7 +462,7 @@ export const start = () => {
     }
 
     const localStorageOptions =
-      readLocalStorage<LocalStorageOptions>('react-scan-options');
+      readLocalStorage<LocalStorageOptions>('evolu-scan-options');
 
     if (localStorageOptions) {
       const validLocalOptions = validateOptions(localStorageOptions);
@@ -486,7 +486,7 @@ export const start = () => {
         if (isInstrumentationActive()) return;
         // oxlint-disable-next-line no-console
         console.error(
-          '[React Scan] Failed to load. Must import React Scan before React runs.',
+          '[Evolu Scan] Failed to load. Must import Evolu Scan before React runs.',
         );
       }, 5000);
     }
@@ -494,7 +494,7 @@ export const start = () => {
     if (ReactScanInternals.options.value._debug === 'verbose') {
       // oxlint-disable-next-line no-console
       console.error(
-        '[React Scan Internal Error]',
+        '[Evolu Scan Internal Error]',
         'Failed to create notifications outline canvas',
         e,
       );
@@ -533,7 +533,7 @@ const createNotificationsOutlineCanvas = () => {
     if (ReactScanInternals.options.value._debug === 'verbose') {
       // oxlint-disable-next-line no-console
       console.error(
-        '[React Scan Internal Error]',
+        '[Evolu Scan Internal Error]',
         'Failed to create notifications outline canvas',
         e,
       );

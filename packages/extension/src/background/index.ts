@@ -13,7 +13,7 @@ const injectScripts = async (tabId: number) => {
     });
 
     await browser.tabs.sendMessage(tabId, {
-      type: 'react-scan:page-reload',
+      type: 'evolu-scan:page-reload',
     });
   } catch (e) {
     // oxlint-disable-next-line no-console
@@ -23,7 +23,7 @@ const injectScripts = async (tabId: number) => {
 
 const isScriptsLoaded = async (tabId: number): Promise<boolean> => {
   try {
-    await browser.tabs.sendMessage(tabId, { type: 'react-scan:ping' });
+    await browser.tabs.sendMessage(tabId, { type: 'evolu-scan:ping' });
     return true;
   } catch {
     return false;
@@ -85,7 +85,7 @@ browserAction.onClicked.addListener(async (tab) => {
 
   try {
     await browser.tabs.sendMessage(tab.id, {
-      type: 'react-scan:toggle-state',
+      type: 'evolu-scan:toggle-state',
     });
 
     await updateIconForTab(tab, IconState.DISABLED);
@@ -100,7 +100,7 @@ browser.runtime.onMessage.addListener(
   (message: unknown, sender: browser.Runtime.MessageSender) => {
     const msg = message as BroadcastMessage;
     if (!sender.tab?.id) return;
-    if (msg.type === 'react-scan:is-enabled') {
+    if (msg.type === 'evolu-scan:is-enabled') {
       void updateIconForTab(
         sender.tab,
         msg.data?.state ? IconState.ENABLED : IconState.DISABLED,

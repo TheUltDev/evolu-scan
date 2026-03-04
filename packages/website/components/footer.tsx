@@ -5,7 +5,7 @@ export default function Footer() {
         <div>&copy; {new Date().getFullYear()} Million Software, Inc.</div>
         <a
           className="hover:text-white/70 transition-colors"
-          href="https://github.com/aidenybai/react-scan"
+          href="https://github.com/evoluhq/evolu-scan"
           target="_blank"
           rel="noopener noreferrer"
         >

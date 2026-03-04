@@ -53,7 +53,7 @@ export type AllAggregatedChanges = {
     | {
         // this looks weird, because it is
         // its a work around to allow context changes to be sent impotently
-        // (react-scan internals do not yet handle sending context changes the render they change)
+        // (evolu-scan internals do not yet handle sending context changes the render they change)
         kind: 'partially-initialized';
         value: unknown;
         name: string;

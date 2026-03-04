@@ -28,7 +28,7 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: 'pnpm --filter @react-scan/kitchen-sink dev',
+    command: 'pnpm --filter @evolu-scan/kitchen-sink dev',
     url: `http://localhost:${PORT}`,
     reuseExistingServer: !process.env.CI,
     timeout: 30_000,

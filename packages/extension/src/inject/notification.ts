@@ -13,12 +13,12 @@ export const createNotificationUI = ({
   title = defaultTitle,
   content = defaultContent,
 }) => {
-  busDispatch<IEvents['react-scan:send-to-background']>(
-    'react-scan:send-to-background',
+  busDispatch<IEvents['evolu-scan:send-to-background']>(
+    'evolu-scan:send-to-background',
     {
-      topic: 'react-scan:send-to-background',
+      topic: 'evolu-scan:send-to-background',
       message: {
-        type: 'react-scan:is-enabled',
+        type: 'evolu-scan:is-enabled',
         data: {
           state: false,
         },
@@ -31,19 +31,19 @@ export const createNotificationUI = ({
   }
 
   backdrop = document.createElement('div');
-  backdrop.id = 'react-scan-backdrop';
+  backdrop.id = 'evolu-scan-backdrop';
   backdrop.style.opacity = '0';
   backdrop.style.pointerEvents = 'none';
 
   const toast = document.createElement('div');
-  toast.id = 'react-scan-toast';
+  toast.id = 'evolu-scan-toast';
   toast.onclick = (e) => {
     e.stopPropagation();
   };
 
   // Create title element
   const titleElement = document.createElement('div');
-  titleElement.id = 'react-scan-toast-title';
+  titleElement.id = 'evolu-scan-toast-title';
 
   const icon = document.createElement('span');
   icon.className = 'icon';
@@ -58,7 +58,7 @@ export const createNotificationUI = ({
 
   // Create message element
   const messageElement = document.createElement('div');
-  messageElement.id = 'react-scan-toast-message';
+  messageElement.id = 'evolu-scan-toast-message';
 
   const text = document.createElement('span');
   text.textContent = content;
@@ -68,7 +68,7 @@ export const createNotificationUI = ({
   toast.appendChild(messageElement);
 
   const button = document.createElement('button');
-  button.id = 'react-scan-toast-close-button';
+  button.id = 'evolu-scan-toast-close-button';
   button.type = 'button';
   button.onclick = toggleNotification;
 
@@ -104,7 +104,7 @@ export const createNotificationUI = ({
   backdrop.onclick = toggleNotification;
 
   const style = document.createElement('style');
-  style.id = 'react-scan-no-react-styles';
+  style.id = 'evolu-scan-no-react-styles';
   style.appendChild(document.createTextNode(noReactStyles));
 
   const fragment = document.createDocumentFragment();

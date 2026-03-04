@@ -323,8 +323,8 @@ const setupPerformanceListener = (
       let current: Element | null = entry.target;
       while (current) {
         if (
-          current.id === 'react-scan-toolbar-root' ||
-          current.id === 'react-scan-root'
+          current.id === 'evolu-scan-toolbar-root' ||
+          current.id === 'evolu-scan-root'
         ) {
           return;
         }
@@ -645,7 +645,7 @@ export const setupDetailedPointerTimingListener = (
     const path = e.composedPath();
     if (
       path.some(
-        (el) => el instanceof Element && el.id === 'react-scan-toolbar-root',
+        (el) => el instanceof Element && el.id === 'evolu-scan-toolbar-root',
       )
     ) {
       return;

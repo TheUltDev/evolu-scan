@@ -22,7 +22,7 @@ export default defineConfig(({ mode }): UserConfig => {
   if (env.NODE_ENV === 'development' && isBrave && !env.BRAVE_BINARY) {
     // oxlint-disable-next-line no-console
     console.error(`
-    ⚛️  React Scan
+    ⚛️  Evolu Scan
     ==============
     🚫 Error: BRAVE_BINARY environment variable is missing
 
@@ -97,12 +97,12 @@ export default defineConfig(({ mode }): UserConfig => {
               : 'chromium',
           chromiumBinary: getBrowserBinary(),
           firefoxBinary: env.FIREFOX_BINARY,
-          startUrl: ['https://github.com/aidenybai/react-scan'],
+          startUrl: ['https://github.com/evoluhq/evolu-scan'],
         },
       }),
     ],
     optimizeDeps: {
-      exclude: ['react-scan'],
+      exclude: ['@evolu/scan'],
     },
   };
 });

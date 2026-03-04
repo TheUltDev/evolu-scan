@@ -76,7 +76,7 @@ export default function CLI({ command }: { command: string }) {
         Install via {`<script>`} or npm instead?
         <a
           className="ml-1 text-neutral-400 underline hover:text-white"
-          href="https://github.com/aidenybai/react-scan#readme"
+          href="https://github.com/evoluhq/evolu-scan#readme"
         >
           Full installation guide →
         </a>

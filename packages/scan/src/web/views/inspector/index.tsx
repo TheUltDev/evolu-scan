@@ -78,7 +78,7 @@ class InspectorErrorBoundary extends Component {
 
 const inspectorContainerClassName = computed(() =>
   cn(
-    'react-scan-inspector',
+    'evolu-scan-inspector',
     'flex-1',
     'opacity-0',
     'overflow-y-auto overflow-x-hidden',

@@ -35,7 +35,7 @@ test.describe('Notifications', () => {
     await page.waitForTimeout(2000);
 
     const shadowContent = await page.evaluate(() => {
-      const root = document.getElementById('react-scan-root');
+      const root = document.getElementById('evolu-scan-root');
       return root?.shadowRoot?.innerHTML ?? '';
     });
     expect(shadowContent.length).toBeGreaterThan(100);

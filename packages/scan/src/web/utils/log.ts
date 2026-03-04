@@ -89,7 +89,7 @@ export const logIntro = () => {
   }
   // oxlint-disable-next-line no-console
   console.log(
-    '%c[·] %cReact Scan',
+    '%c[·] %cEvolu Scan',
     'font-weight:bold;color:#7a68e8;font-size:20px;',
     'font-weight:bold;font-size:14px;',
   );

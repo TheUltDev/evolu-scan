@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "React Scan",
+  "name": "Evolu Scan",
   "version": "0.0.0",
   "description": "Scan React apps for performance problems",
   "icons": {
@@ -11,7 +11,7 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "react-scan@million.dev",
+      "id": "evolu-scan@million.dev",
       "strict_min_version": "57.0"
     }
   },
@@ -24,26 +24,47 @@
     }
   },
   "background": {
-    "scripts": ["src/background/index.ts"]
+    "scripts": [
+      "src/background/index.ts"
+    ]
   },
-  "permissions": ["activeTab", "tabs", "scripting", "<all_urls>"],
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "scripting",
+    "<all_urls>"
+  ],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["src/inject/react-scan.ts"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "src/inject/evolu-scan.ts"
+      ],
       "run_at": "document_start"
     },
     {
-      "matches": ["<all_urls>"],
-      "js": ["src/inject/index.ts"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "src/inject/index.ts"
+      ],
       "run_at": "document_start"
     },
     {
-      "matches": ["<all_urls>"],
-      "js": ["src/content/index.ts"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "src/content/index.ts"
+      ],
       "run_at": "document_start"
     }
   ],
-  "web_accessible_resources": ["icons/*"]
+  "web_accessible_resources": [
+    "icons/*"
+  ]
 }

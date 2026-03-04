@@ -44,20 +44,20 @@ const INSTALL_COMMANDS: Record<PackageManager, string> = {
 
 // --- Templates ---
 
-const REACT_SCAN_SCRIPT_TAG = '<script src="https://unpkg.com/react-scan/dist/auto.global.js" crossorigin="anonymous"></script>';
+const REACT_SCAN_SCRIPT_TAG = '<script src="https://unpkg.com/@evolu/scan/dist/auto.global.js" crossorigin="anonymous"></script>';
 
 const NEXT_APP_ROUTER_SCRIPT = `{process.env.NODE_ENV === "development" && (
-          <script src="https://unpkg.com/react-scan/dist/auto.global.js" crossOrigin="anonymous" />
+          <script src="https://unpkg.com/@evolu/scan/dist/auto.global.js" crossOrigin="anonymous" />
         )}`;
 
 const NEXT_PAGES_ROUTER_SCRIPT = `{process.env.NODE_ENV === "development" && (
-          <script src="https://unpkg.com/react-scan/dist/auto.global.js" crossOrigin="anonymous" />
+          <script src="https://unpkg.com/@evolu/scan/dist/auto.global.js" crossOrigin="anonymous" />
         )}`;
 
-const VITE_SCRIPT = `<script src="https://unpkg.com/react-scan/dist/auto.global.js" crossorigin="anonymous"></script>`;
+const VITE_SCRIPT = `<script src="https://unpkg.com/@evolu/scan/dist/auto.global.js" crossorigin="anonymous"></script>`;
 
 const WEBPACK_IMPORT = `if (process.env.NODE_ENV === "development") {
-  import("react-scan");
+  import("@evolu/scan");
 }`;
 
 // --- Detection ---
@@ -111,7 +111,7 @@ const detectProject = (cwd: string): ProjectInfo => {
         ...packageJson.dependencies,
         ...packageJson.devDependencies,
       };
-      hasReactScan = Boolean(allDeps['react-scan']);
+      hasReactScan = Boolean(allDeps['@evolu/scan']);
     } catch { /* */ }
   }
 
@@ -181,7 +181,7 @@ const findEntryFile = (projectRoot: string): string | null => {
 };
 
 const hasReactScanCode = (content: string): boolean => {
-  return content.includes('react-scan') || content.includes('react_scan');
+  return content.includes('@evolu/scan') || content.includes('evolu-scan') || content.includes('react_scan');
 };
 
 // --- Transform ---
@@ -205,7 +205,7 @@ const transformNextAppRouter = (
     return {
       success: true,
       filePath: layoutPath,
-      message: 'React Scan is already installed.',
+      message: 'Evolu Scan is already installed.',
       noChanges: true,
     };
   }
@@ -258,7 +258,7 @@ const transformNextPagesRouter = (
     return {
       success: true,
       filePath: documentPath,
-      message: 'React Scan is already installed.',
+      message: 'Evolu Scan is already installed.',
       noChanges: true,
     };
   }
@@ -284,7 +284,7 @@ const transformNextPagesRouter = (
       success: false,
       filePath: documentPath,
       message:
-        'Could not find <Head> component in _document file to inject React Scan script.',
+        'Could not find <Head> component in _document file to inject Evolu Scan script.',
     };
   }
 
@@ -313,7 +313,7 @@ const transformVite = (projectRoot: string): TransformResult => {
     return {
       success: true,
       filePath: indexHtml,
-      message: 'React Scan is already installed.',
+      message: 'Evolu Scan is already installed.',
       noChanges: true,
     };
   }
@@ -349,7 +349,7 @@ const transformWebpack = (projectRoot: string): TransformResult => {
       return {
         success: true,
         filePath: indexHtml,
-        message: 'React Scan is already installed.',
+        message: 'Evolu Scan is already installed.',
         noChanges: true,
       };
     }
@@ -391,7 +391,7 @@ const transformWebpack = (projectRoot: string): TransformResult => {
     return {
       success: true,
       filePath: entryFile,
-      message: 'React Scan is already installed.',
+      message: 'Evolu Scan is already installed.',
       noChanges: true,
     };
   }
@@ -427,7 +427,7 @@ const previewTransform = (
       return {
         success: false,
         filePath: '',
-        message: `Framework "${framework}" is not yet supported by automatic setup. Visit https://github.com/aidenybai/react-scan#install for manual setup.`,
+        message: `Framework "${framework}" is not yet supported by automatic setup. Visit https://github.com/evoluhq/evolu-scan#install for manual setup.`,
       };
   }
 };

@@ -1,5 +1,5 @@
 {
-  "name": "@react-scan/extension",
+  "name": "@evolu-scan/extension",
   "version": "0.5.3",
   "private": true,
   "type": "module",
@@ -23,7 +23,7 @@
     "bippy": "0.3.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scan": "workspace:*",
+    "@evolu/scan": "workspace:*",
     "zod": "^3.23.8"
   },
   "devDependencies": {

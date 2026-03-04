@@ -1,2 +1,2 @@
-export const STORAGE_KEY = 'react-scan-options';
-export const EXTENSION_STORAGE_KEY = 'react-scan-extension';
+export const STORAGE_KEY = 'evolu-scan-options';
+export const EXTENSION_STORAGE_KEY = 'evolu-scan-extension';

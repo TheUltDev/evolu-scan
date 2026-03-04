@@ -1,4 +1,4 @@
-import type * as reactScan from 'react-scan';
+import type * as reactScan from '@evolu/scan';
 
 declare global {
   interface Window {

@@ -966,7 +966,7 @@ export const ComponentsTree = () => {
   }, []);
 
   return (
-    <div className="react-scan-components-tree flex">
+    <div className="evolu-scan-components-tree flex">
       <div
         ref={refResizeHandle}
         onPointerDown={handleResize}

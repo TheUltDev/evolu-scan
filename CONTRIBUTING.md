@@ -1,10 +1,10 @@
-# Contributing to React Scan
+# Contributing to Evolu Scan
 
 First off, thanks for taking the time to contribute! ❤️
 
 ## Table of Contents
 
-- [Contributing to React Scan](#contributing-to-react-scan)
+- [Contributing to Evolu Scan](#contributing-to-evolu-scan)
   - [Table of Contents](#table-of-contents)
   - [Project Structure](#project-structure)
   - [Development Setup](#development-setup)
@@ -18,16 +18,16 @@ First off, thanks for taking the time to contribute! ❤️
 
 This is a monorepo containing several packages:
 
-- `packages/scan` - Core React Scan package
-- `packages/vite-plugin-react-scan` - Vite plugin for React Scan
+- `packages/scan` - Core Evolu Scan package
+- `packages/vite-plugin-evolu-scan` - Vite plugin for Evolu Scan
 - `packages/extension` - VS Code extension
 
 ## Development Setup
 
 1. **Clone and Install**
    ```bash
-   git clone https://github.com/aidenybai/react-scan.git
-   cd react-scan
+   git clone https://github.com/evoluhq/evolu-scan.git
+   cd evolu-scan
    pnpm install
    ```
 
@@ -36,7 +36,7 @@ This is a monorepo containing several packages:
    pnpm build
    ```
 
-3. **Testing React Scan**
+3. **Testing Evolu Scan**
    ```bash
    cd packages/scan
    pnpm build:copy

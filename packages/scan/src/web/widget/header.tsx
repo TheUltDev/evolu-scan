@@ -29,11 +29,11 @@ export const Header = () => {
   }
 
   return (
-    <div className="react-scan-header">
+    <div className="evolu-scan-header">
       <div className="relative flex-1 h-full">
         <div
           className={cn(
-            'react-scan-header-item is-visible',
+            'evolu-scan-header-item is-visible',
             !isInitialView && '!duration-0',
           )}
         >
@@ -44,7 +44,7 @@ export const Header = () => {
       <button
         type="button"
         title="Close"
-        className="react-scan-close-button"
+        className="evolu-scan-close-button"
         onClick={handleClose}
       >
         <Icon name="icon-close" />

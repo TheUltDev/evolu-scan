@@ -1,4 +1,4 @@
-html.freeze > body {
+html.freeze>body {
   pointer-events: none;
 }
 
@@ -11,11 +11,11 @@ html.freeze svg {
   pointer-events: none;
 }
 
-html.freeze #react-scan-toast {
+html.freeze #evolu-scan-toast {
   pointer-events: auto;
 }
 
-#react-scan-backdrop {
+#evolu-scan-backdrop {
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.01);
@@ -27,7 +27,7 @@ html.freeze #react-scan-toast {
   z-index: 2147483650;
 }
 
-#react-scan-toast {
+#evolu-scan-toast {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -49,26 +49,26 @@ html.freeze #react-scan-toast {
   z-index: 2147483651;
 }
 
-#react-scan-toast-title {
+#evolu-scan-toast-title {
   margin: 0 0 8px 0;
 }
 
-#react-scan-toast-message {
+#evolu-scan-toast-message {
   display: flex;
   align-items: flex-start;
 }
 
-#react-scan-toast-message span {
+#evolu-scan-toast-message span {
   white-space: pre-line;
 }
 
-#react-scan-toast .icon {
+#evolu-scan-toast .icon {
   font-size: .75rem;
   margin-right: 8px;
 }
 
 @media (max-width: 320px) {
-  #react-scan-toast {
+  #evolu-scan-toast {
     flex-direction: column;
     min-width: auto;
     width: calc(100% - 36px);
@@ -76,14 +76,14 @@ html.freeze #react-scan-toast {
 }
 
 @media (max-width: 720px) {
-  #react-scan-toast {
+  #evolu-scan-toast {
     br {
       display: none;
     }
   }
 }
 
-#react-scan-toast-close-button {
+#evolu-scan-toast-close-button {
   position: absolute;
   top: 10px;
   right: 8px;
@@ -100,6 +100,6 @@ html.freeze #react-scan-toast {
   transition: background-color 300ms ease;
 }
 
-#react-scan-toast-close-button:hover {
+#evolu-scan-toast-close-button:hover {
   background-color: rgba(255, 255, 255, 0.15);
 }

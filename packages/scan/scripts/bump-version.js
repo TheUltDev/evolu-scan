@@ -18,7 +18,7 @@ scanPackage.version = newVersion;
 fs.writeFileSync(scanPackagePath, `${JSON.stringify(scanPackage, null, 2)}\n`);
 
 // Get the tar file path
-const tarFileName = `react-scan-${newVersion}.tgz`;
+const tarFileName = `evolu-scan-${newVersion}.tgz`;
 const tarFilePath = path.join(__dirname, '..', tarFileName);
 
 // Copy to clipboard

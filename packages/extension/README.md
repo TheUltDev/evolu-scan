@@ -1,4 +1,4 @@
-# React Scanner Extension
+# Evolu Scanner Extension
 
 Browser extension for scanning React applications and identifying performance issues.
 

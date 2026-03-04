@@ -35,7 +35,7 @@ const INSTALL_TABS: InstallTab[] = [
     label: 'CLI',
     description: '',
     lang: 'bash',
-    code: `npx -y react-scan@latest init`,
+    code: `npx -y evolu-scan@latest init`,
   },
   {
     id: 'script',
@@ -45,7 +45,7 @@ const INSTALL_TABS: InstallTab[] = [
     code: `<!-- paste this BEFORE any scripts -->
 <script
   crossOrigin="anonymous"
-  src="//unpkg.com/react-scan/dist/auto.global.js"
+  src="//unpkg.com/evolu-scan/dist/auto.global.js"
 ></script>`,
   },
   {
@@ -60,7 +60,7 @@ export default function RootLayout({ children }) {
     <html>
       <head>
         <Script
-          src="//unpkg.com/react-scan/dist/auto.global.js"
+          src="//unpkg.com/evolu-scan/dist/auto.global.js"
           crossOrigin="anonymous"
           strategy="beforeInteractive"
         />
@@ -83,7 +83,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <Script
-          src="//unpkg.com/react-scan/dist/auto.global.js"
+          src="//unpkg.com/evolu-scan/dist/auto.global.js"
           crossOrigin="anonymous"
           strategy="beforeInteractive"
         />
@@ -99,14 +99,14 @@ export default function Document() {
   {
     id: 'vite',
     label: 'Vite',
-    description: <>Example <InlineCode>index.html</InlineCode> with React Scan enabled</>,
+    description: <>Example <InlineCode>index.html</InlineCode> with Evolu Scan enabled</>,
     lang: 'xml',
     code: `<!doctype html>
 <html lang="en">
   <head>
     <script
       crossOrigin="anonymous"
-      src="//unpkg.com/react-scan/dist/auto.global.js"
+      src="//unpkg.com/evolu-scan/dist/auto.global.js"
     ></script>
   </head>
   <body>
@@ -129,7 +129,7 @@ export default function App() {
         <Meta />
         <script
           crossOrigin="anonymous"
-          src="//unpkg.com/react-scan/dist/auto.global.js"
+          src="//unpkg.com/evolu-scan/dist/auto.global.js"
         />
         <Links />
       </head>

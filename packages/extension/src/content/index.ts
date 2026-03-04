@@ -15,21 +15,21 @@ chrome.runtime.onMessage.addListener(
 
     const data = result.data;
 
-    if (data.type === 'react-scan:ping') {
+    if (data.type === 'evolu-scan:ping') {
       sendResponse({ pong: true });
       return false;
     }
 
-    if (data.type === 'react-scan:page-reload') {
+    if (data.type === 'evolu-scan:page-reload') {
       window.location.reload();
       return false;
     }
 
-    if (data.type === 'react-scan:toggle-state') {
-      busDispatch<IEvents['react-scan:toggle-state']>(
-        'react-scan:toggle-state',
+    if (data.type === 'evolu-scan:toggle-state') {
+      busDispatch<IEvents['evolu-scan:toggle-state']>(
+        'evolu-scan:toggle-state',
         {
-          topic: 'react-scan:toggle-state',
+          topic: 'evolu-scan:toggle-state',
           message: undefined,
         },
       );
@@ -48,8 +48,8 @@ const sendMessageToBackground = ({ type, data }: BroadcastMessage) => {
   }
 };
 
-busSubscribe<IEvents['react-scan:send-to-background']>(
-  'react-scan:send-to-background',
+busSubscribe<IEvents['evolu-scan:send-to-background']>(
+  'evolu-scan:send-to-background',
   (event) => {
     sendMessageToBackground(event.message);
   },

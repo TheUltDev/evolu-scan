@@ -1,7 +1,7 @@
 {
-  "name": "@react-scan/vite-plugin-react-scan",
+  "name": "@evolu-scan/vite-plugin-evolu-scan",
   "version": "0.2.3",
-  "description": "A Vite plugin for React Scan - detects performance issues in your React app.",
+  "description": "A Vite plugin for Evolu Scan - detects performance issues in your React app.",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -14,7 +14,7 @@
     "prepublishOnly": "rimraf dist && npm run build"
   },
   "peerDependenciesMeta": {
-    "react-scan": {
+    "@evolu/scan": {
       "optional": false
     },
     "vite": {
@@ -23,25 +23,22 @@
   },
   "keywords": [
     "react",
-    "react-scan",
-    "react scan",
+    "evolu-scan",
+    "evolu scan",
     "render",
     "performance",
     "vite",
     "vite plugin"
   ],
-  "author": {
-    "name": "Team React Scan",
-    "url": "https://github.com/aidenybai/react-scan"
-  },
+  "author": "Daniel Steigerwald <daniel@steigerwald.cz>",
   "license": "MIT",
-  "homepage": "https://github.com/aidenybai/react-scan",
+  "homepage": "https://github.com/evoluhq/evolu-scan",
   "bugs": {
-    "url": "https://github.com/aidenybai/react-scan/issues"
+    "url": "https://github.com/evoluhq/evolu-scan/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/aidenybai/react-scan.git"
+    "url": "https://github.com/evoluhq/evolu-scan.git"
   },
   "dependencies": {
     "@babel/core": "^7.26.0",
@@ -51,7 +48,7 @@
     "cheerio": "^1.0.0"
   },
   "peerDependencies": {
-    "react-scan": ">=0.5.3",
+    "@evolu/scan": ">=0.5.3",
     "vite": "^2 || ^3 || ^4 || ^5 || ^6"
   },
   "devDependencies": {

@@ -1,21 +1,21 @@
-# @react-scan/vite-plugin-react-scan
+# @evolu-scan/vite-plugin-evolu-scan
 
-A Vite plugin that integrates React Scan into your Vite application, automatically detecting performance issues in your React components.
+A Vite plugin that integrates Evolu Scan into your Vite application, automatically detecting performance issues in your React components.
 
 ## Installation
 
 ```bash
 # npm
-npm install -D @react-scan/vite-plugin-react-scan react-scan
+npm install -D @evolu-scan/vite-plugin-evolu-scan evolu-scan
 
 # pnpm
-pnpm add -D @react-scan/vite-plugin-react-scan react-scan
+pnpm add -D @evolu-scan/vite-plugin-evolu-scan evolu-scan
 
 # yarn
-yarn add -D @react-scan/vite-plugin-react-scan react-scan
+yarn add -D @evolu-scan/vite-plugin-evolu-scan evolu-scan
 ```
 
-> **Note:** Make sure `react-scan` is installed as a peer dependency. The plugin will automatically locate it in your project's dependency tree.
+> **Note:** Make sure `evolu-scan` is installed as a peer dependency. The plugin will automatically locate it in your project's dependency tree.
 
 ## Usage
 
@@ -24,7 +24,7 @@ Add the plugin to your `vite.config.ts`:
 ```ts
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import reactScan from '@react-scan/vite-plugin-react-scan';
+import reactScan from '@evolu-scan/vite-plugin-evolu-scan';
 
 export default defineConfig({
   plugins: [
@@ -41,7 +41,7 @@ export default defineConfig({
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `enable` | `boolean` | `process.env.NODE_ENV === 'development'` | Enable/disable scanning |
-| `scanOptions` | `object` | `{ ... }` | Custom React Scan options |
+| `scanOptions` | `object` | `{ ... }` | Custom Evolu Scan options |
 | `autoDisplayNames` | `boolean` | `false` | Automatically add display names to React components |
 | `debug` | `boolean` | `false` | Enable debug logging |
 
@@ -50,7 +50,7 @@ export default defineConfig({
 ```ts
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import reactScan from '@react-scan/vite-plugin-react-scan';
+import reactScan from '@evolu-scan/vite-plugin-evolu-scan';
 
 export default defineConfig({
   plugins: [
@@ -58,7 +58,7 @@ export default defineConfig({
     reactScan({
       enable: true,
       autoDisplayNames: true,
-      scanOptions: {} // React Scan specific options
+      scanOptions: {} // Evolu Scan specific options
     }),
   ],
 });
@@ -66,7 +66,7 @@ export default defineConfig({
 
 ## Development vs Production
 
-- In development: The plugin injects React Scan directly into your application for real-time analysis
+- In development: The plugin injects Evolu Scan directly into your application for real-time analysis
 - In production: The plugin can be disabled/enabled by default with specific options
 
 ## Contributing
@@ -75,4 +75,4 @@ Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md)
 
 ## License
 
-React Scan Vite Plugin is [MIT-licensed](LICENSE) open-source software by Aiden Bai, [Million Software, Inc.](https://million.dev), and [contributors](https://github.com/aidenybai/react-scan/graphs/contributors).
+Evolu Scan Vite Plugin is [MIT-licensed](LICENSE) open-source software by Aiden Bai, [Million Software, Inc.](https://million.dev), and [contributors](https://github.com/evoluhq/evolu-scan/graphs/contributors).

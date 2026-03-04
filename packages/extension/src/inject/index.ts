@@ -1,4 +1,4 @@
-import * as reactScan from 'react-scan';
+import * as reactScan from '@evolu/scan';
 import { gt } from 'semver';
 import type { IEvents } from '~types/messages';
 import { EXTENSION_STORAGE_KEY, STORAGE_KEY } from '~utils/constants';
@@ -105,12 +105,12 @@ window.addEventListener('DOMContentLoaded', async () => {
         "React is not detected on this page.\nPlease ensure you're visiting a React application.",
     });
 
-    busDispatch<IEvents['react-scan:send-to-background']>(
-      'react-scan:send-to-background',
+    busDispatch<IEvents['evolu-scan:send-to-background']>(
+      'evolu-scan:send-to-background',
       {
-        topic: 'react-scan:send-to-background',
+        topic: 'evolu-scan:send-to-background',
         message: {
-          type: 'react-scan:is-enabled',
+          type: 'evolu-scan:is-enabled',
           data: {
             state: false,
           },
@@ -118,8 +118,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       },
     );
 
-    busSubscribe<IEvents['react-scan:toggle-state']>(
-      'react-scan:toggle-state',
+    busSubscribe<IEvents['evolu-scan:toggle-state']>(
+      'evolu-scan:toggle-state',
       async () => {
         toggleNotification();
       },
@@ -131,15 +131,15 @@ window.addEventListener('DOMContentLoaded', async () => {
   if (isTargetPageAlreadyUsedReactScan()) {
     createNotificationUI({
       title: 'Already Initialized',
-      content: 'React Scan is already initialized on this page.',
+      content: 'Evolu Scan is already initialized on this page.',
     });
 
-    busDispatch<IEvents['react-scan:send-to-background']>(
-      'react-scan:send-to-background',
+    busDispatch<IEvents['evolu-scan:send-to-background']>(
+      'evolu-scan:send-to-background',
       {
-        topic: 'react-scan:send-to-background',
+        topic: 'evolu-scan:send-to-background',
         message: {
-          type: 'react-scan:is-enabled',
+          type: 'evolu-scan:is-enabled',
           data: {
             state: false,
           },
@@ -147,8 +147,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       },
     );
 
-    busSubscribe<IEvents['react-scan:toggle-state']>(
-      'react-scan:toggle-state',
+    busSubscribe<IEvents['evolu-scan:toggle-state']>(
+      'evolu-scan:toggle-state',
       async () => {
         toggleNotification();
       },
@@ -159,12 +159,12 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   const storedOptions = readLocalStorage<reactScan.Options>(STORAGE_KEY);
   if (storedOptions !== null) {
-    busDispatch<IEvents['react-scan:send-to-background']>(
-      'react-scan:send-to-background',
+    busDispatch<IEvents['evolu-scan:send-to-background']>(
+      'evolu-scan:send-to-background',
       {
-        topic: 'react-scan:send-to-background',
+        topic: 'evolu-scan:send-to-background',
         message: {
-          type: 'react-scan:is-enabled',
+          type: 'evolu-scan:is-enabled',
           data: {
             state: storedOptions.showToolbar,
           },
@@ -177,8 +177,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     window.reactScan = reactScan.setOptions;
   }
 
-  busSubscribe<IEvents['react-scan:toggle-state']>(
-    'react-scan:toggle-state',
+  busSubscribe<IEvents['evolu-scan:toggle-state']>(
+    'evolu-scan:toggle-state',
     async () => {
       if (!isReactAvailable || isTargetPageAlreadyUsedReactScan()) {
         toggleNotification();

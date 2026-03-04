@@ -17,7 +17,7 @@ export default function Home(): JSX.Element {
   return (
     <div className="flex flex-col w-screen h-screen bg-[#111111] text-neutral-200">
       <div className="flex flex-none border-b border-neutral-800">
-        <h1 className="m-8 font-bold text-3xl">react-scan</h1>
+        <h1 className="m-8 font-bold text-3xl">evolu-scan</h1>
       </div>
       <div className="flex flex-1">
         {/* content */}

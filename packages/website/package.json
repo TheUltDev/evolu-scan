@@ -1,11 +1,11 @@
 {
-  "name": "@react-scan/website",
+  "name": "@evolu-scan/website",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "presync": "shx cp ../scan/dist/auto.global.js ./public/auto.global.js",
     "dev": "pnpm presync && next dev --turbopack",
-    "build": "pnpm --filter react-scan build && pnpm presync && next build",
+    "build": "pnpm --filter @evolu/scan build && pnpm presync && next build",
     "postbuild": "node ../../scripts/version-warning.mjs",
     "start": "next start",
     "lint": "oxlint ."
@@ -18,7 +18,7 @@
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-grab": "^0.1.15",
-    "react-scan": "^0.5.3",
+    "@evolu/scan": "^0.5.3",
     "zod": "^3.23.8"
   },
   "devDependencies": {

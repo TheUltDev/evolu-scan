@@ -95,7 +95,7 @@ Concise rules for building accessible, fast, delightful UIs Use MUST/SHOULD/NEVE
 
 - SHOULD: Test iOS Low Power Mode and macOS Safari
 - MUST: Measure reliably (disable extensions that skew runtime)
-- MUST: Track and minimize re-renders (React DevTools/React Scan)
+- MUST: Track and minimize re-renders (React DevTools/Evolu Scan)
 - MUST: Profile with CPU/network throttling
 - MUST: Batch layout reads/writes; avoid unnecessary reflows/repaints
 - MUST: Mutations (`POST/PATCH/DELETE`) target <500 ms

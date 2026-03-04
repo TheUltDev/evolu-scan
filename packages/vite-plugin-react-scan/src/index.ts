@@ -3,7 +3,7 @@ import path from 'node:path';
 import { transformAsync } from '@babel/core';
 import babelPluginReactDisplayName from 'babel-plugin-add-react-displayname/index.js';
 import * as cheerio from 'cheerio';
-import type { Options } from 'react-scan';
+import type { Options } from '@evolu/scan';
 import type { Plugin, ResolvedConfig } from 'vite';
 
 async function resolveModuleFileContent(moduleName: string, startDir: string = process.cwd()) {
@@ -49,7 +49,7 @@ interface ReactScanPluginOptions {
   enable?: boolean;
 
   /**
-   * Custom React Scan options
+   * Custom Evolu Scan options
    */
   scanOptions?: Options;
 
@@ -66,7 +66,7 @@ interface ReactScanPluginOptions {
   autoDisplayNames?: boolean;
 }
 
-const PLUGIN_NAME = 'vite-plugin-react-scan';
+const PLUGIN_NAME = 'vite-plugin-evolu-scan';
 
 const DEFAULT_SCAN_OPTIONS: Partial<Options> = {};
 
@@ -92,7 +92,7 @@ const validateOptions = (options: ReactScanPluginOptions) => {
 };
 
 const JSX_EXTENSIONS = ['.jsx', '.tsx'] as const;
-const REACT_SCAN_IDENTIFIER = 'react-scan';
+const REACT_SCAN_IDENTIFIER = '@evolu/scan';
 
 const isJsxFile = (id: string) =>
   JSX_EXTENSIONS.some((ext) => id.endsWith(ext));
@@ -136,7 +136,7 @@ const reactScanPlugin = (options: ReactScanPluginOptions = {}): Plugin => {
     const base = config.base || '/';
     return `
     <script type="module">
-      import { scan } from '${base}@id/react-scan';
+      import { scan } from '${base}@id/${REACT_SCAN_IDENTIFIER}';
       (async () => {
         try {
           scan(${hasOptions ? JSON.stringify(options) : ''});
@@ -154,7 +154,7 @@ const reactScanPlugin = (options: ReactScanPluginOptions = {}): Plugin => {
     config(config) {
       return {
         optimizeDeps: {
-          exclude: [...(config.optimizeDeps?.exclude || []), 'react-scan'],
+          exclude: [...(config.optimizeDeps?.exclude || []), '@evolu/scan'],
         },
       };
     },
@@ -232,7 +232,7 @@ const reactScanPlugin = (options: ReactScanPluginOptions = {}): Plugin => {
         const $ = cheerio.load(html);
         const scanScript = generateScanScript(scanOptions);
 
-        // Remove any existing React Scan script to avoid duplicates
+        // Remove any existing Evolu Scan script to avoid duplicates
         let removedCount = 0;
         $('script').each((_index: number, element: cheerio.Element) => {
           const content = $(element).html() || '';
@@ -273,7 +273,7 @@ const reactScanPlugin = (options: ReactScanPluginOptions = {}): Plugin => {
 
     resolveId(id) {
       if (!isBuild && id === `/@id/${REACT_SCAN_IDENTIFIER}`) {
-        log.debug('Resolving react-scan module');
+        log.debug('Resolving evolu-scan module');
         return REACT_SCAN_IDENTIFIER;
       }
       return null;
@@ -281,7 +281,7 @@ const reactScanPlugin = (options: ReactScanPluginOptions = {}): Plugin => {
 
     async generateBundle() {
       if (isBuild && enable) {
-        log.debug('Build started, processing react-scan');
+        log.debug('Build started, processing evolu-scan');
 
         try {
           const moduleNamePath = `${REACT_SCAN_IDENTIFIER}/dist/auto.global.js`;
@@ -299,12 +299,12 @@ const reactScanPlugin = (options: ReactScanPluginOptions = {}): Plugin => {
 
           // Store the full path for use in the script tag
           scanFilePath = `/${assetFileName}`;
-          log.debug('Emitted react-scan as asset:', assetFileName);
+          log.debug('Emitted evolu-scan as asset:', assetFileName);
         } catch (error) {
-          log.error('Failed to process react-scan:', error);
+          log.error('Failed to process evolu-scan:', error);
           throw new Error(
             `Unable to locate '${REACT_SCAN_IDENTIFIER}'. This module is a required peer dependency.
-Please ensure 'react-scan' is installed in your project using your preferred package manager.`,
+Please ensure '@evolu/scan' is installed in your project using your preferred package manager.`,
           );
         }
       }

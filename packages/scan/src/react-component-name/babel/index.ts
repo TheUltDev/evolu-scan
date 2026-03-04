@@ -231,7 +231,7 @@ function isReactComponent(
 }
 
 export const reactScanComponentNamePlugin = (options?: Options): PluginObj => ({
-  name: 'react-scan/component-name',
+  name: 'evolu-scan/component-name',
   visitor: {
     Program(path) {
       const assignedNames = getAssignedDisplayNames(path);

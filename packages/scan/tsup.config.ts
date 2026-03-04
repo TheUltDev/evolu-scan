@@ -26,6 +26,9 @@ const addDirectivesToChunkFiles = async (readPath: string): Promise<void> => {
 };
 
 const banner = `/**
+ * The MIT License (MIT)
+ * 
+ * Copyright 2025 Evolu
  * Copyright 2025 Aiden Bai, Million Software, Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software

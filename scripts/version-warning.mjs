@@ -91,7 +91,7 @@ const message = pkgInfo.versions
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([pkg, version], index, array) => {
         const prevPkg = index > 0 ? array[index - 1][0] : '';
-        const needsSpace = prevPkg.startsWith('@') && pkg === 'react-scan';
+        const needsSpace = prevPkg.startsWith('@') && pkg === 'evolu-scan';
         return `${needsSpace ? '\n' : ''}${styles.dim(pkg.padEnd(pEnd))}${styles.version(`v${version}`)}`;
       })
       .join('\n')}`

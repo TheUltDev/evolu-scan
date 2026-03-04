@@ -1,4 +1,4 @@
-# @react-scan/vite-plugin-react-scan
+# @evolu-scan/vite-plugin-evolu-scan
 
 ## 0.2.3
 
@@ -6,7 +6,7 @@
 
 - fix
 - Updated dependencies
-  - react-scan@0.5.3
+  - evolu-scan@0.5.3
 
 ## 0.2.2
 
@@ -14,7 +14,7 @@
 
 - fix
 - Updated dependencies
-  - react-scan@0.5.2
+  - evolu-scan@0.5.2
 
 ## 0.2.1
 
@@ -22,7 +22,7 @@
 
 - fix: infinite mounting
 - Updated dependencies
-  - react-scan@0.5.1
+  - evolu-scan@0.5.1
 
 ## 0.2.0
 
@@ -34,4 +34,4 @@
 
 - Updated dependencies
 - Updated dependencies [9d38ffe]
-  - react-scan@0.5.0
+  - evolu-scan@0.5.0

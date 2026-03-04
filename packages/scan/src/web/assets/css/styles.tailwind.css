@@ -82,6 +82,7 @@ svg {
 */
 .with-data-text {
   overflow: hidden;
+
   &::before {
     content: attr(data-text);
     @apply block;
@@ -89,7 +90,7 @@ svg {
   }
 }
 
-#react-scan-toolbar {
+#evolu-scan-toolbar {
   @apply fixed left-0 top-0;
   @apply flex flex-col;
   @apply shadow-lg;
@@ -150,6 +151,7 @@ svg {
     }
   }
 }
+
 .resize-right {
   @apply right-0;
   @apply translate-x-1/2;
@@ -157,6 +159,7 @@ svg {
   .resize-line-wrapper {
     @apply right-0;
   }
+
   .resize-line {
     @apply rounded-r-lg;
     @apply -translate-x-full;
@@ -170,6 +173,7 @@ svg {
   .resize-line-wrapper {
     @apply left-0;
   }
+
   .resize-line {
     @apply rounded-l-lg;
     @apply translate-x-full;
@@ -193,6 +197,7 @@ svg {
     }
   }
 }
+
 .resize-top {
   @apply top-0;
   @apply -translate-y-1/2;
@@ -200,6 +205,7 @@ svg {
   .resize-line-wrapper {
     @apply top-0;
   }
+
   .resize-line {
     @apply rounded-t-lg;
     @apply translate-y-full;
@@ -213,13 +219,14 @@ svg {
   .resize-line-wrapper {
     @apply bottom-0;
   }
+
   .resize-line {
     @apply rounded-b-lg;
     @apply -translate-y-full;
   }
 }
 
-.react-scan-header {
+.evolu-scan-header {
   @apply flex items-center gap-x-2;
   @apply pl-3 pr-2;
   @apply min-h-9;
@@ -227,8 +234,8 @@ svg {
   @apply whitespace-nowrap overflow-hidden;
 }
 
-.react-scan-replay-button,
-.react-scan-close-button {
+.evolu-scan-replay-button,
+.evolu-scan-close-button {
   @apply flex items-center;
   @apply p-1;
   @apply min-w-fit;
@@ -236,7 +243,7 @@ svg {
   @apply transition-all duration-300;
 }
 
-.react-scan-replay-button {
+.evolu-scan-replay-button {
   @apply relative;
   @apply overflow-hidden;
   @apply !bg-purple-500/50;
@@ -256,16 +263,14 @@ svg {
     @apply inset-0;
     @apply -translate-x-full;
     animation: shimmer 2s infinite;
-    background: linear-gradient(
-      to right,
-      transparent,
-      rgba(142, 97, 227, 0.3),
-      transparent
-    );
+    background: linear-gradient(to right,
+        transparent,
+        rgba(142, 97, 227, 0.3),
+        transparent);
   }
 }
 
-.react-scan-close-button {
+.evolu-scan-close-button {
   @apply bg-white/10;
 
   &:hover {
@@ -288,19 +293,19 @@ svg {
   @apply bg-[#0a0a0a] border-b-1 border-[#222];
 }
 
-.react-scan-section {
+.evolu-scan-section {
   @apply flex flex-col;
   @apply px-2;
   @apply text-[#888];
   @apply before:content-[attr(data-section)] before:text-gray-500;
   @apply text-xs;
 
-  > .react-scan-property {
+  >.evolu-scan-property {
     @apply -ml-3.5;
   }
 }
 
-.react-scan-property {
+.evolu-scan-property {
   @apply relative;
   @apply flex flex-col;
   @apply pl-8;
@@ -308,31 +313,31 @@ svg {
   @apply overflow-hidden;
 }
 
-.react-scan-property-content {
+.evolu-scan-property-content {
   @apply flex-1 flex flex-col;
   @apply min-h-7;
   @apply max-w-full;
   @apply overflow-hidden;
 }
 
-.react-scan-string {
+.evolu-scan-string {
   color: #9ecbff;
 }
 
-.react-scan-number {
+.evolu-scan-number {
   color: #79c7ff;
 }
 
-.react-scan-boolean {
+.evolu-scan-boolean {
   color: #56b6c2;
 }
 
-.react-scan-key {
+.evolu-scan-key {
   @apply w-fit max-w-60;
   @apply text-white whitespace-nowrap;
 }
 
-.react-scan-input {
+.evolu-scan-input {
   @apply text-white;
   @apply bg-black;
 }
@@ -341,12 +346,13 @@ svg {
   from {
     @apply opacity-100;
   }
+
   to {
     @apply opacity-0;
   }
 }
 
-.react-scan-arrow {
+.evolu-scan-arrow {
   @apply absolute top-0 left-7;
   @apply flex items-center justify-center;
   @apply cursor-pointer;
@@ -354,12 +360,12 @@ svg {
   @apply -translate-x-full;
   @apply z-10;
 
-  > svg {
+  >svg {
     @apply transition-transform;
   }
 }
 
-.react-scan-nested {
+.evolu-scan-nested {
   @apply relative;
   @apply overflow-hidden;
 
@@ -371,24 +377,24 @@ svg {
   }
 }
 
-.react-scan-settings {
+.evolu-scan-settings {
   @apply absolute inset-0;
   @apply flex flex-col gap-4;
   @apply py-2 px-4;
   @apply text-[#888];
 
-  > div {
+  >div {
     @apply flex items-center justify-between;
     @apply transition-colors duration-300;
   }
 }
 
-.react-scan-preview-line {
+.evolu-scan-preview-line {
   @apply relative;
   @apply flex items-center min-h-7 gap-x-2;
 }
 
-.react-scan-flash-overlay {
+.evolu-scan-flash-overlay {
   @apply absolute inset-0;
   @apply opacity-0;
   @apply z-50;
@@ -398,7 +404,7 @@ svg {
   @apply bg-purple-500/90;
 }
 
-.react-scan-toggle {
+.evolu-scan-toggle {
   @apply relative;
   @apply inline-flex;
   @apply w-10 h-6;
@@ -411,7 +417,7 @@ svg {
   }
 
   input:checked {
-    + div {
+    +div {
       @apply bg-[#5f3f9a];
 
       &::before {
@@ -422,7 +428,7 @@ svg {
     }
   }
 
-  > div {
+  >div {
     @apply absolute inset-1;
     @apply bg-neutral-700;
     @apply rounded-full;
@@ -443,12 +449,12 @@ svg {
   }
 }
 
-.react-scan-flash-active {
+.evolu-scan-flash-active {
   @apply opacity-40;
   @apply transition-opacity duration-300;
 }
 
-.react-scan-inspector-overlay {
+.evolu-scan-inspector-overlay {
   @apply flex flex-col;
   @apply opacity-0;
   @apply transition-opacity duration-200 ease-out;
@@ -463,7 +469,7 @@ svg {
   }
 }
 
-.react-scan-what-changed {
+.evolu-scan-what-changed {
   ul {
     @apply list-disc;
     @apply pl-4;
@@ -471,7 +477,8 @@ svg {
 
   li {
     @apply whitespace-nowrap;
-    > div {
+
+    >div {
       @apply flex items-center justify-between gap-x-2;
     }
   }
@@ -500,7 +507,7 @@ svg {
   @apply text-xs;
   @apply font-mono;
 
-  > div {
+  >div {
     @apply px-1.5 py-0.5;
     @apply text-xs font-medium tabular-nums rounded-[4px];
     @apply origin-center;
@@ -512,11 +519,11 @@ svg {
   }
 }
 
-.react-scan-slider {
+.evolu-scan-slider {
   @apply relative;
   @apply min-h-6;
 
-  > input {
+  >input {
     @apply absolute inset-0;
     @apply opacity-0;
   }
@@ -554,7 +561,7 @@ svg {
 
   &:hover,
   &:active {
-    > span {
+    >span {
       @apply bg-[#222];
     }
 
@@ -571,7 +578,7 @@ svg {
     @apply transition-colors;
   }
 
-  > span {
+  >span {
     @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
     @apply w-1.5 h-4.5;
     @apply rounded;
@@ -616,7 +623,7 @@ svg {
   }
 }
 
-.react-scan-toolbar-notification {
+.evolu-scan-toolbar-notification {
   @apply absolute inset-x-0;
   @apply flex items-center gap-x-2;
   @apply p-1 pl-2 text-[10px];
@@ -654,7 +661,7 @@ svg {
   }
 }
 
-.react-scan-header-item {
+.evolu-scan-header-item {
   @apply absolute inset-0 -translate-y-[200%];
   @apply transition-transform duration-300;
 
@@ -663,23 +670,22 @@ svg {
   }
 }
 
-.react-scan-components-tree:has(.resize-v-line:hover, .resize-v-line:active)
-  .tree {
+.evolu-scan-components-tree:has(.resize-v-line:hover, .resize-v-line:active) .tree {
   overflow: hidden;
 }
 
-.react-scan-expandable {
+.evolu-scan-expandable {
   display: grid;
   grid-template-rows: 0fr;
   @apply overflow-hidden;
   @apply transition-all duration-75;
   transition-timing-function: ease-out;
 
-  > * {
+  >* {
     min-height: 0;
   }
 
-  &.react-scan-expanded {
+  &.evolu-scan-expanded {
     grid-template-rows: 1fr;
     transition-duration: 100ms;
   }

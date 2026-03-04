@@ -66,15 +66,15 @@ importers:
       '@evolu/react-web':
         specifier: ^2.4.0
         version: 2.4.0(@evolu/common@7.4.1)(@evolu/web@2.4.0(@evolu/common@7.4.1))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@evolu/scan':
+        specifier: workspace:*
+        version: link:../packages/scan
       react:
         specifier: ^19.0.0
         version: 19.0.0
       react-dom:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
-      react-scan:
-        specifier: workspace:*
-        version: link:../packages/scan
       tailwindcss:
         specifier: ^3.4.17
         version: 3.4.17
@@ -100,6 +100,9 @@ importers:
 
   packages/extension:
     dependencies:
+      '@evolu/scan':
+        specifier: workspace:*
+        version: link:../scan
       bippy:
         specifier: 0.3.8
         version: 0.3.8(@types/react@19.1.8)(react@18.3.1)
@@ -109,9 +112,6 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.3.1(react@18.3.1)
-      react-scan:
-        specifier: workspace:*
-        version: link:../scan
       zod:
         specifier: ^3.23.8
         version: 3.25.67
@@ -151,7 +151,7 @@ importers:
         version: 4.4.4(@types/node@22.15.34)(jiti@1.21.7)(terser@5.43.1)(tsx@4.20.3)
       vite-tsconfig-paths:
         specifier: ^5.1.4
-        version: 5.1.4(typescript@5.8.3)(vite@6.3.5(@types/node@22.15.34))
+        version: 5.1.4(typescript@5.9.3)(vite@6.3.5(@types/node@22.15.34)(jiti@1.21.7)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0))
       webextension-polyfill:
         specifier: ^0.12.0
         version: 0.12.0
@@ -207,13 +207,13 @@ importers:
     devDependencies:
       '@esbuild-plugins/tsconfig-paths':
         specifier: ^0.1.2
-        version: 0.1.2(esbuild@0.25.5)(typescript@5.8.3)
+        version: 0.1.2(esbuild@0.25.5)(typescript@5.9.3)
       '@evolu/common':
         specifier: ^7.4.1
         version: 7.4.1
       '@remix-run/react':
         specifier: '*'
-        version: 2.16.8(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.3)
+        version: 2.16.8(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.9.3)
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
@@ -264,7 +264,7 @@ importers:
         version: 5.43.1
       tsup:
         specifier: ^8.0.0
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.8.0)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.9.3)(yaml@2.8.0)
       vitest:
         specifier: ^3.0.0
         version: 3.2.4(@types/node@20.19.2)(jiti@1.21.7)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0)
@@ -280,15 +280,15 @@ importers:
       '@babel/preset-typescript':
         specifier: ^7.23.3
         version: 7.27.1(@babel/core@7.27.7)
+      '@evolu/scan':
+        specifier: '>=0.5.3'
+        version: link:../scan
       babel-plugin-add-react-displayname:
         specifier: ^0.0.5
         version: 0.0.5
       cheerio:
         specifier: ^1.0.0
         version: 1.1.0
-      react-scan:
-        specifier: '>=0.5.3'
-        version: link:../scan
     devDependencies:
       '@types/babel__core':
         specifier: ^7.20.5
@@ -301,13 +301,16 @@ importers:
         version: 22.15.34
       typescript:
         specifier: latest
-        version: 5.8.3
+        version: 5.9.3
       vite:
         specifier: ^6.3.0
         version: 6.3.5(@types/node@22.15.34)(jiti@1.21.7)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0)
 
   packages/website:
     dependencies:
+      '@evolu/scan':
+        specifier: ^0.5.3
+        version: link:../scan
       '@vercel/analytics':
         specifier: ^1.4.1
         version: 1.5.0(@remix-run/react@2.16.8(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.8.3))(next@15.2.6(@playwright/test@1.58.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
@@ -329,9 +332,6 @@ importers:
       react-grab:
         specifier: ^0.1.15
         version: 0.1.15(@types/react@19.1.8)(react@19.0.0)
-      react-scan:
-        specifier: ^0.5.3
-        version: link:../scan
       zod:
         specifier: ^3.23.8
         version: 3.25.67
@@ -3575,6 +3575,11 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  typescript@5.9.3:
+    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
   ufo@1.6.1:
     resolution: {integrity: sha512-9a4/uxlTWJ4+a5i0ooc1rU7C7YOw3wT+UGqdeNNHWnOF9qcMBgLRS+4IYUqbczewFx4mLEig6gawh7X6mFlEkA==}
 
@@ -3731,6 +3736,7 @@ packages:
   whatwg-encoding@3.1.1:
     resolution: {integrity: sha512-6qN4hJdMwfYBtE3YBTTHhoeuUrDBPZmbQaxWAqSALV/MeEnR5z1xd8UKud2RAkFoPkmB+hli1TZSnyi84xz1vQ==}
     engines: {node: '>=18'}
+    deprecated: Use @exodus/bytes instead for a more spec-conformant and faster implementation
 
   whatwg-mimetype@4.0.0:
     resolution: {integrity: sha512-QaKxh0eNIi2mE9p2vEdzfagOKHCcj1pJ56EEHGQOVxp8r9/iszLUUV7v89x9O1p/T+NlTM5W7jW6+cz4Fq1YVg==}
@@ -4234,13 +4240,13 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
-  '@esbuild-plugins/tsconfig-paths@0.1.2(esbuild@0.25.5)(typescript@5.8.3)':
+  '@esbuild-plugins/tsconfig-paths@0.1.2(esbuild@0.25.5)(typescript@5.9.3)':
     dependencies:
       debug: 4.4.1
       esbuild: 0.25.5
       find-up: 5.0.0
       strip-json-comments: 3.1.1
-      typescript: 5.8.3
+      typescript: 5.9.3
     transitivePeerDependencies:
       - supports-color
 
@@ -4656,6 +4662,19 @@ snapshots:
       turbo-stream: 2.4.1
     optionalDependencies:
       typescript: 5.8.3
+    optional: true
+
+  '@remix-run/react@2.16.8(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.9.3)':
+    dependencies:
+      '@remix-run/router': 1.23.0
+      '@remix-run/server-runtime': 2.16.8(typescript@5.9.3)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+      react-router: 6.30.0(react@19.0.0)
+      react-router-dom: 6.30.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      turbo-stream: 2.4.1
+    optionalDependencies:
+      typescript: 5.9.3
 
   '@remix-run/router@1.23.0': {}
 
@@ -4670,6 +4689,19 @@ snapshots:
       turbo-stream: 2.4.1
     optionalDependencies:
       typescript: 5.8.3
+    optional: true
+
+  '@remix-run/server-runtime@2.16.8(typescript@5.9.3)':
+    dependencies:
+      '@remix-run/router': 1.23.0
+      '@types/cookie': 0.6.0
+      '@web3-storage/multipart-parser': 1.0.0
+      cookie: 0.7.2
+      set-cookie-parser: 2.7.1
+      source-map: 0.7.4
+      turbo-stream: 2.4.1
+    optionalDependencies:
+      typescript: 5.9.3
 
   '@rolldown/pluginutils@1.0.0-beta.19': {}
 
@@ -6939,9 +6971,13 @@ snapshots:
     optionalDependencies:
       typescript: 5.8.3
 
+  tsconfck@3.1.6(typescript@5.9.3):
+    optionalDependencies:
+      typescript: 5.9.3
+
   tslib@2.8.1: {}
 
-  tsup@8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.8.0):
+  tsup@8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.9.3)(yaml@2.8.0):
     dependencies:
       bundle-require: 5.1.0(esbuild@0.25.5)
       cac: 6.7.14
@@ -6962,7 +6998,7 @@ snapshots:
       tree-kill: 1.2.2
     optionalDependencies:
       postcss: 8.5.6
-      typescript: 5.8.3
+      typescript: 5.9.3
     transitivePeerDependencies:
       - jiti
       - supports-color
@@ -6986,6 +7022,8 @@ snapshots:
   typedarray@0.0.6: {}
 
   typescript@5.8.3: {}
+
+  typescript@5.9.3: {}
 
   ufo@1.6.1: {}
 
@@ -7086,6 +7124,17 @@ snapshots:
       debug: 4.4.1
       globrex: 0.1.2
       tsconfck: 3.1.6(typescript@5.8.3)
+    optionalDependencies:
+      vite: 6.3.5(@types/node@22.15.34)(jiti@1.21.7)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0)
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  vite-tsconfig-paths@5.1.4(typescript@5.9.3)(vite@6.3.5(@types/node@22.15.34)(jiti@1.21.7)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0)):
+    dependencies:
+      debug: 4.4.1
+      globrex: 0.1.2
+      tsconfck: 3.1.6(typescript@5.9.3)
     optionalDependencies:
       vite: 6.3.5(@types/node@22.15.34)(jiti@1.21.7)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0)
     transitivePeerDependencies:

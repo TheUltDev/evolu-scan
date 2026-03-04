@@ -12,7 +12,7 @@ export const Toggle = ({
   ...props
 }: ToggleProps) => {
   return (
-    <div className={cn('react-scan-toggle', className)}>
+    <div className={cn('evolu-scan-toggle', className)}>
       <input
         type="checkbox"
         {...props}

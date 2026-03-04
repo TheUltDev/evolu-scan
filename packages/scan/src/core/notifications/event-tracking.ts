@@ -291,7 +291,7 @@ const trackCurrentMouseOverToolbar = () => {
       .composedPath()
       .map((path) => (path as Element).id)
       .filter(Boolean)
-      .includes('react-scan-toolbar');
+      .includes('evolu-scan-toolbar');
   };
 
   document.addEventListener('mouseover', callback);

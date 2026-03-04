@@ -118,7 +118,7 @@ export const OtherVisualization = ({
     if (notificationState.routeMessage?.name) {
       const container = root?.querySelector('#overview-scroll-container');
       const element = root?.querySelector(
-        `#react-scan-overview-bar-${notificationState.routeMessage.name}`,
+        `#evolu-scan-overview-bar-${notificationState.routeMessage.name}`,
       ) as HTMLElement;
 
       if (container && element) {
@@ -157,7 +157,7 @@ export const OtherVisualization = ({
         {timeData.map((entry) => {
           const isExpanded = expandedItems.includes(entry.kind);
           return (
-            <div key={entry.kind} id={`react-scan-overview-bar-${entry.kind}`}>
+            <div key={entry.kind} id={`evolu-scan-overview-bar-${entry.kind}`}>
               <button
                 onClick={() =>
                   setExpandedItems((prev) =>
@@ -517,7 +517,7 @@ const Explanation = ({ input }: { input: OverviewInput }) => {
             significant component renders
           </p>
           <p>
-            On a production React build, React Scan can't access the time it
+            On a production React build, Evolu Scan can't access the time it
             took for component to render. To get that information, run React
             Scan on a development build
           </p>

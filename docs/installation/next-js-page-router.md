@@ -4,7 +4,7 @@
 
 Add the script tag to your `pages/_document`
 
-Refer to the [CDN Guide](https://github.com/aidenybai/react-scan/blob/main/docs/installation/cdn.md) for the available URLs.
+Refer to the [CDN Guide](https://github.com/evoluhq/evolu-scan/blob/main/docs/installation/cdn.md) for the available URLs.
 
 ```jsx
 // pages/_document
@@ -14,7 +14,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <script src="https://unpkg.com/react-scan/dist/auto.global.js" />
+        <script src="https://unpkg.com/evolu-scan/dist/auto.global.js" />
 
         {/* rest of your scripts go under */}
       </Head>
@@ -34,13 +34,13 @@ Add the following code to your `App` component in `pages/_app`:
 ```jsx
 // pages/_app
 
-// react-scan must be the top-most import
-import { scan } from "react-scan";
+// evolu-scan must be the top-most import
+import { scan } from "evolu-scan";
 import { useEffect } from "react";
 
 export default function App({ Component, pageProps }) {
   useEffect(() => {
-    // Make sure to run React Scan after hydration
+    // Make sure to run Evolu Scan after hydration
     scan({
       enabled: true,
     });
@@ -50,8 +50,8 @@ export default function App({ Component, pageProps }) {
 ```
 
 
-If you want react-scan to also run in production, use the react-scan/all-environments import path
+If you want evolu-scan to also run in production, use the evolu-scan/all-environments import path
 ```diff
-- import { scan } from "react-scan";
-+ import { scan } from "react-scan/all-environments";
+- import { scan } from "evolu-scan";
++ import { scan } from "evolu-scan/all-environments";
 ```

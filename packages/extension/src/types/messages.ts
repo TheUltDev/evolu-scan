@@ -2,10 +2,10 @@ import { z } from 'zod';
 
 export const BroadcastSchema = z.object({
   type: z.enum([
-    'react-scan:ping',
-    'react-scan:is-enabled',
-    'react-scan:toggle-state',
-    'react-scan:page-reload',
+    'evolu-scan:ping',
+    'evolu-scan:is-enabled',
+    'evolu-scan:toggle-state',
+    'evolu-scan:page-reload',
   ]),
   data: z.any().optional(),
 });
@@ -13,12 +13,12 @@ export const BroadcastSchema = z.object({
 export type BroadcastMessage = z.infer<typeof BroadcastSchema>;
 
 export interface IEvents {
-  'react-scan:toggle-state': {
-    topic: 'react-scan:toggle-state';
+  'evolu-scan:toggle-state': {
+    topic: 'evolu-scan:toggle-state';
     message: undefined;
   };
-  'react-scan:send-to-background': {
-    topic: 'react-scan:send-to-background';
+  'evolu-scan:send-to-background': {
+    topic: 'evolu-scan:send-to-background';
     message: BroadcastMessage;
   };
 }

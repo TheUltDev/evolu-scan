@@ -85,7 +85,7 @@ export const NotificationTabs = ({
                 }
                 const prevEnabledState = prev.audioNotificationsOptions.enabled;
                 localStorage.setItem(
-                  'react-scan-notifications-audio',
+                  'evolu-scan-notifications-audio',
                   String(!prevEnabledState),
                 );
 

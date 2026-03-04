@@ -16,11 +16,11 @@ export const RenderExplanation = ({
   const [isProduction] = useState(getIsProduction());
 
   useLayoutEffect(() => {
-    const res = localStorage.getItem('react-scan-tip-shown');
+    const res = localStorage.getItem('evolu-scan-tip-shown');
     const asBool = res === 'true' ? true : res === 'false' ? false : null;
     if (asBool === null) {
       setTipIsShown(true);
-      localStorage.setItem('react-scan-tip-is-shown', 'true');
+      localStorage.setItem('evolu-scan-tip-is-shown', 'true');
       return;
     }
     if (!asBool) {
@@ -83,7 +83,7 @@ export const RenderExplanation = ({
             onClick={() => {
               setTipIsShown(false);
 
-              localStorage.setItem('react-scan-tip-shown', 'false');
+              localStorage.setItem('evolu-scan-tip-shown', 'false');
             }}
             className={cn([
               'absolute right-2 top-2 rounded-sm p-1 hover:bg-[#18181B]',

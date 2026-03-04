@@ -6,7 +6,7 @@ test.describe('Inspector', () => {
     await gotoFixture(page);
   });
 
-  test('inspect state is available in React Scan internals', async ({ page }) => {
+  test('inspect state is available in Evolu Scan internals', async ({ page }) => {
     const hasInspectState = await page.evaluate(() => {
       const scan = (window as any).__REACT_SCAN__;
       if (!scan?.ReactScanInternals?.Store) return false;
@@ -28,7 +28,7 @@ test.describe('Inspector', () => {
 
   test('shadow DOM contains toolbar elements', async ({ page }) => {
     const elementCount = await page.evaluate(() => {
-      const root = document.getElementById('react-scan-root');
+      const root = document.getElementById('evolu-scan-root');
       return root?.shadowRoot?.querySelectorAll('*').length ?? 0;
     });
     expect(elementCount).toBeGreaterThan(5);
