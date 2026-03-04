@@ -24,6 +24,8 @@ interface PersistedEvoluDbSettings {
   followActive: boolean;
   hiddenColumns: Record<string, string[]>;
   sort: Record<string, SortConfig>;
+  columnWidths: Record<string, Record<string, number>>;
+  columnOrder: Record<string, string[]>;
 }
 
 const defaultSettings: PersistedEvoluDbSettings = {
@@ -32,6 +34,8 @@ const defaultSettings: PersistedEvoluDbSettings = {
   followActive: false,
   hiddenColumns: {},
   sort: {},
+  columnWidths: {},
+  columnOrder: {},
 };
 
 const loadSettings = (): PersistedEvoluDbSettings => {
@@ -64,6 +68,12 @@ export const EvoluDbViewer = () => {
   });
   const [sort, setSort] = useState<SortConfig>(() => {
     return settingsRef.current.sort[selectedTable ?? ''] ?? null;
+  });
+  const [columnWidths, setColumnWidths] = useState<Record<string, number>>(() => {
+    return settingsRef.current.columnWidths[selectedTable ?? ''] ?? {};
+  });
+  const [columnOrder, setColumnOrder] = useState<string[]>(() => {
+    return settingsRef.current.columnOrder[selectedTable ?? ''] ?? [];
   });
 
   const persist = useCallback((patch: Partial<PersistedEvoluDbSettings>) => {
@@ -109,6 +119,26 @@ export const EvoluDbViewer = () => {
     });
   }, [sort, selectedTable, persist]);
 
+  useEffect(() => {
+    if (!selectedTable) return;
+    persist({
+      columnWidths: {
+        ...settingsRef.current.columnWidths,
+        [selectedTable]: columnWidths,
+      },
+    });
+  }, [columnWidths, selectedTable, persist]);
+
+  useEffect(() => {
+    if (!selectedTable) return;
+    persist({
+      columnOrder: {
+        ...settingsRef.current.columnOrder,
+        [selectedTable]: columnOrder,
+      },
+    });
+  }, [columnOrder, selectedTable, persist]);
+
   const detectChanges = useFlashChanges(tableBodyRef, onChangesDetected);
 
   const loadDb = useCallback(async () => {
@@ -136,6 +166,8 @@ export const EvoluDbViewer = () => {
         const saved = settingsRef.current.hiddenColumns[first.name];
         setHiddenColumns(new Set(saved ?? []));
         setSort(settingsRef.current.sort[first.name] ?? null);
+        setColumnWidths(settingsRef.current.columnWidths[first.name] ?? {});
+        setColumnOrder(settingsRef.current.columnOrder[first.name] ?? []);
       }
 
       if (exportHandleRef.current) {
@@ -275,6 +307,8 @@ export const EvoluDbViewer = () => {
             const saved = settingsRef.current.hiddenColumns[name];
             setHiddenColumns(new Set(saved ?? []));
             setSort(settingsRef.current.sort[name] ?? null);
+            setColumnWidths(settingsRef.current.columnWidths[name] ?? {});
+            setColumnOrder(settingsRef.current.columnOrder[name] ?? []);
           }}
         />
 
@@ -313,6 +347,16 @@ export const EvoluDbViewer = () => {
             hiddenColumns={hiddenColumns}
             sort={sort}
             onSortChange={setSort}
+            columnWidths={columnWidths}
+            onColumnWidthsChange={setColumnWidths}
+            columnOrder={columnOrder}
+            onColumnOrderChange={setColumnOrder}
+            onResetAll={() => {
+              setHiddenColumns(new Set());
+              setSort(null);
+              setColumnWidths({});
+              setColumnOrder([]);
+            }}
           />
         </div>
       </div>
