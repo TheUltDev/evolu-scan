@@ -29,6 +29,7 @@ export const EvoluDbViewer = () => {
   const exportHandleRef = useRef<FileSystemFileHandle | null>(null);
   const [exportState, setExportState] = useState<'idle' | 'picking' | 'active'>('idle');
   const [showDeleted, setShowDeleted] = useState(false);
+  const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(new Set());
 
   const { followActive, toggleFollow, onChangesDetected, syncSelectedTable } =
     useFollowChanges(tableBodyRef, setSelectedTable, setSearchQuery);
@@ -181,6 +182,7 @@ export const EvoluDbViewer = () => {
           onSelect={(name) => {
             setSelectedTable(name);
             setSearchQuery('');
+            setHiddenColumns(new Set());
           }}
         />
 
@@ -194,7 +196,20 @@ export const EvoluDbViewer = () => {
             totalCount={currentTableData?.rows.length || 0}
           />
 
-          {currentTableInfo && <ColumnTypes columns={currentTableInfo.columns} />}
+          {currentTableInfo && (
+            <ColumnTypes
+              columns={currentTableInfo.columns}
+              hiddenColumns={hiddenColumns}
+              onToggleColumn={(name) =>
+                setHiddenColumns((prev) => {
+                  const next = new Set(prev);
+                  if (next.has(name)) next.delete(name);
+                  else next.add(name);
+                  return next;
+                })
+              }
+            />
+          )}
 
           <DataTable
             bodyRef={tableBodyRef}
@@ -203,6 +218,7 @@ export const EvoluDbViewer = () => {
             selectedTable={selectedTable}
             isEmpty={!currentTableData || currentTableData.rows.length === 0}
             showDeleted={showDeleted}
+            hiddenColumns={hiddenColumns}
           />
         </div>
       </div>
