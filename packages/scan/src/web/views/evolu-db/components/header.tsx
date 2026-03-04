@@ -65,7 +65,7 @@ export const Header = ({
           type="button"
           onClick={onExport}
           disabled={exportState === 'picking'}
-          title={exportState === 'active' ? 'Stop exporting to file' : 'Export database to file'}
+          title={exportState === 'active' ? 'Stop syncing to disk' : 'Sync database to disk'}
           className="button rounded w-6 h-6 flex items-center justify-center text-neutral-500 hover:text-neutral-300"
           style={{
             color:
