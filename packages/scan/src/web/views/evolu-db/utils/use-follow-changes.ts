@@ -12,6 +12,7 @@ export const useFollowChanges = (
 
   const selectedTableRef = useRef<string | null>(null);
   const hiddenColumnsRef = useRef<Set<string>>(new Set());
+  const hideEvoluTablesRef = useRef(true);
 
   const syncSelectedTable = (table: string | null) => {
     selectedTableRef.current = table;
@@ -21,10 +22,16 @@ export const useFollowChanges = (
     hiddenColumnsRef.current = cols;
   };
 
+  const syncHideEvoluTables = (hide: boolean) => {
+    hideEvoluTablesRef.current = hide;
+  };
+
   const onChangesDetected = useCallback((changes: ChangeInfo[]) => {
     if (!followActiveRef.current || changes.length === 0) return;
 
-    const change = changes.find((c) => !c.tableName.startsWith('evolu_'));
+    const change = changes.find((c) =>
+      hideEvoluTablesRef.current ? !c.tableName.startsWith('evolu_') : true,
+    );
     if (!change) return;
     const firstRow = Math.min(...change.rowIndices);
     const hidden = hiddenColumnsRef.current;
@@ -64,5 +71,6 @@ export const useFollowChanges = (
     onChangesDetected,
     syncSelectedTable,
     syncHiddenColumns,
+    syncHideEvoluTables,
   };
 };

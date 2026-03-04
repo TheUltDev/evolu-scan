@@ -32,10 +32,11 @@ export const EvoluDbViewer = () => {
   const [hideEvoluTables, setHideEvoluTables] = useState(true);
   const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(new Set());
 
-  const { followActive, toggleFollow, onChangesDetected, syncSelectedTable, syncHiddenColumns } =
+  const { followActive, toggleFollow, onChangesDetected, syncSelectedTable, syncHiddenColumns, syncHideEvoluTables } =
     useFollowChanges(tableBodyRef, setSelectedTable, setSearchQuery);
   syncSelectedTable(selectedTable);
   syncHiddenColumns(hiddenColumns);
+  syncHideEvoluTables(hideEvoluTables);
 
   const detectChanges = useFlashChanges(tableBodyRef, onChangesDetected);
 
