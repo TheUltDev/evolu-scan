@@ -132,7 +132,6 @@ export const DataTable = ({
     let pointerId = -1;
 
     const onPointerDown = (e: PointerEvent) => {
-
       if (e.button !== 0) {
         e.stopPropagation();
         return;

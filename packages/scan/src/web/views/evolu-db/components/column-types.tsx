@@ -79,7 +79,7 @@ export const ColumnTypes = ({
   return (
     <div
       ref={scrollRef}
-      className="flex items-center gap-x-1 px-3 py-1 border-b border-[#1e1e1e] overflow-x-auto cursor-grab"
+      className="flex items-center gap-x-1 px-2 py-1 border-b border-[#1e1e1e] overflow-x-auto cursor-grab"
       style={{ touchAction: 'pan-y' }}
     >
       {columns.map((col) => {
@@ -90,7 +90,7 @@ export const ColumnTypes = ({
             type="button"
             onClick={() => onToggleColumn(col.name)}
             className={cn(
-              'flex items-center gap-x-0.5 text-[10px] px-1.5 py-0.5 rounded bg-[#1e1e1e] cursor-pointer select-none transition-opacity',
+              'flex items-center gap-x-1 text-[10px] px-1.5 py-0.5 rounded bg-[#1e1e1e] cursor-pointer select-none transition-opacity',
               hidden && 'opacity-30',
             )}
           >
