@@ -29,6 +29,7 @@ export const EvoluDbViewer = () => {
   const exportHandleRef = useRef<FileSystemFileHandle | null>(null);
   const [exportState, setExportState] = useState<'idle' | 'picking' | 'active'>('idle');
   const [showDeleted, setShowDeleted] = useState(false);
+  const [hideEvoluTables, setHideEvoluTables] = useState(true);
   const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(new Set());
 
   const { followActive, toggleFollow, onChangesDetected, syncSelectedTable } =
@@ -57,7 +58,8 @@ export const EvoluDbViewer = () => {
       });
       setError(null);
       if (!selectedTable && snap.tables.length > 0) {
-        setSelectedTable(snap.tables[0].name);
+        const first = snap.tables.find((t) => !t.name.startsWith('evolu_')) ?? snap.tables[0];
+        setSelectedTable(first.name);
       }
 
       if (exportHandleRef.current) {
@@ -135,6 +137,12 @@ export const EvoluDbViewer = () => {
     return snapshot.tables.find((t) => t.name === selectedTable) || null;
   }, [snapshot, selectedTable]);
 
+  const visibleTables = useMemo(() => {
+    if (!snapshot) return [];
+    if (!hideEvoluTables) return snapshot.tables;
+    return snapshot.tables.filter((t) => !t.name.startsWith('evolu_'));
+  }, [snapshot, hideEvoluTables]);
+
   if (error) {
     return (
       <div className="h-full w-full flex items-center justify-center">
@@ -168,16 +176,18 @@ export const EvoluDbViewer = () => {
         exportState={exportState}
         followActive={followActive}
         showDeleted={showDeleted}
+        hideEvoluTables={hideEvoluTables}
         dbLoading={signalDbLoading}
         onRefresh={loadDb}
         onExport={onExportClick}
         onFollowToggle={toggleFollow}
         onShowDeletedToggle={() => setShowDeleted((v) => !v)}
+        onHideEvoluTablesToggle={() => setHideEvoluTables((v) => !v)}
       />
 
       <div className="flex flex-1 overflow-hidden">
         <Sidebar
-          tables={snapshot.tables}
+          tables={visibleTables}
           selectedTable={selectedTable}
           onSelect={(name) => {
             setSelectedTable(name);

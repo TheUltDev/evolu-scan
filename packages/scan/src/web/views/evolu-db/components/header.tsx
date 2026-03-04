@@ -8,21 +8,25 @@ export const Header = ({
   exportState,
   followActive,
   showDeleted,
+  hideEvoluTables,
   dbLoading,
   onRefresh,
   onExport,
   onFollowToggle,
   onShowDeletedToggle,
+  onHideEvoluTablesToggle,
 }: {
   snapshot: DbSnapshot;
   exportState: string;
   followActive: boolean;
   showDeleted: boolean;
+  hideEvoluTables: boolean;
   dbLoading: Signal<boolean>;
   onRefresh: () => void;
   onExport: () => void;
   onFollowToggle: () => void;
   onShowDeletedToggle: () => void;
+  onHideEvoluTablesToggle: () => void;
 }) => (
   <div className={cn('w-full flex border-b border-[#27272A] min-h-[40px]')}>
     <div className="min-w-fit w-full flex items-center pl-3 pr-2 text-sm gap-x-3">
@@ -60,6 +64,15 @@ export const Header = ({
           style={{ color: showDeleted ? '#f87171' : undefined }}
         >
           <Icon name="icon-trash" size={14} />
+        </button>
+        <button
+          type="button"
+          onClick={onHideEvoluTablesToggle}
+          title={hideEvoluTables ? 'Show Evolu tables' : 'Hide Evolu tables'}
+          className="button rounded w-6 h-6 flex items-center justify-center text-neutral-500 hover:text-neutral-300"
+          style={{ color: !hideEvoluTables ? '#f59e0b' : undefined }}
+        >
+          <Icon name="icon-settings" size={14} />
         </button>
         <button
           type="button"

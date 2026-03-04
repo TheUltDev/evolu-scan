@@ -19,7 +19,8 @@ export const useFollowChanges = (
   const onChangesDetected = useCallback((changes: ChangeInfo[]) => {
     if (!followActiveRef.current || changes.length === 0) return;
 
-    const change = changes[0];
+    const change = changes.find((c) => !c.tableName.startsWith('evolu_'));
+    if (!change) return;
     const firstRow = Math.min(...change.rowIndices);
     const firstCol = change.columns.values().next().value;
 
