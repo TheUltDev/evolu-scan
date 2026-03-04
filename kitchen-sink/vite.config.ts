@@ -3,6 +3,9 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react()],
+  optimizeDeps: {
+    exclude: ['@evolu/sqlite-wasm', '@evolu/react-web'],
+  },
   css: {
     modules: {
       localsConvention: 'camelCaseOnly',
