@@ -188,23 +188,6 @@ export const EvoluDbViewer = () => {
     };
   }, [loadDb, signalWidgetViews.value.view]);
 
-  useEffect(() => {
-    setHiddenColumns((prev) => {
-      const has = prev.has('isDeleted');
-      if (showDeleted && !has) {
-        const next = new Set(prev);
-        next.add('isDeleted');
-        return next;
-      }
-      if (!showDeleted && has) {
-        const next = new Set(prev);
-        next.delete('isDeleted');
-        return next;
-      }
-      return prev;
-    });
-  }, [showDeleted]);
-
   const currentTableData = useMemo(() => {
     if (!snapshot || !selectedTable) return null;
     return snapshot.tableData.get(selectedTable) || null;
@@ -307,7 +290,7 @@ export const EvoluDbViewer = () => {
 
           {currentTableInfo && (
             <ColumnTypes
-              columns={currentTableInfo.columns}
+              columns={currentTableInfo.columns.filter((c) => showDeleted || c.name !== 'isDeleted')}
               hiddenColumns={hiddenColumns}
               onToggleColumn={(name) =>
                 setHiddenColumns((prev) => {
@@ -322,7 +305,7 @@ export const EvoluDbViewer = () => {
 
           <DataTable
             bodyRef={tableBodyRef}
-            columns={currentTableData?.columns || []}
+            columns={currentTableData?.columns.filter((c) => showDeleted || c !== 'isDeleted') || []}
             rows={filteredRows}
             selectedTable={selectedTable}
             isEmpty={!currentTableData || currentTableData.rows.length === 0}
