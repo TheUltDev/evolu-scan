@@ -9,7 +9,7 @@ scan({
 
 const ThemeContext = createContext('light');
 
-function Counter(): JSX.Element {
+function Counter() {
   const [count, setCount] = useState(0);
   return (
     <div data-testid="counter">
@@ -21,7 +21,7 @@ function Counter(): JSX.Element {
   );
 }
 
-function UnstableProps(): JSX.Element {
+function UnstableProps() {
   const [tick, setTick] = useState(0);
   return (
     <div data-testid="unstable-section">
@@ -41,7 +41,7 @@ const MemoChild = memo(function MemoChild({
   style: { color: string };
   onClick: () => void;
   label: string;
-}): JSX.Element {
+}) {
   return (
     <div data-testid="memo-child" style={style} onClick={onClick}>
       MemoChild: {label}
@@ -49,12 +49,12 @@ const MemoChild = memo(function MemoChild({
   );
 });
 
-function ContextConsumer(): JSX.Element {
+function ContextConsumer() {
   const theme = useContext(ThemeContext);
   return <div data-testid="context-value">Theme: {theme}</div>;
 }
 
-function ThemeToggle(): JSX.Element {
+function ThemeToggle() {
   const [theme, setTheme] = useState('light');
   return (
     <ThemeContext.Provider value={theme}>
@@ -72,7 +72,7 @@ function ThemeToggle(): JSX.Element {
   );
 }
 
-function SlowComponent(): JSX.Element {
+function SlowComponent() {
   const [rendering, setRendering] = useState(false);
 
   const triggerSlowRender = () => {
@@ -94,7 +94,7 @@ function SlowComponent(): JSX.Element {
   );
 }
 
-function RapidUpdater(): JSX.Element {
+function RapidUpdater() {
   const [count, setCount] = useState(0);
 
   const triggerRapid = () => {
@@ -113,7 +113,7 @@ function RapidUpdater(): JSX.Element {
   );
 }
 
-export default function E2EFixture(): JSX.Element {
+export default function E2EFixture() {
   return (
     <div style={{ padding: 24, fontFamily: 'sans-serif' }}>
       <h1 data-testid="heading">React Scan E2E Fixture</h1>
