@@ -104,7 +104,7 @@ export const Header = ({
           type="button"
           onClick={handleClose}
           title="Close"
-          className="button rounded w-6 h-6 flex items-center justify-center text-neutral-500 hover:text-neutral-300"
+          className="button rounded w-6 h-6 flex items-center justify-center text-white hover:text-neutral-300"
         >
           <Icon name="icon-close" size={14} />
         </button>
