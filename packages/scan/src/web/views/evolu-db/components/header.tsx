@@ -91,7 +91,7 @@ export const Header = ({
           style={{
             color:
               exportState === 'active'
-                ? '#4ade80'
+                ? '#60a5fa'
                 : exportState === 'picking'
                   ? '#8e61e3'
                   : undefined,
