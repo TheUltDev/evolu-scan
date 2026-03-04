@@ -11,9 +11,14 @@ export const useFollowChanges = (
   followActiveRef.current = followActive;
 
   const selectedTableRef = useRef<string | null>(null);
+  const hiddenColumnsRef = useRef<Set<string>>(new Set());
 
   const syncSelectedTable = (table: string | null) => {
     selectedTableRef.current = table;
+  };
+
+  const syncHiddenColumns = (cols: Set<string>) => {
+    hiddenColumnsRef.current = cols;
   };
 
   const onChangesDetected = useCallback((changes: ChangeInfo[]) => {
@@ -22,12 +27,15 @@ export const useFollowChanges = (
     const change = changes.find((c) => !c.tableName.startsWith('evolu_'));
     if (!change) return;
     const firstRow = Math.min(...change.rowIndices);
-    const firstCol = change.columns.values().next().value;
+    const hidden = hiddenColumnsRef.current;
+    const firstCol = Array.from(change.columns).find((c) => !hidden.has(c));
 
     if (selectedTableRef.current !== change.tableName) {
       setSelectedTable(change.tableName);
       setSearchQuery('');
     }
+
+    if (!firstCol) return;
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
@@ -55,5 +63,6 @@ export const useFollowChanges = (
     toggleFollow,
     onChangesDetected,
     syncSelectedTable,
+    syncHiddenColumns,
   };
 };
