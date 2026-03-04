@@ -117,20 +117,23 @@ export const EvoluDbViewer = () => {
     return snapshot.tableData.get(selectedTable) || null;
   }, [snapshot, selectedTable]);
 
-  const filteredRows = useMemo(() => {
+  const visibleRows = useMemo(() => {
     if (!currentTableData) return [];
-    let rows = currentTableData.rows;
-    if (!showDeleted && currentTableData.columns.includes('isDeleted')) {
-      rows = rows.filter((row) => !row.isDeleted);
+    if (showDeleted || !currentTableData.columns.includes('isDeleted')) {
+      return currentTableData.rows;
     }
-    if (!searchQuery.trim()) return rows;
+    return currentTableData.rows.filter((row) => !row.isDeleted);
+  }, [currentTableData, showDeleted]);
+
+  const filteredRows = useMemo(() => {
+    if (!searchQuery.trim()) return visibleRows;
     const q = searchQuery.toLowerCase();
-    return rows.filter((row) =>
+    return visibleRows.filter((row) =>
       Object.values(row).some((v) =>
         formatCellValue(v).toLowerCase().includes(q),
       ),
     );
-  }, [currentTableData, searchQuery, showDeleted]);
+  }, [visibleRows, searchQuery]);
 
   const currentTableInfo = useMemo(() => {
     if (!snapshot || !selectedTable) return null;
@@ -203,7 +206,7 @@ export const EvoluDbViewer = () => {
             onQueryChange={setSearchQuery}
             selectedTable={selectedTable}
             filteredCount={filteredRows.length}
-            totalCount={currentTableData?.rows.length || 0}
+            totalCount={visibleRows.length}
           />
 
           {currentTableInfo && (
