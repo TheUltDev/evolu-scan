@@ -36,7 +36,9 @@
   "pnpm": {
     "overrides": {
       "@jridgewell/gen-mapping": "0.3.2",
-      "@jridgewell/sourcemap-codec": "1.4.15"
+      "@jridgewell/sourcemap-codec": "1.4.15",
+      "@types/react": "^19.0.10",
+      "@types/react-dom": "^19.0.4"
     }
   }
 }
