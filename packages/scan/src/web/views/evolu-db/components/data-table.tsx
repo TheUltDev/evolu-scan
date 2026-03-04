@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'preact/hooks';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { cn } from '~web/utils/helpers';
 import { formatCellValue } from '../utils/format-cell-value';
 
@@ -64,6 +64,53 @@ export const DataTable = ({
     });
   }, []);
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    let dragging = false;
+    let startX = 0;
+    let startY = 0;
+    let scrollLeft = 0;
+    let scrollTop = 0;
+
+    const onPointerDown = (e: PointerEvent) => {
+      if ((e.target as HTMLElement).closest('button, th')) return;
+      e.stopPropagation();
+      dragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      scrollLeft = el.scrollLeft;
+      scrollTop = el.scrollTop;
+      el.setPointerCapture(e.pointerId);
+      el.style.cursor = 'grabbing';
+    };
+
+    const onPointerMove = (e: PointerEvent) => {
+      if (!dragging) return;
+      el.scrollLeft = scrollLeft - (e.clientX - startX);
+      el.scrollTop = scrollTop - (e.clientY - startY);
+    };
+
+    const onPointerUp = (e: PointerEvent) => {
+      if (!dragging) return;
+      dragging = false;
+      el.releasePointerCapture(e.pointerId);
+      el.style.cursor = '';
+    };
+
+    el.addEventListener('pointerdown', onPointerDown);
+    el.addEventListener('pointermove', onPointerMove);
+    el.addEventListener('pointerup', onPointerUp);
+    return () => {
+      el.removeEventListener('pointerdown', onPointerDown);
+      el.removeEventListener('pointermove', onPointerMove);
+      el.removeEventListener('pointerup', onPointerUp);
+    };
+  }, []);
+
   const visibleColumns = useMemo(
     () => columns.filter((col) => !hiddenColumns.has(col)),
     [columns, hiddenColumns],
@@ -87,7 +134,14 @@ export const DataTable = ({
   }, [rows, sort]);
 
   return (
-    <div ref={bodyRef} className="flex-1 overflow-auto">
+    <div
+      ref={(el: HTMLDivElement | null) => {
+        bodyRef.current = el;
+        scrollRef.current = el;
+      }}
+      className="flex-1 overflow-auto cursor-grab"
+      style={{ touchAction: 'none' }}
+    >
       {isEmpty ? (
         <div className="flex items-center justify-center h-full text-xs text-neutral-600">
           {selectedTable ? 'No rows' : 'Select a table'}
