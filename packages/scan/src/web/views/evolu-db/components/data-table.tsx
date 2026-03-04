@@ -190,6 +190,7 @@ export const DataTable = ({
               return (
                 <tr
                   key={rowIdx}
+                  data-row-id={row.id != null ? String(row.id) : undefined}
                   className={cn(
                     'border-b border-[#1a1a1a] hover:bg-[#5f3f9a]/10 transition-colors',
                     isDeleted && 'opacity-40',
@@ -197,7 +198,9 @@ export const DataTable = ({
                 >
                   <td className="px-2 py-1 text-neutral-600 tabular-nums">{rowIdx}</td>
                   {visibleColumns.map((col) => {
-                    const cellKey = `${selectedTable}:${rowIdx}:${col}`;
+                    const rowId = row.id != null ? String(row.id) : String(rowIdx);
+                    const cellKey = `${rowId}:${col}`;
+                    const copyCellKey = `${selectedTable}:${rowIdx}:${col}`;
                     const value = row[col];
                     const formatted = formatCellValue(value);
                     const isNull = value === null || value === undefined;
@@ -209,7 +212,7 @@ export const DataTable = ({
                         className={cn(
                           'px-2 py-1 max-w-[200px] truncate cursor-pointer',
                           'transition-colors duration-300',
-                          copiedCell === cellKey
+                          copiedCell === copyCellKey
                             ? 'bg-blue-500/20 text-blue-400'
                             : isNull
                               ? 'text-neutral-600 italic'
@@ -221,10 +224,10 @@ export const DataTable = ({
                                   ? 'text-[#ff7b72]'
                                   : 'text-neutral-300',
                         )}
-                        title={copiedCell === cellKey ? 'Copied!' : formatted}
-                        onClick={() => copyToClipboard(cellKey, formatted)}
+                        title={copiedCell === copyCellKey ? 'Copied!' : formatted}
+                        onClick={() => copyToClipboard(copyCellKey, formatted)}
                       >
-                        {copiedCell === cellKey ? 'Copied!' : formatted}
+                        {copiedCell === copyCellKey ? 'Copied!' : formatted}
                       </td>
                     );
                   })}

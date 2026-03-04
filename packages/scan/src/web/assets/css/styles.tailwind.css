@@ -687,8 +687,8 @@ svg {
 
 @keyframes evoluCellFlash {
   0% {
-    background-color: rgba(142, 97, 227, 0.4);
-    box-shadow: inset 0 0 0 1px rgba(142, 97, 227, 0.6);
+    background-color: rgba(74, 222, 128, 0.4);
+    box-shadow: inset 0 0 0 1px rgba(74, 222, 128, 0.6);
   }
 
   100% {
@@ -697,6 +697,20 @@ svg {
   }
 }
 
+@keyframes evoluRowFlash {
+  0% {
+    background-color: rgba(74, 222, 128, 0.25);
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}
+
 .evolu-cell-flash {
   animation: evoluCellFlash 1.2s ease-out forwards;
+}
+
+.evolu-row-flash {
+  animation: evoluRowFlash 1.2s ease-out forwards;
 }

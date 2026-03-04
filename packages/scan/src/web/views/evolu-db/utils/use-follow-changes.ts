@@ -33,29 +33,46 @@ export const useFollowChanges = (
       hideEvoluTablesRef.current ? !c.tableName.startsWith('evolu_') : true,
     );
     if (!change) return;
-    const firstRow = Math.min(...change.rowIndices);
-    const hidden = hiddenColumnsRef.current;
-    const firstCol = Array.from(change.columns).find((c) => !hidden.has(c));
 
     if (selectedTableRef.current !== change.tableName) {
       setSelectedTable(change.tableName);
       setSearchQuery('');
     }
 
-    if (!firstCol) return;
-
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         const container = tableBodyRef.current;
         if (!container) return;
-        const exactKey = `${change.tableName}:${firstRow}:${firstCol}`;
-        const cell = container.querySelector(`[data-cell-key="${exactKey}"]`);
-        if (cell) {
-          (cell as HTMLElement).scrollIntoView({
-            block: 'center',
-            inline: 'center',
-            behavior: 'smooth',
-          });
+
+        if (change.isNewRows) {
+          const firstRowId = change.rowIds.values().next().value;
+          if (firstRowId) {
+            const row = container.querySelector(`[data-row-id="${firstRowId}"]`);
+            if (row) {
+              (row as HTMLElement).scrollIntoView({
+                block: 'center',
+                inline: 'center',
+                behavior: 'smooth',
+              });
+              return;
+            }
+          }
+        }
+
+        const hidden = hiddenColumnsRef.current;
+        const firstCol = Array.from(change.columns).find((c) => !hidden.has(c));
+        if (!firstCol) return;
+
+        const firstRowId = change.rowIds.values().next().value;
+        if (firstRowId) {
+          const cell = container.querySelector(`[data-cell-key="${firstRowId}:${firstCol}"]`);
+          if (cell) {
+            (cell as HTMLElement).scrollIntoView({
+              block: 'center',
+              inline: 'center',
+              behavior: 'smooth',
+            });
+          }
         }
       });
     });
