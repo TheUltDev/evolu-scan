@@ -102,7 +102,7 @@ function TodoList() {
 export default function App() {
   return (
     <div className="app">
-      <h1>Evolu List</h1>
+      <h1>Todo List</h1>
       <EvoluProvider value={evolu}>
         <TodoListForm />
         <Suspense>
