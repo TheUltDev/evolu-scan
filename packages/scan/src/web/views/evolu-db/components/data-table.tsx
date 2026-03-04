@@ -2,8 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks'
 import { cn } from '~web/utils/helpers';
 import { formatCellValue } from '../utils/format-cell-value';
 
-type SortDir = 'asc' | 'desc';
-type SortConfig = { column: string; dir: SortDir } | null;
+export type SortDir = 'asc' | 'desc';
+export type SortConfig = { column: string; dir: SortDir } | null;
 
 const SortIndicator = ({ dir, active }: { dir: SortDir; active: boolean }) => (
   <svg
@@ -43,6 +43,8 @@ export const DataTable = ({
   isEmpty,
   showDeleted,
   hiddenColumns,
+  sort,
+  onSortChange,
 }: {
   bodyRef: { current: HTMLDivElement | null };
   columns: string[];
@@ -51,8 +53,9 @@ export const DataTable = ({
   isEmpty: boolean;
   showDeleted: boolean;
   hiddenColumns: Set<string>;
+  sort: SortConfig;
+  onSortChange: (sort: SortConfig) => void;
 }) => {
-  const [sort, setSort] = useState<SortConfig>(null);
   const [copiedCell, setCopiedCell] = useState<string | null>(null);
   const copyTimeout = useRef<ReturnType<typeof setTimeout>>();
 
@@ -134,11 +137,9 @@ export const DataTable = ({
   );
 
   const toggleSort = (col: string) => {
-    setSort((prev) => {
-      if (prev?.column !== col) return { column: col, dir: 'asc' };
-      if (prev.dir === 'asc') return { column: col, dir: 'desc' };
-      return null;
-    });
+    if (sort?.column !== col) onSortChange({ column: col, dir: 'asc' });
+    else if (sort.dir === 'asc') onSortChange({ column: col, dir: 'desc' });
+    else onSortChange(null);
   };
 
   const sortedRows = useMemo(() => {

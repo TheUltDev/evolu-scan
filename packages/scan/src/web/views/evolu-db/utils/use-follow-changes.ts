@@ -5,8 +5,9 @@ export const useFollowChanges = (
   tableBodyRef: { current: HTMLDivElement | null },
   setSelectedTable: (table: string) => void,
   setSearchQuery: (query: string) => void,
+  initialFollowActive = false,
 ) => {
-  const [followActive, setFollowActive] = useState(false);
+  const [followActive, setFollowActive] = useState(initialFollowActive);
   const followActiveRef = useRef(false);
   followActiveRef.current = followActive;
 
@@ -82,9 +83,14 @@ export const useFollowChanges = (
     setFollowActive((v) => !v);
   }, []);
 
+  const disableFollow = useCallback(() => {
+    setFollowActive(false);
+  }, []);
+
   return {
     followActive,
     toggleFollow,
+    disableFollow,
     onChangesDetected,
     syncSelectedTable,
     syncHiddenColumns,

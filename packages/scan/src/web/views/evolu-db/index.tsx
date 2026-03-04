@@ -1,8 +1,10 @@
 import { signal } from '@preact/signals';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { ReactScanInternals } from '~core/index';
+import { LOCALSTORAGE_EVOLU_DB_KEY } from '~web/constants';
 import { signalWidgetViews } from '~web/state';
 import { Icon } from '~web/components/icon';
+import { readLocalStorage, saveLocalStorage } from '~web/utils/helpers';
 import { parseDatabase } from './utils/parse-database';
 import { useFlashChanges } from './utils/use-flash-changes';
 import { useFollowChanges } from './utils/use-follow-changes';
@@ -12,8 +14,34 @@ import { Sidebar } from './components/sidebar';
 import { SearchBar } from './components/search-bar';
 import { ColumnTypes } from './components/column-types';
 import { DataTable } from './components/data-table';
+import type { SortConfig } from './components/data-table';
 import { POLL_INTERVAL } from './consts';
 import type { DbSnapshot } from './types';
+
+interface PersistedEvoluDbSettings {
+  showDeleted: boolean;
+  hideEvoluTables: boolean;
+  followActive: boolean;
+  hiddenColumns: Record<string, string[]>;
+  sort: Record<string, SortConfig>;
+}
+
+const defaultSettings: PersistedEvoluDbSettings = {
+  showDeleted: false,
+  hideEvoluTables: true,
+  followActive: false,
+  hiddenColumns: {},
+  sort: {},
+};
+
+const loadSettings = (): PersistedEvoluDbSettings => {
+  const stored = readLocalStorage<PersistedEvoluDbSettings>(LOCALSTORAGE_EVOLU_DB_KEY);
+  return stored ? { ...defaultSettings, ...stored } : defaultSettings;
+};
+
+const persistSettings = (settings: PersistedEvoluDbSettings) => {
+  saveLocalStorage(LOCALSTORAGE_EVOLU_DB_KEY, settings);
+};
 
 const signalDbLoading = signal(false);
 
@@ -27,16 +55,59 @@ export const EvoluDbViewer = () => {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const exportHandleRef = useRef<FileSystemFileHandle | null>(null);
+  const settingsRef = useRef(loadSettings());
   const [exportState, setExportState] = useState<'idle' | 'picking' | 'active'>('idle');
-  const [showDeleted, setShowDeleted] = useState(false);
-  const [hideEvoluTables, setHideEvoluTables] = useState(true);
-  const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(new Set());
+  const [showDeleted, setShowDeleted] = useState(settingsRef.current.showDeleted);
+  const [hideEvoluTables, setHideEvoluTables] = useState(settingsRef.current.hideEvoluTables);
+  const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(() => {
+    return new Set(settingsRef.current.hiddenColumns[selectedTable ?? ''] ?? []);
+  });
+  const [sort, setSort] = useState<SortConfig>(() => {
+    return settingsRef.current.sort[selectedTable ?? ''] ?? null;
+  });
 
-  const { followActive, toggleFollow, onChangesDetected, syncSelectedTable, syncHiddenColumns, syncHideEvoluTables } =
-    useFollowChanges(tableBodyRef, setSelectedTable, setSearchQuery);
+  const persist = useCallback((patch: Partial<PersistedEvoluDbSettings>) => {
+    Object.assign(settingsRef.current, patch);
+    persistSettings(settingsRef.current);
+  }, []);
+
+  const { followActive, toggleFollow, disableFollow, onChangesDetected, syncSelectedTable, syncHiddenColumns, syncHideEvoluTables } =
+    useFollowChanges(tableBodyRef, setSelectedTable, setSearchQuery, settingsRef.current.followActive);
   syncSelectedTable(selectedTable);
   syncHiddenColumns(hiddenColumns);
   syncHideEvoluTables(hideEvoluTables);
+
+  useEffect(() => {
+    persist({ showDeleted });
+  }, [showDeleted, persist]);
+
+  useEffect(() => {
+    persist({ hideEvoluTables });
+  }, [hideEvoluTables, persist]);
+
+  useEffect(() => {
+    persist({ followActive });
+  }, [followActive, persist]);
+
+  useEffect(() => {
+    if (!selectedTable) return;
+    persist({
+      hiddenColumns: {
+        ...settingsRef.current.hiddenColumns,
+        [selectedTable]: Array.from(hiddenColumns),
+      },
+    });
+  }, [hiddenColumns, selectedTable, persist]);
+
+  useEffect(() => {
+    if (!selectedTable) return;
+    persist({
+      sort: {
+        ...settingsRef.current.sort,
+        [selectedTable]: sort,
+      },
+    });
+  }, [sort, selectedTable, persist]);
 
   const detectChanges = useFlashChanges(tableBodyRef, onChangesDetected);
 
@@ -62,6 +133,9 @@ export const EvoluDbViewer = () => {
       if (!selectedTable && snap.tables.length > 0) {
         const first = snap.tables.find((t) => !t.name.startsWith('evolu_')) ?? snap.tables[0];
         setSelectedTable(first.name);
+        const saved = settingsRef.current.hiddenColumns[first.name];
+        setHiddenColumns(new Set(saved ?? []));
+        setSort(settingsRef.current.sort[first.name] ?? null);
       }
 
       if (exportHandleRef.current) {
@@ -214,7 +288,10 @@ export const EvoluDbViewer = () => {
           onSelect={(name) => {
             setSelectedTable(name);
             setSearchQuery('');
-            setHiddenColumns(new Set());
+            disableFollow();
+            const saved = settingsRef.current.hiddenColumns[name];
+            setHiddenColumns(new Set(saved ?? []));
+            setSort(settingsRef.current.sort[name] ?? null);
           }}
         />
 
@@ -251,6 +328,8 @@ export const EvoluDbViewer = () => {
             isEmpty={!currentTableData || currentTableData.rows.length === 0}
             showDeleted={showDeleted}
             hiddenColumns={hiddenColumns}
+            sort={sort}
+            onSortChange={setSort}
           />
         </div>
       </div>
