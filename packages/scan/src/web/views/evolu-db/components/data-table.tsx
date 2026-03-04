@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'preact/hooks';
+import { useCallback, useMemo, useRef, useState } from 'preact/hooks';
 import { cn } from '~web/utils/helpers';
 import { formatCellValue } from '../utils/format-cell-value';
 
@@ -53,6 +53,16 @@ export const DataTable = ({
   hiddenColumns: Set<string>;
 }) => {
   const [sort, setSort] = useState<SortConfig>(null);
+  const [copiedCell, setCopiedCell] = useState<string | null>(null);
+  const copyTimeout = useRef<ReturnType<typeof setTimeout>>();
+
+  const copyToClipboard = useCallback((cellKey: string, text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      clearTimeout(copyTimeout.current);
+      setCopiedCell(cellKey);
+      copyTimeout.current = setTimeout(() => setCopiedCell(null), 1200);
+    });
+  }, []);
 
   const visibleColumns = useMemo(
     () => columns.filter((col) => !hiddenColumns.has(col)),
@@ -126,21 +136,24 @@ export const DataTable = ({
                         key={col}
                         data-cell-key={cellKey}
                         className={cn(
-                          'px-2 py-1 max-w-[200px] truncate',
+                          'px-2 py-1 max-w-[200px] truncate cursor-pointer',
                           'transition-colors duration-300',
-                          isNull
-                            ? 'text-neutral-600 italic'
-                            : typeof value === 'number' || typeof value === 'bigint'
-                              ? 'text-[#79c0ff]'
-                              : typeof value === 'boolean' ||
-                                  formatted === 'true' ||
-                                  formatted === 'false'
-                                ? 'text-[#ff7b72]'
-                                : 'text-neutral-300',
+                          copiedCell === cellKey
+                            ? 'bg-blue-500/20 text-blue-400'
+                            : isNull
+                              ? 'text-neutral-600 italic'
+                              : typeof value === 'number' || typeof value === 'bigint'
+                                ? 'text-[#79c0ff]'
+                                : typeof value === 'boolean' ||
+                                    formatted === 'true' ||
+                                    formatted === 'false'
+                                  ? 'text-[#ff7b72]'
+                                  : 'text-neutral-300',
                         )}
-                        title={formatted}
+                        title={copiedCell === cellKey ? 'Copied!' : formatted}
+                        onClick={() => copyToClipboard(cellKey, formatted)}
                       >
-                        {formatted}
+                        {copiedCell === cellKey ? 'Copied!' : formatted}
                       </td>
                     );
                   })}
