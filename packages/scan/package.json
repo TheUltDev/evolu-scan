@@ -19,6 +19,10 @@
   },
   "license": "MIT",
   "author": "Daniel Steigerwald <daniel@steigerwald.cz>",
+  "files": [
+    "dist",
+    "package.json"
+  ],
   "scripts": {
     "build": "pnpm run build:css && cross-env NODE_ENV=production tsup",
     "postbuild": "node ../../scripts/version-warning.mjs",
@@ -186,15 +190,6 @@
       ]
     }
   },
-  "bin": "bin/cli.js",
-  "files": [
-    "dist",
-    "bin",
-    "package.json",
-    "README.md",
-    "LICENSE",
-    "auto.d.ts"
-  ],
   "dependencies": {
     "@babel/core": "^7.29.0",
     "@babel/types": "^7.29.0",
@@ -231,8 +226,8 @@
     "vitest": "^4.0.18"
   },
   "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
+    "react": ">=19",
+    "react-dom": ">=19"
   },
   "optionalDependencies": {
     "unplugin": "3.0.0"

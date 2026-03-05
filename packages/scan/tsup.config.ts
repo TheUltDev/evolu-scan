@@ -171,30 +171,6 @@ export default defineConfig([
     ],
   },
   {
-    entry: ['./src/cli.mts'],
-    outDir: DIST_PATH,
-    banner: {
-      js: banner,
-    },
-    splitting: false,
-    clean: false,
-    sourcemap: false,
-    format: ['cjs'],
-    target: 'esnext',
-    platform: 'node',
-    minify: false,
-    env: {
-      NODE_ENV: process.env.NODE_ENV ?? 'development',
-      NPM_PACKAGE_VERSION: JSON.parse(
-        fs.readFileSync(
-          path.join(__dirname, '../scan', 'package.json'),
-          'utf8',
-        ),
-      ).version,
-    },
-    watch: process.env.NODE_ENV === 'development',
-  },
-  {
     entry: [
       './src/react-component-name/index.ts',
       './src/react-component-name/vite.ts',
