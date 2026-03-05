@@ -1,3 +1,4 @@
+import { useCallback, useRef, useState } from 'preact/hooks';
 import { Store } from '../../../../core/index';
 import { Icon } from '../../../components/icon';
 import { signalWidgetViews } from '../../../state';
@@ -32,6 +33,18 @@ export const Header = ({
   onShowDeletedToggle: () => void;
   onHideEvoluTablesToggle: () => void;
 }) => {
+  const [fakeSpinning, setFakeSpinning] = useState(false);
+  const fakeTimer = useRef<ReturnType<typeof setTimeout>>();
+
+  const handleRefresh = useCallback(() => {
+    setFakeSpinning(true);
+    clearTimeout(fakeTimer.current);
+    fakeTimer.current = setTimeout(() => setFakeSpinning(false), 500);
+    onRefresh();
+  }, [onRefresh]);
+
+  const spinning = dbLoading.value || fakeSpinning;
+
   const handleClose = () => {
     signalWidgetViews.value = { view: 'none' };
     Store.inspectState.value = { kind: 'inspect-off' };
@@ -45,17 +58,17 @@ export const Header = ({
       <span className="text-[10px] text-neutral-500">
         {snapshot.tables.length} table{snapshot.tables.length !== 1 && 's'} — {formatBytes(snapshot.byteSize)}
       </span>
-      {dbLoading.value && (
-        <span className="text-[10px] text-[#8e61e3] animate-pulse">syncing</span>
-      )}
       <div className="flex items-center gap-x-2 ml-auto">
         <button
           type="button"
-          onClick={onRefresh}
+          onClick={handleRefresh}
           title="Refresh database"
-          className="button rounded w-6 h-6 flex items-center justify-center text-neutral-500 hover:text-neutral-300"
+          className={cn(
+            "button rounded w-6 h-6 flex items-center justify-center hover:text-neutral-300",
+            spinning ? "text-green-400" : "text-neutral-500"
+          )}
         >
-          <Icon name="icon-refresh-cw" size={14} />
+          <Icon name="icon-refresh-cw" size={14} className={spinning ? "animate-spin" : ""} />
         </button>
         <button
           type="button"

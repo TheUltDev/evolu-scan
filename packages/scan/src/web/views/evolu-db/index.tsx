@@ -50,6 +50,17 @@ const persistSettings = (settings: PersistedEvoluDbSettings) => {
 };
 
 const signalDbLoading = signal(false);
+let lastDbHash: string | null = null;
+
+const hashBytes = async (buffer: ArrayBuffer): Promise<string> => {
+  const buf = await crypto.subtle.digest('SHA-1', buffer);
+  const arr = new Uint8Array(buf);
+  let hex = '';
+  for (let i = 0; i < arr.length; i++) {
+    hex += arr[i].toString(16).padStart(2, '0');
+  }
+  return hex;
+};
 
 export const EvoluDbViewer = () => {
   const [snapshot, setSnapshot] = useState<DbSnapshot | null>(null);
@@ -157,10 +168,17 @@ export const EvoluDbViewer = () => {
       return;
     }
 
-    signalDbLoading.value = true;
     try {
       const bytes = await evolu.exportDatabase();
       const raw = new Uint8Array(bytes);
+      const hash = await hashBytes(raw.buffer);
+
+      if (hash === lastDbHash) return;
+      lastDbHash = hash;
+
+      signalDbLoading.value = true;
+      const loadStart = performance.now();
+
       const snap = await parseDatabase(raw);
       setSnapshot((prev) => {
         if (prev && snap.tableData.size > 0) {
@@ -189,9 +207,16 @@ export const EvoluDbViewer = () => {
           setExportState('idle');
         }
       }
+
+      const elapsed = performance.now() - loadStart;
+      const remaining = 500 - elapsed;
+      if (remaining > 0) {
+        setTimeout(() => { signalDbLoading.value = false; }, remaining);
+      } else {
+        signalDbLoading.value = false;
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load database');
-    } finally {
       signalDbLoading.value = false;
     }
   }, [selectedTable, detectChanges]);
