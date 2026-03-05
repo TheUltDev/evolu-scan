@@ -11,20 +11,20 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "@evolu/common": "^7.4.1",
+    "@evolu/common": "catalog:",
     "@evolu/react": "^10.4.0",
     "@evolu/react-web": "^2.4.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "@evolu/scan": "workspace:*"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.2.1",
-    "@types/react": "^19.0.8",
-    "@types/react-dom": "^19.0.3",
-    "@vitejs/plugin-react": "^4.3.4",
-    "tailwindcss": "^4.2.1",
-    "typescript": "^5.7.3",
-    "vite": "^6.3.0"
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "^5.1.4",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:",
+    "vite": "^7.3.1"
   }
 }

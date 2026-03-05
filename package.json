@@ -5,44 +5,43 @@
     "build": "node scripts/workspace.mjs build",
     "postbuild": "node scripts/version-warning.mjs",
     "dev": "node scripts/workspace.mjs dev",
-    "pack": "node scripts/workspace.mjs pack",
-    "pack:bump": "pnpm --filter scan pack:bump",
     "lint": "pnpm -r lint",
     "lint:all": "oxlint .",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "pack": "node scripts/workspace.mjs pack",
+    "pack:bump": "pnpm --filter scan pack:bump",
     "changeset": "changeset add",
     "version": "changeset version",
-    "release": "changeset publish",
-    "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui"
+    "release": "changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.30.0",
+    "@evolu/common": "catalog:",
     "@playwright/test": "^1.58.2",
-    "@types/node": "^25.3.3",
     "@tailwindcss/postcss": "^4.2.1",
+    "@types/node": "catalog:",
     "autoprefixer": "^10.4.27",
     "boxen": "^8.0.1",
     "chalk": "^5.6.2",
-    "esbuild": "^0.27.3",
     "oxlint": "latest",
     "postcss": "^8.5.8",
-    "rimraf": "^6.1.3",
-    "tailwindcss": "^4.2.1",
-    "typescript": "latest",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:",
     "vite-tsconfig-paths": "^6.1.1"
   },
   "packageManager": "pnpm@10.30.3",
   "pnpm": {
     "onlyBuiltDependencies": [
       "@evolu/sqlite-wasm",
-      "esbuild",
-      "@playwright/test"
+      "@playwright/test",
+      "esbuild"
     ],
     "overrides": {
       "@jridgewell/gen-mapping": "0.3.13",
       "@jridgewell/sourcemap-codec": "1.5.5",
-      "@types/react": "^19.2.14",
-      "@types/react-dom": "^19.2.3"
+      "@types/react": "catalog:",
+      "@types/react-dom": "catalog:"
     }
   }
 }

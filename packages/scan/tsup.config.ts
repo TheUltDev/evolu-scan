@@ -213,7 +213,6 @@ export default defineConfig([
     target: 'esnext',
     external: [
       'unplugin',
-      'estree-walker',
       '@rollup/pluginutils',
       '@babel/types',
       '@babel/parser',

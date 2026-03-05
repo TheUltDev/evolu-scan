@@ -1,28 +1,23 @@
-import { type Signal, signal } from '@preact/signals';
-import {
-  type Fiber,
-  detectReactBuildType,
-  getRDTHook,
-  getType,
-  isInstrumentationActive,
-} from 'bippy';
-import type { ComponentType } from 'preact';
-import type { ReactNode } from 'preact/compat';
-import type { RenderData } from 'src/core/utils';
-import { initReactScanInstrumentation } from 'src/new-outlines';
-import styles from '~web/assets/css/styles.css';
+import { signal } from '@preact/signals';
+import { getType, getRDTHook, detectReactBuildType, isInstrumentationActive } from 'bippy';
+import { readLocalStorage, saveLocalStorage } from '~web/utils/helpers';
 import { createToolbar } from '~web/toolbar';
 import { IS_CLIENT } from '~web/utils/constants';
-import { readLocalStorage, saveLocalStorage } from '~web/utils/helpers';
-import type { States } from '~web/views/inspector/utils';
-import type {
-  ChangeReason,
-  Render,
-  createInstrumentation,
-} from './instrumentation';
+import styles from '~web/assets/css/styles.css';
+
 import { startTimingTracking } from './notifications/event-tracking';
 import { createHighlightCanvas } from './notifications/outline-overlay';
+import { initReactScanInstrumentation } from '../new-outlines';
 import packageJson from '../../package.json';
+
+import type { Fiber } from 'bippy';
+import type { Evolu } from '@evolu/common';
+import type { Signal } from '@preact/signals';
+import type { ReactNode } from 'preact/compat';
+import type { ComponentType } from 'preact';
+import type { RenderData } from 'src/core/utils';
+import type { States } from '~web/views/inspector/utils';
+import type { ChangeReason, Render, createInstrumentation } from './instrumentation';
 
 let rootContainer: HTMLDivElement | null = null;
 let shadowRoot: ShadowRoot | null = null;
@@ -139,7 +134,7 @@ export interface Options {
    * Evolu database instance. When provided, a database export button
    * appears in the toolbar allowing one-click SQLite database download.
    */
-  evolu?: { exportDatabase: () => Promise<Uint8Array> };
+  evolu?: Evolu<any>;
 
   onCommitStart?: () => void;
   onRender?: (fiber: Fiber, renders: Array<Render>) => void;
