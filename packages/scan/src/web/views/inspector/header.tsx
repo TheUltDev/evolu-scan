@@ -8,10 +8,8 @@ import { timelineState } from './states';
 
 const headerInspectClassName = computed(() =>
   cn(
-    'absolute inset-0 flex items-center gap-x-2',
-    'translate-y-0',
-    'transition-transform duration-300',
-    signalIsSettingsOpen.value && '-translate-y-[200%]',
+    'evolu-scan-header-item gap-x-2',
+    !signalIsSettingsOpen.value && 'is-visible',
   ),
 );
 

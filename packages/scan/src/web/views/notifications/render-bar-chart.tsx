@@ -482,9 +482,10 @@ const RenderBar = ({
         {depth === 0 && (
           <div
             className={cn([
-              'absolute right-0 top-1/2 transition-none -translate-y-1/2 bg-white text-black px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity mr-16',
+              'absolute right-0 top-1/2 bg-white text-black px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity mr-16',
               'pointer-events-none',
             ])}
+            style={{ translate: '0 -50%' }}
           >
             Click to learn more
           </div>

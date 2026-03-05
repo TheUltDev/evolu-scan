@@ -222,7 +222,6 @@ input {
 }
 
 svg {
-  @apply w-auto h-auto;
   @apply pointer-events-none;
 }
 
@@ -294,7 +293,8 @@ svg {
   @apply transition-all;
 
   svg {
-    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+    @apply absolute top-1/2 left-1/2;
+    translate: -50% -50%;
   }
 }
 
@@ -311,14 +311,14 @@ svg {
 
   &:hover {
     .resize-line {
-      @apply translate-x-0;
+      translate: 0 0;
     }
   }
 }
 
 .resize-right {
   @apply right-0;
-  @apply translate-x-1/2;
+  translate: 50% 0;
 
   .resize-line-wrapper {
     @apply right-0;
@@ -326,13 +326,13 @@ svg {
 
   .resize-line {
     @apply rounded-r-lg;
-    @apply -translate-x-full;
+    translate: -100% 0;
   }
 }
 
 .resize-left {
   @apply left-0;
-  @apply -translate-x-1/2;
+  translate: -50% 0;
 
   .resize-line-wrapper {
     @apply left-0;
@@ -340,7 +340,7 @@ svg {
 
   .resize-line {
     @apply rounded-l-lg;
-    @apply translate-x-full;
+    translate: 100% 0;
   }
 }
 
@@ -357,14 +357,14 @@ svg {
 
   &:hover {
     .resize-line {
-      @apply translate-y-0;
+      translate: 0 0;
     }
   }
 }
 
 .resize-top {
   @apply top-0;
-  @apply -translate-y-1/2;
+  translate: 0 -50%;
 
   .resize-line-wrapper {
     @apply top-0;
@@ -372,13 +372,13 @@ svg {
 
   .resize-line {
     @apply rounded-t-lg;
-    @apply translate-y-full;
+    translate: 0 100%;
   }
 }
 
 .resize-bottom {
   @apply bottom-0;
-  @apply translate-y-1/2;
+  translate: 0 50%;
 
   .resize-line-wrapper {
     @apply bottom-0;
@@ -386,7 +386,7 @@ svg {
 
   .resize-line {
     @apply rounded-b-lg;
-    @apply -translate-y-full;
+    translate: 0 -100%;
   }
 }
 
@@ -425,7 +425,7 @@ svg {
     content: "";
     @apply absolute;
     @apply inset-0;
-    @apply -translate-x-full;
+    translate: -100% 0;
     animation: shimmer 2s infinite;
     background: linear-gradient(to right,
         transparent,
@@ -521,7 +521,7 @@ svg {
   @apply flex items-center justify-center;
   @apply cursor-pointer;
   @apply w-6 h-7;
-  @apply -translate-x-full;
+  translate: -100% 0;
   @apply z-10;
 
   >svg {
@@ -585,7 +585,7 @@ svg {
       @apply bg-[#5f3f9a];
 
       &::before {
-        @apply translate-x-full;
+        translate: 100% -50%;
         @apply left-auto;
         @apply border-[#5f3f9a];
       }
@@ -602,7 +602,7 @@ svg {
     &:before {
       @apply content-[''];
       @apply absolute top-1/2 left-0;
-      @apply -translate-y-1/2;
+      translate: 0 -50%;
       @apply w-4 h-4;
       @apply bg-white;
       @apply border-2 border-neutral-700;
@@ -695,7 +695,8 @@ svg {
 
   &:before {
     @apply content-[''];
-    @apply absolute inset-x-0 top-1/2 -translate-y-1/2;
+    @apply absolute inset-x-0 top-1/2;
+    translate: 0 -50%;
     @apply h-1.5;
     @apply bg-[#8e61e3]/40;
     @apply rounded-lg;
@@ -709,7 +710,8 @@ svg {
   }
 
   span {
-    @apply absolute left-0 top-1/2 -translate-y-1/2;
+    @apply absolute left-0 top-1/2;
+    translate: 0 -50%;
     @apply w-2.5 h-2.5;
     @apply rounded-lg;
     @apply bg-[#8e61e3];
@@ -737,21 +739,24 @@ svg {
 
   &::before {
     @apply content-[""];
-    @apply absolute inset-0 left-1/2 -translate-x-1/2;
+    @apply absolute inset-0 left-1/2;
+    translate: -50% 0;
     @apply w-[1px];
     @apply bg-[#222];
     @apply transition-colors;
   }
 
   >span {
-    @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
+    @apply absolute left-1/2 top-1/2;
+    translate: -50% -50%;
     @apply w-1.5 h-4.5;
     @apply rounded;
     @apply transition-colors;
   }
 
   svg {
-    @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
+    @apply absolute left-1/2 top-1/2;
+    translate: -50% -50%;
     @apply text-neutral-400 rotate-90;
     @apply opacity-0;
     @apply transition-opacity;
@@ -804,34 +809,40 @@ svg {
   }
 
   &.position-top {
-    @apply top-full -translate-y-full;
+    @apply top-full;
+    translate: 0 -100%;
     @apply rounded-b-lg;
 
     &::before {
-      @apply top-0 -translate-y-full;
+      @apply top-0;
+      translate: 0 -100%;
     }
   }
 
   &.position-bottom {
-    @apply bottom-full translate-y-full;
+    @apply bottom-full;
+    translate: 0 100%;
     @apply rounded-t-lg;
 
     &::before {
-      @apply bottom-0 translate-y-full;
+      @apply bottom-0;
+      translate: 0 100%;
     }
   }
 
   &.is-open {
-    @apply translate-y-0;
+    translate: 0 0;
   }
 }
 
 .evolu-scan-header-item {
-  @apply absolute inset-0 -translate-y-[200%];
+  @apply absolute inset-0;
+  @apply flex items-center;
+  translate: 0 -200%;
   @apply transition-transform duration-300;
 
   &.is-visible {
-    @apply translate-y-0;
+    translate: 0 0;
   }
 }
 
@@ -884,4 +895,17 @@ svg {
 
 .evolu-row-flash {
   animation: evoluRowFlash 1.2s ease-out forwards;
+}
+
+.evolu-scan-popover {
+  &::after {
+    @apply content-[""] absolute;
+    top: 100%;
+    left: 50%;
+    translate: -50% 0;
+    @apply w-[10px] h-[6px];
+    @apply border-l-[5px] border-l-transparent;
+    @apply border-r-[5px] border-r-transparent;
+    @apply border-t-[6px] border-t-white;
+  }
 }
