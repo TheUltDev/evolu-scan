@@ -1,9 +1,9 @@
-import { Store } from '~core/index';
-import { Icon } from '~web/components/icon';
-import { useDelayedValue } from '~web/hooks/use-delayed-value';
-import { signalWidgetViews } from '~web/state';
-import { cn } from '~web/utils/helpers';
-import { HeaderInspect } from '~web/views/inspector/header';
+import { Store } from '../../core/index';
+import { Icon } from '../components/icon';
+import { useDelayedValue } from '../hooks/use-delayed-value';
+import { signalWidgetViews } from '../state';
+import { cn } from '../utils/helpers';
+import { HeaderInspect } from '../views/inspector/header';
 
 export const Header = () => {
   const isInitialView = useDelayedValue(

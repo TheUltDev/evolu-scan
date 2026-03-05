@@ -1,8 +1,8 @@
 import { type Signal } from '@preact/signals';
-import { Store } from '~core/index';
-import { Icon } from '~web/components/icon';
-import { signalWidgetViews } from '~web/state';
-import { cn } from '~web/utils/helpers';
+import { Store } from '../../../../core/index';
+import { Icon } from '../../../components/icon';
+import { signalWidgetViews } from '../../../state';
+import { cn } from '../../../utils/helpers';
 import type { DbSnapshot } from '../types';
 
 export const Header = ({

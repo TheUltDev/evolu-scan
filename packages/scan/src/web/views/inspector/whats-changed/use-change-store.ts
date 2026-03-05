@@ -4,9 +4,9 @@ import {
   ChangesPayload,
   ContextChange,
   Store,
-} from '~core/index';
+} from '../../../../core/index';
 import { Fiber, getFiberId } from 'bippy';
-import { isEqual } from '~core/utils';
+import { isEqual } from '../../../../core/utils';
 import { signal } from '@preact/signals';
 
 const CHANGES_QUEUE_INTERVAL = 50;

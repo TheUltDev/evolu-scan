@@ -1,8 +1,8 @@
-import { cn } from '~web/utils/helpers';
+import { cn } from '../../utils/helpers';
 import { NotificationEvent, useNotificationsContext } from './data';
 import { useLayoutEffect, useState } from 'preact/hooks';
 import { ArrowLeft, CloseIcon } from './icons';
-import { getIsProduction } from '~core/index';
+import { getIsProduction } from '../../../core/index';
 
 export const RenderExplanation = ({
   selectedEvent: _,

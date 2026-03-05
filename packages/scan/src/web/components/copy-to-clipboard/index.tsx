@@ -1,6 +1,6 @@
 import { memo } from 'preact/compat';
 import { useCallback, useEffect, useState } from 'preact/hooks';
-import { cn } from '~web/utils/helpers';
+import { cn } from '../../utils/helpers';
 import { Icon } from '../icon';
 
 interface CopyToClipboardProps {

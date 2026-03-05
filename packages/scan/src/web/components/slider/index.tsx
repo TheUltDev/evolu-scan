@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from "preact/hooks";
-import { cn } from "~web/utils/helpers";
+import { cn } from "../../utils/helpers";
 
 interface SliderProps {
   className?: string;

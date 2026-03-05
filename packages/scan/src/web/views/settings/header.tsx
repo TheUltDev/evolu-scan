@@ -1,5 +1,5 @@
-import { signalIsSettingsOpen } from '~web/state';
-import { cn } from '~web/utils/helpers';
+import { signalIsSettingsOpen } from '../../state';
+import { cn } from '../../utils/helpers';
 
 export const HeaderSettings = () => {
   const isSettingsOpen = signalIsSettingsOpen.value;

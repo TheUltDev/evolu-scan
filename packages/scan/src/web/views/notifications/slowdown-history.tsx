@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'preact/compat';
-import { cn } from '~web/utils/helpers';
+import { cn } from '../../utils/helpers';
 import {
   InteractionEvent,
   NotificationEvent,
@@ -15,8 +15,8 @@ import {
   TrendingDownIcon,
 } from './icons';
 import { Popover } from './popover';
-import { iife } from '~core/notifications/performance-utils';
-import { toolbarEventStore } from '~core/notifications/event-tracking';
+import { iife } from '../../../core/notifications/performance-utils';
+import { toolbarEventStore } from '../../../core/notifications/event-tracking';
 import { CollapsedDroppedFrame, CollapsedItem } from './collapsed-event';
 
 const useFlashManager = (events: NotificationEvent[]) => {

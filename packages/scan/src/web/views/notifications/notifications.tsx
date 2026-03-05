@@ -1,11 +1,11 @@
 import { forwardRef } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { not_globally_unique_generateId } from '~core/utils';
-import { useToolbarEventLog } from '~core/notifications/event-tracking';
-import { FiberRenders } from '~core/notifications/performance';
-import { iife, invariantError } from '~core/notifications/performance-utils';
-import { playNotificationSound } from '~core/utils';
-import { cn } from '~web/utils/helpers';
+import { not_globally_unique_generateId } from '../../../core/utils';
+import { useToolbarEventLog } from '../../../core/notifications/event-tracking';
+import { FiberRenders } from '../../../core/notifications/performance';
+import { iife, invariantError } from '../../../core/notifications/performance-utils';
+import { playNotificationSound } from '../../../core/utils';
+import { cn } from '../../utils/helpers';
 import {
   NotificationStateContext,
   NotificationsState,

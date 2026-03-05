@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'preact/hooks';
-import { cn } from '~web/utils/helpers';
+import { cn } from '../../../utils/helpers';
 
 export const ColumnTypes = ({
   columns,

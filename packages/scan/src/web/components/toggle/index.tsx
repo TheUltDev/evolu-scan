@@ -1,5 +1,5 @@
 import type { JSX } from 'preact';
-import { cn } from '~web/utils/helpers';
+import { cn } from '../../utils/helpers';
 
 interface ToggleProps extends JSX.HTMLAttributes<HTMLInputElement> {
   checked: boolean;

@@ -1,7 +1,7 @@
 import { useState } from 'preact/hooks';
-import { CopyToClipboard } from '~web/components/copy-to-clipboard';
-import { Icon } from '~web/components/icon';
-import { cn } from '~web/utils/helpers';
+import { CopyToClipboard } from '../../components/copy-to-clipboard';
+import { Icon } from '../../components/icon';
+import { cn } from '../../utils/helpers';
 import { formatForClipboard, formatValuePreview, safeGetValue } from './utils';
 
 const ArrayHeader = ({

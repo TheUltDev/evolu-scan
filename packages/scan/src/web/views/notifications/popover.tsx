@@ -7,8 +7,8 @@ import {
   useRef,
   useState,
 } from 'preact/compat';
-import { cn } from '~web/utils/helpers';
-import { ToolbarElementContext } from '~web/widget';
+import { cn } from '../../utils/helpers';
+import { ToolbarElementContext } from '../../widget';
 
 type PopoverState = 'closed' | 'opening' | 'open' | 'closing';
 

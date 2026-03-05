@@ -1,12 +1,12 @@
 import { useState } from 'preact/hooks';
-import { cn } from '~web/utils/helpers';
+import { cn } from '../../utils/helpers';
 import {
   GroupedFiberRender,
   NotificationEvent,
   getComponentName,
   getTotalTime,
 } from './data';
-import { iife } from '~core/notifications/performance-utils';
+import { iife } from '../../../core/notifications/performance-utils';
 
 const formatReactData = (groupedFiberRenders: Array<GroupedFiberRender>) => {
   let text = '';

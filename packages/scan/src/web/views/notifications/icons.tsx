@@ -1,5 +1,5 @@
-import { ReactScanInternals } from '~core/index';
-import { cn } from '~web/utils/helpers';
+import { ReactScanInternals } from '../../../core/index';
+import { cn } from '../../utils/helpers';
 
 export const ChevronRight = ({
   size = 24,

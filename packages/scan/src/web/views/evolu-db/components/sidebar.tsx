@@ -1,5 +1,5 @@
 import { useCallback, useRef } from 'preact/hooks';
-import { cn } from '~web/utils/helpers';
+import { cn } from '../../../utils/helpers';
 import type { DbSnapshot } from '../types';
 
 const MIN_SIDEBAR_WIDTH = 100;

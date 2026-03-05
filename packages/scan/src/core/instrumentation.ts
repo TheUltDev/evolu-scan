@@ -21,12 +21,12 @@ import {
   traverseRenderedFibers,
 } from 'bippy';
 import { isValidElement } from 'preact';
-import { isEqual } from '~core/utils';
+import { isEqual } from './utils';
 import {
   collectContextChanges,
   collectPropsChanges,
   collectStateChanges,
-} from '~web/views/inspector/timeline/utils';
+} from '../web/views/inspector/timeline/utils';
 import {
   type Change,
   type ContextChange,

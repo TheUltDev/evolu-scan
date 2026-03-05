@@ -1,9 +1,9 @@
 import { type ReadonlySignal, computed } from '@preact/signals';
 import type { ReactNode } from 'preact/compat';
-import { ReactScanInternals, Store } from '~core/index';
-import { signalWidgetViews } from '~web/state';
-import { cn } from '~web/utils/helpers';
-import { Header } from '~web/widget/header';
+import { ReactScanInternals, Store } from '../../core/index';
+import { signalWidgetViews } from '../state';
+import { cn } from '../utils/helpers';
+import { Header } from '../widget/header';
 import { ViewInspector } from './inspector';
 import { Toolbar } from './toolbar';
 import { NotificationWrapper } from './notifications/notifications';

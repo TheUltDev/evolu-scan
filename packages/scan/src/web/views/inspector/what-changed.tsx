@@ -6,9 +6,9 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
-import { CopyToClipboard } from '~web/components/copy-to-clipboard';
-import { Icon } from '~web/components/icon';
-import { cn, throttle } from '~web/utils/helpers';
+import { CopyToClipboard } from '../../components/copy-to-clipboard';
+import { Icon } from '../../components/icon';
+import { cn, throttle } from '../../utils/helpers';
 import { DiffValueView } from './diff-value';
 import { timelineState } from './states';
 import {
@@ -23,7 +23,7 @@ import {
   useInspectedFiberChangeStore,
 } from './whats-changed/use-change-store';
 import { getDisplayName, getType } from 'bippy';
-import { Store } from '~core/index';
+import { Store } from '../../../core/index';
 
 export type Setter<T> = Dispatch<StateUpdater<T>>;
 

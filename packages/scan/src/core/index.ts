@@ -1,9 +1,9 @@
 import { signal } from '@preact/signals';
 import { getType, getRDTHook, detectReactBuildType, isInstrumentationActive } from 'bippy';
-import { readLocalStorage, saveLocalStorage } from '~web/utils/helpers';
-import { createToolbar } from '~web/toolbar';
-import { IS_CLIENT } from '~web/utils/constants';
-import styles from '~web/assets/css/styles.css';
+import { readLocalStorage, saveLocalStorage } from '../web/utils/helpers';
+import { createToolbar } from '../web/toolbar';
+import { IS_CLIENT } from '../web/utils/constants';
+import styles from '../web/assets/css/styles.css';
 
 import { startTimingTracking } from './notifications/event-tracking';
 import { createHighlightCanvas } from './notifications/outline-overlay';
@@ -15,8 +15,8 @@ import type { Evolu } from '@evolu/common';
 import type { Signal } from '@preact/signals';
 import type { ReactNode } from 'preact/compat';
 import type { ComponentType } from 'preact';
-import type { RenderData } from 'src/core/utils';
-import type { States } from '~web/views/inspector/utils';
+import type { RenderData } from './utils';
+import type { States } from '../web/views/inspector/utils';
 import type { ChangeReason, Render, createInstrumentation } from './instrumentation';
 
 let rootContainer: HTMLDivElement | null = null;

@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { ChangeReason, type Render } from '~core/instrumentation';
-import { getLabelText } from '~core/utils';
+import { ChangeReason, type Render } from '../../core/instrumentation';
+import { getLabelText } from '../../core/utils';
 
 export const log = (renders: Array<Render>) => {
   const logMap = new Map<

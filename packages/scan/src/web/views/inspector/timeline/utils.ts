@@ -8,7 +8,7 @@ import {
   type MemoizedState,
   SimpleMemoComponentTag,
 } from 'bippy';
-import { isEqual } from '~core/utils';
+import { isEqual } from '../../../../core/utils';
 import { getChangedPropsDetailed, isPromise } from '../utils';
 
 interface ChangeTrackingInfo {

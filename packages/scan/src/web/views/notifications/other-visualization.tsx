@@ -1,8 +1,8 @@
 import { ReactNode } from 'preact/compat';
 import { useContext, useEffect, useState } from 'preact/hooks';
-import { getIsProduction } from '~core/index';
-import { iife } from '~core/notifications/performance-utils';
-import { cn } from '~web/utils/helpers';
+import { getIsProduction } from '../../../core/index';
+import { iife } from '../../../core/notifications/performance-utils';
+import { cn } from '../../utils/helpers';
 import {
   InteractionEvent,
   NotificationEvent,
@@ -10,7 +10,7 @@ import {
   useNotificationsContext,
 } from './data';
 import { getLLMPrompt } from './optimize';
-import { ToolbarElementContext } from '~web/widget';
+import { ToolbarElementContext } from '../../widget';
 type BaseTimeDataItem = {
   name: string;
   time: number;

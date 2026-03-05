@@ -1,10 +1,10 @@
 import { signal } from '@preact/signals';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks';
-import { ReactScanInternals } from '~core/index';
-import { LOCALSTORAGE_EVOLU_DB_KEY } from '~web/constants';
-import { signalWidgetViews } from '~web/state';
-import { Icon } from '~web/components/icon';
-import { readLocalStorage, saveLocalStorage } from '~web/utils/helpers';
+import { ReactScanInternals } from '../../../core/index';
+import { LOCALSTORAGE_EVOLU_DB_KEY } from '../../constants';
+import { signalWidgetViews } from '../../state';
+import { Icon } from '../../components/icon';
+import { readLocalStorage, saveLocalStorage } from '../../utils/helpers';
 import { parseDatabase } from './utils/parse-database';
 import { useFlashChanges } from './utils/use-flash-changes';
 import { useFollowChanges } from './utils/use-follow-changes';

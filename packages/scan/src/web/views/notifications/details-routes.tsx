@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useRef, useState } from 'preact/compat';
-import { playNotificationSound } from '~core/utils';
-import { cn } from '~web/utils/helpers';
+import { playNotificationSound } from '../../../core/utils';
+import { cn } from '../../utils/helpers';
 import { useNotificationsContext } from './data';
 import { CloseIcon } from './icons';
 import { NotificationTabs } from './notification-tabs';
@@ -8,7 +8,7 @@ import { Optimize } from './optimize';
 import { OtherVisualization } from './other-visualization';
 import { RenderBarChart } from './render-bar-chart';
 import { RenderExplanation } from './render-explanation';
-import { signalWidgetViews } from '~web/state';
+import { signalWidgetViews } from '../../state';
 
 export const DetailsRoutes = () => {
   const { notificationState, setNotificationState } = useNotificationsContext();

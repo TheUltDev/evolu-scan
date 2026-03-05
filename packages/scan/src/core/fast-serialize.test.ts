@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { fastSerialize } from '~core/instrumentation';
+import { fastSerialize } from './instrumentation';
 
 describe('fastSerialize', () => {
   it('serializes null', () => {

@@ -1,9 +1,9 @@
 import { computed, untracked, useSignalEffect } from '@preact/signals';
 import type { Fiber } from 'bippy';
 import { useMemo, useRef, useState } from 'preact/hooks';
-import { Store } from '~core/index';
-import { signalIsSettingsOpen } from '~web/state';
-import { cn, getExtendedDisplayName } from '~web/utils/helpers';
+import { Store } from '../../../core/index';
+import { signalIsSettingsOpen } from '../../state';
+import { cn, getExtendedDisplayName } from '../../utils/helpers';
 import { timelineState } from './states';
 
 const headerInspectClassName = computed(() =>

@@ -5,21 +5,21 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
-import { Store } from '~core/index';
-import { getRenderData } from '~core/instrumentation';
-import { Icon } from '~web/components/icon';
+import { Store } from '../../../../core/index';
+import { getRenderData } from '../../../../core/instrumentation';
+import { Icon } from '../../../components/icon';
 import {
   LOCALSTORAGE_KEY,
   MIN_CONTAINER_WIDTH,
-} from '~web/constants';
-import { useVirtualList } from '~web/hooks/use-virtual-list';
-import { signalWidget } from '~web/state';
+} from '../../../constants';
+import { useVirtualList } from '../../../hooks/use-virtual-list';
+import { signalWidget } from '../../../state';
 import {
   cn,
   getExtendedDisplayName,
   saveLocalStorage,
-} from '~web/utils/helpers';
-import { getFiberPath } from '~web/utils/pin';
+} from '../../../utils/helpers';
+import { getFiberPath } from '../../../utils/pin';
 import { inspectorUpdateSignal } from '../states';
 import {
   type InspectableElement,

@@ -9,13 +9,13 @@ import {
   type LocalStorageOptions,
   ReactScanInternals,
   Store,
-} from '~core/index';
-import { Icon } from '~web/components/icon';
-import { Toggle } from '~web/components/toggle';
-import { signalWidgetViews } from '~web/state';
-import { cn, readLocalStorage, saveLocalStorage } from '~web/utils/helpers';
-import { constant } from '~web/utils/preact/constant';
-import { FPSMeter } from '~web/widget/fps-meter';
+} from '../../../core/index';
+import { Icon } from '../../components/icon';
+import { Toggle } from '../../components/toggle';
+import { signalWidgetViews } from '../../state';
+import { cn, readLocalStorage, saveLocalStorage } from '../../utils/helpers';
+import { constant } from '../../utils/preact/constant';
+import { FPSMeter } from '../../widget/fps-meter';
 import { getEventSeverity } from '../notifications/data';
 import { Notification } from '../notifications/icons';
 import { useAppNotifications } from '../notifications/notifications';

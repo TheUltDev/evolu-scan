@@ -7,7 +7,7 @@ import {
 } from './data';
 import { SlowdownHistoryItem } from './slowdown-history';
 import { ChevronRight } from './icons';
-import { cn } from '~web/utils/helpers';
+import { cn } from '../../utils/helpers';
 
 export type CollapsedDroppedFrame = {
   kind: 'collapsed-frame-drops';

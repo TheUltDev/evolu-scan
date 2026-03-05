@@ -1,7 +1,7 @@
 import { createContext } from 'preact';
 import { SetStateAction } from 'preact/compat';
 import { Dispatch, useContext } from 'preact/hooks';
-import { HIGH_SEVERITY_FPS_DROP_TIME } from '~core/notifications/event-tracking';
+import { HIGH_SEVERITY_FPS_DROP_TIME } from '../../../core/notifications/event-tracking';
 import { getFiberFromElement } from '../inspector/utils';
 import { hasMemoCache } from 'bippy';
 

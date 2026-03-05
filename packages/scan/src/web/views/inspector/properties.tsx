@@ -7,11 +7,11 @@ import {
   useState,
 } from 'preact/hooks';
 
-import { isEqual } from '~core/utils';
-import { CopyToClipboard } from '~web/components/copy-to-clipboard';
-import { Icon } from '~web/components/icon';
-import { useMergedRefs } from '~web/hooks/use-merged-refs';
-import { cn, tryOrElse } from '~web/utils/helpers';
+import { isEqual } from '../../../core/utils';
+import { CopyToClipboard } from '../../components/copy-to-clipboard';
+import { Icon } from '../../components/icon';
+import { useMergedRefs } from '../../hooks/use-merged-refs';
+import { cn, tryOrElse } from '../../utils/helpers';
 import { globalInspectorState } from '.';
 import { flashManager } from './flash-overlay';
 import { timelineState } from './states';

@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'preact/compat';
-import { not_globally_unique_generateId } from '~core/utils';
+import { not_globally_unique_generateId } from '../utils';
 import { MAX_INTERACTION_BATCH, interactionStore } from './interaction-store';
 import {
   FiberRenders,
@@ -15,7 +15,7 @@ import {
   performanceEntryChannels,
 } from './performance-store';
 import { BoundedArray } from './performance-utils';
-import { createStore } from '~web/utils/create-store';
+import { createStore } from '../../web/utils/create-store';
 
 let profileListeners: Array<(interaction: FinalInteraction) => void> = [];
 

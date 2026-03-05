@@ -1,6 +1,5 @@
 import * as fs from 'node:fs';
-import { defineConfig, type InputOptions } from 'rolldown';
-import { dts } from 'rolldown-plugin-dts';
+import { defineConfig } from 'rolldown';
 import { workerPlugin } from './worker-plugin';
 
 const distPath = './dist';
@@ -36,15 +35,15 @@ fs.mkdirSync(distPath, { recursive: true });
 const nodeEnv = process.env.NODE_ENV ?? 'development';
 
 const sharedOptions = {
-  platform: 'browser',
+  platform: 'browser' as const,
   tsconfig: './tsconfig.json',
   transform: {
     define: { 'process.env.NODE_ENV': JSON.stringify(nodeEnv) },
   },
-  moduleTypes: { '.css': 'text' },
+  moduleTypes: { '.css': 'text' } as Record<string, 'text'>,
   external: ['react', 'react-dom', '@evolu/sqlite-wasm'],
   plugins: [workerPlugin],
-} satisfies Partial<InputOptions>;
+};
 
 const libraryInput = {
   index: './src/index.ts',
@@ -55,7 +54,6 @@ export default defineConfig([
   {
     ...sharedOptions,
     input: libraryInput,
-    plugins: [workerPlugin, dts()],
     output: {
       dir: distPath,
       format: 'esm',

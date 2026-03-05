@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks';
-import { cn } from '~web/utils/helpers';
+import { cn } from '../../../utils/helpers';
 import { formatCellValue } from '../utils/format-cell-value';
 
 export type SortDir = 'asc' | 'desc';

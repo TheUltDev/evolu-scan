@@ -1,8 +1,8 @@
 import { useRef, useState } from 'preact/hooks';
-import { getBatchedRectMap } from 'src/new-outlines';
-import { getIsProduction } from '~core/index';
-import { iife } from '~core/notifications/performance-utils';
-import { cn } from '~web/utils/helpers';
+import { getBatchedRectMap } from '../../../new-outlines';
+import { getIsProduction } from '../../../core/index';
+import { iife } from '../../../core/notifications/performance-utils';
+import { cn } from '../../utils/helpers';
 import {
   GroupedFiberRender,
   NotificationEvent,
@@ -13,7 +13,7 @@ import {
 import {
   HighlightStore,
   drawHighlights,
-} from '~core/notifications/outline-overlay';
+} from '../../../core/notifications/outline-overlay';
 import { ChevronRight } from './icons';
 
 // todo: cleanup, convoluted ternaries

@@ -1,5 +1,5 @@
-import { Icon } from '~web/components/icon';
-import { cn } from '~web/utils/helpers';
+import { Icon } from '../../../components/icon';
+import { cn } from '../../../utils/helpers';
 
 export const SearchBar = ({
   inputRef,

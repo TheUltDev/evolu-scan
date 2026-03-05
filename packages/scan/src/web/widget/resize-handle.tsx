@@ -1,18 +1,18 @@
 import type { JSX } from 'preact';
 import { useCallback, useEffect, useRef } from 'preact/hooks';
-import { Store } from '~core/index';
-import { Icon } from '~web/components/icon';
+import { Store } from '../../core/index';
+import { Icon } from '../components/icon';
 import {
   LOCALSTORAGE_KEY,
   MIN_CONTAINER_WIDTH,
   MIN_SIZE,
-} from '~web/constants';
+} from '../constants';
 import {
   signalRefWidget,
   signalWidget,
   signalWidgetViews,
-} from '~web/state';
-import { cn, saveLocalStorage } from '~web/utils/helpers';
+} from '../state';
+import { cn, saveLocalStorage } from '../utils/helpers';
 import {
   calculateNewSizeAndPosition,
   calculatePosition,
