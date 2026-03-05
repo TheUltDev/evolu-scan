@@ -1,9 +1,9 @@
-import { Store } from '~core/index';
-import { Icon } from '~web/components/icon';
-import { useDelayedValue } from '~web/hooks/use-delayed-value';
-import { signalWidgetViews } from '~web/state';
-import { cn } from '~web/utils/helpers';
-import { HeaderInspect } from '~web/views/inspector/header';
+import { Store } from '../../core/index';
+import { Icon } from '../components/icon';
+import { useDelayedValue } from '../hooks/use-delayed-value';
+import { signalWidgetViews } from '../state';
+import { cn } from '../utils/helpers';
+import { HeaderInspect } from '../views/inspector/header';
 
 export const Header = () => {
   const isInitialView = useDelayedValue(
@@ -20,19 +20,20 @@ export const Header = () => {
     };
   };
 
-  const isHeaderIsNotifications =
-    signalWidgetViews.value.view === 'notifications';
+  const isHeaderHidden =
+    signalWidgetViews.value.view === 'notifications' ||
+    signalWidgetViews.value.view === 'evolu';
 
-  if (isHeaderIsNotifications) {
+  if (isHeaderHidden) {
     return;
   }
 
   return (
-    <div className="react-scan-header">
+    <div className="evolu-scan-header">
       <div className="relative flex-1 h-full">
         <div
           className={cn(
-            'react-scan-header-item is-visible',
+            'evolu-scan-header-item is-visible',
             !isInitialView && '!duration-0',
           )}
         >
@@ -43,7 +44,7 @@ export const Header = () => {
       <button
         type="button"
         title="Close"
-        className="react-scan-close-button"
+        className="evolu-scan-close-button"
         onClick={handleClose}
       >
         <Icon name="icon-close" />

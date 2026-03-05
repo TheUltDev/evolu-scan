@@ -1,12 +1,12 @@
 import { useState } from 'preact/hooks';
-import { cn } from '~web/utils/helpers';
+import { cn } from '../../utils/helpers';
 import {
   GroupedFiberRender,
   NotificationEvent,
   getComponentName,
   getTotalTime,
 } from './data';
-import { iife } from '~core/notifications/performance-utils';
+import { iife } from '../../../core/notifications/performance-utils';
 
 const formatReactData = (groupedFiberRenders: Array<GroupedFiberRender>) => {
   let text = '';
@@ -111,7 +111,7 @@ const generateInteractionOptimizationPrompt = ({
 Your should split your goals into 2 parts:
 - identifying the problem
 - fixing the problem
-	- it is okay to implement a fix even if you aren't 100% sure the fix solves the performance problem. When you aren't sure, you should tell the user to try repeating the interaction, and feeding the "Formatted Data" in the React Scan notifications optimize tab. This allows you to start a debugging flow with the user, where you attempt a fix, and observe the result. The user may make a mistake when they pass you the formatted data, so must make sure, given the data passed to you, that the associated data ties to the same interaction you were trying to debug.
+	- it is okay to implement a fix even if you aren't 100% sure the fix solves the performance problem. When you aren't sure, you should tell the user to try repeating the interaction, and feeding the "Formatted Data" in the Evolu Scan notifications optimize tab. This allows you to start a debugging flow with the user, where you attempt a fix, and observe the result. The user may make a mistake when they pass you the formatted data, so must make sure, given the data passed to you, that the associated data ties to the same interaction you were trying to debug.
 
 
 Make sure to check if the user has the react compiler enabled (project dependent, configured through build tool), so you don't unnecessarily memoize components. If it is, you do not need to worry about memoizing user components
@@ -176,7 +176,7 @@ const generateFrameDropOptimizationPrompt = ({
 Your should split your goals into 2 parts:
 - identifying the problem
 - fixing the problem
-	- it is okay to implement a fix even if you aren't 100% sure the fix solves the performance problem. When you aren't sure, you should tell the user to try repeating the interaction, and feeding the "Formatted Data" in the React Scan notifications optimize tab. This allows you to start a debugging flow with the user, where you attempt a fix, and observe the result. The user may make a mistake when they pass you the formatted data, so must make sure, given the data passed to you, that the associated data ties to the same interaction you were trying to debug.
+	- it is okay to implement a fix even if you aren't 100% sure the fix solves the performance problem. When you aren't sure, you should tell the user to try repeating the interaction, and feeding the "Formatted Data" in the Evolu Scan notifications optimize tab. This allows you to start a debugging flow with the user, where you attempt a fix, and observe the result. The user may make a mistake when they pass you the formatted data, so must make sure, given the data passed to you, that the associated data ties to the same interaction you were trying to debug.
 
 Make sure to check if the user has the react compiler enabled (project dependent, configured through build tool), so you don't unnecessarily memoize components. If it is, you do not need to worry about memoizing user components
 

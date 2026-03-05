@@ -1,33 +1,47 @@
-import * as esbuild from 'esbuild';
+import { build } from 'rolldown';
+import type { Plugin } from 'rolldown';
 
-/**
- * A hacky plugin to build the worker file (resolving all imports), and inline
- * the javascript into a variable by replacing __WORKER_CODE__ string in bundle with the worker
- * build output
- */
-export const workerPlugin = {
-  name: 'worker-plugin',
-  setup(build) {
-    const workerResult = esbuild.buildSync({
-      entryPoints: ['src/new-outlines/offscreen-canvas.worker.ts'],
-      bundle: true,
-      write: false,
+let workerCodeCache: string | null = null;
+
+async function getWorkerCode(): Promise<string> {
+  if (workerCodeCache) return workerCodeCache;
+
+  const result = await build({
+    input: 'src/new-outlines/offscreen-canvas.worker.ts',
+    platform: 'browser',
+    tsconfig: './tsconfig.json',
+    output: {
       format: 'iife',
-      platform: 'browser',
       minify: true,
-    });
-    const workerCode = workerResult.outputFiles[0].text;
+    },
+    write: false,
+  });
 
-    build.onEnd((result) => {
-      if (!result.outputFiles) return;
+  const chunk = result.output.find((o) => o.type === 'chunk');
+  if (!chunk) throw new Error('Worker build produced no output');
+  workerCodeCache = chunk.code;
+  return workerCodeCache;
+}
 
-      for (const file of result.outputFiles) {
-        const newText = file.text.replace(
-          'var workerCode = "__WORKER_CODE__"',
-          `var workerCode = ${JSON.stringify(workerCode)}`,
-        );
-        file.contents = Buffer.from(newText);
-      }
-    });
+const transformHandler = async function (code: string) {
+  const workerCode = await getWorkerCode();
+  if (!code.includes("'__WORKER_CODE__'")) return null;
+  return {
+    code: code.replace(
+      "'__WORKER_CODE__'",
+      JSON.stringify(workerCode),
+    ),
+  };
+};
+
+export const workerPlugin: Plugin = {
+  name: 'worker-plugin',
+  transform: {
+    filter: {
+      id: {
+        include: [/new-outlines[/\\]index\.[tj]s$/],
+      },
+    },
+    handler: transformHandler,
   },
 };

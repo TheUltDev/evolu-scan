@@ -1,11 +1,11 @@
 import { forwardRef } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { not_globally_unique_generateId } from '~core/utils';
-import { useToolbarEventLog } from '~core/notifications/event-tracking';
-import { FiberRenders } from '~core/notifications/performance';
-import { iife, invariantError } from '~core/notifications/performance-utils';
-import { playNotificationSound } from '~core/utils';
-import { cn } from '~web/utils/helpers';
+import { not_globally_unique_generateId } from '../../../core/utils';
+import { useToolbarEventLog } from '../../../core/notifications/event-tracking';
+import { FiberRenders } from '../../../core/notifications/performance';
+import { iife, invariantError } from '../../../core/notifications/performance-utils';
+import { playNotificationSound } from '../../../core/utils';
+import { cn } from '../../utils/helpers';
 import {
   NotificationStateContext,
   NotificationsState,
@@ -196,11 +196,11 @@ export const NotificationAudio = () => {
   useEffect(() => {
     // todo: sync with options
     const audioEnabledString = localStorage.getItem(
-      'react-scan-notifications-audio',
+      'evolu-scan-notifications-audio',
     );
 
     if (audioEnabledString !== 'false' && audioEnabledString !== 'true') {
-      localStorage.setItem('react-scan-notifications-audio', 'false');
+      localStorage.setItem('evolu-scan-notifications-audio', 'false');
       return;
     }
 
@@ -321,7 +321,7 @@ export const NotificationWrapper = forwardRef<HTMLDivElement>((_, ref) => {
                 };
               }
               case 'render-explanation': {
-                // it would be ideal not to fade this out, but need to spend the time to sync the outline positions as they change in a performant (this was solved in react scan just need to follow same semantics)
+                // it would be ideal not to fade this out, but need to spend the time to sync the outline positions as they change in a performant (this was solved in evolu scan just need to follow same semantics)
                 fadeOutHighlights();
 
                 return newState;

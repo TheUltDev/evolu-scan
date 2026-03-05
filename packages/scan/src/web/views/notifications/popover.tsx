@@ -7,8 +7,8 @@ import {
   useRef,
   useState,
 } from 'preact/compat';
-import { cn } from '~web/utils/helpers';
-import { ToolbarElementContext } from '~web/widget';
+import { cn } from '../../utils/helpers';
+import { ToolbarElementContext } from '../../widget';
 
 type PopoverState = 'closed' | 'opening' | 'open' | 'closing';
 
@@ -146,14 +146,9 @@ export const Popover = ({
           <div
             ref={popoverRef}
             className={cn([
+              'evolu-scan-popover',
               'absolute z-100 bg-white text-black rounded-lg px-3 py-2 shadow-lg',
               'transition-[opacity] duration-120 ease-out',
-              'after:content-[""] after:absolute after:top-[100%]',
-              'after:left-1/2 after:-translate-x-1/2',
-              'after:w-[10px] after:h-[6px]',
-              'after:border-l-[5px] after:border-l-transparent',
-              'after:border-r-[5px] after:border-r-transparent',
-              'after:border-t-[6px] after:border-t-white',
               'pointer-events-none',
               popoverState === 'opening' || popoverState === 'closing'
                 ? 'opacity-0'

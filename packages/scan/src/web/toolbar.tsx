@@ -22,7 +22,7 @@ class ToolbarErrorBoundary extends Component {
           <div className="p-3 bg-black rounded-lg shadow-lg w-80">
             <div className="flex items-center gap-2 mb-2 text-red-400 text-sm font-medium">
               <Icon name="icon-flame" className="text-red-500" size={14} />
-              React Scan ran into a problem
+              Evolu Scan ran into a problem
             </div>
             <div className="p-2 bg-black rounded font-mono text-xs text-red-300 mb-3 break-words">
               {this.state.error?.message || JSON.stringify(this.state.error)}
@@ -45,7 +45,7 @@ class ToolbarErrorBoundary extends Component {
 
 export const createToolbar = (root: ShadowRoot): HTMLElement => {
   const container = document.createElement('div');
-  container.id = 'react-scan-toolbar-root';
+  container.id = 'evolu-scan-toolbar-root';
   window.__REACT_SCAN_TOOLBAR_CONTAINER__ = container;
   root.appendChild(container);
 

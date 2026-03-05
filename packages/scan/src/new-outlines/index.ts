@@ -15,16 +15,16 @@ import {
   ReactScanInternals,
   Store,
   ignoredProps,
-} from '~core/index';
+} from '../core/index';
 import {
   ChangeReason,
   createInstrumentation,
   getContextChanges,
   getStateChanges,
   OldRenderData,
-} from '~core/instrumentation';
-import { log, logIntro } from '~web/utils/log';
-import { inspectorUpdateSignal } from '~web/views/inspector/states';
+} from '../core/instrumentation';
+import { log, logIntro } from '../web/utils/log';
+import { inspectorUpdateSignal } from '../web/views/inspector/states';
 import {
   OUTLINE_ARRAY_SIZE,
   drawCanvas,
@@ -33,7 +33,7 @@ import {
   updateScroll,
 } from './canvas';
 import type { ActiveOutline, BlueprintOutline, OutlineData } from './types';
-import { getChangedPropsDetailed } from '~web/views/inspector/utils';
+import { getChangedPropsDetailed } from '../web/views/inspector/utils';
 
 // The worker code will be replaced at build time
 const workerCode = '__WORKER_CODE__';
@@ -296,7 +296,7 @@ const getDpr = () => {
 export const getCanvasEl = () => {
   cleanup();
   const host = document.createElement('div');
-  host.setAttribute('data-react-scan', 'true');
+  host.setAttribute('data-evolu-scan', 'true');
   const shadowRoot = host.attachShadow({ mode: 'open' });
 
   const canvasEl = document.createElement('canvas');
@@ -435,7 +435,7 @@ export const stop = () => {
 };
 
 export const cleanup = () => {
-  const host = document.querySelector('[data-react-scan]');
+  const host = document.querySelector('[data-evolu-scan]');
   if (host) {
     host.remove();
   }
@@ -557,7 +557,7 @@ export const initReactScanInstrumentation = (setupToolbar: () => void) => {
     }); // TODO(Alexis): perhaps a better timing
   };
 
-  const instrumentation = createInstrumentation('react-scan-devtools-0.1.0', {
+  const instrumentation = createInstrumentation('evolu-scan-devtools-0.1.0', {
     onCommitStart: () => {
       ReactScanInternals.options.value.onCommitStart?.();
     },

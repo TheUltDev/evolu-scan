@@ -1,28 +1,23 @@
-import { type Signal, signal } from '@preact/signals';
-import {
-  type Fiber,
-  detectReactBuildType,
-  getRDTHook,
-  getType,
-  isInstrumentationActive,
-} from 'bippy';
-import type { ComponentType } from 'preact';
-import type { ReactNode } from 'preact/compat';
-import type { RenderData } from 'src/core/utils';
-import { initReactScanInstrumentation } from 'src/new-outlines';
-import styles from '~web/assets/css/styles.css';
-import { createToolbar } from '~web/toolbar';
-import { IS_CLIENT } from '~web/utils/constants';
-import { readLocalStorage, saveLocalStorage } from '~web/utils/helpers';
-import type { States } from '~web/views/inspector/utils';
-import type {
-  ChangeReason,
-  Render,
-  createInstrumentation,
-} from './instrumentation';
+import { signal } from '@preact/signals';
+import { getType, getRDTHook, detectReactBuildType, isInstrumentationActive } from 'bippy';
+import { readLocalStorage, saveLocalStorage } from '../web/utils/helpers';
+import { createToolbar } from '../web/toolbar';
+import { IS_CLIENT } from '../web/utils/constants';
+import styles from '../web/assets/css/styles.css';
+
 import { startTimingTracking } from './notifications/event-tracking';
 import { createHighlightCanvas } from './notifications/outline-overlay';
+import { initReactScanInstrumentation } from '../new-outlines';
 import packageJson from '../../package.json';
+
+import type { Fiber } from 'bippy';
+import type { Evolu } from '@evolu/common';
+import type { Signal } from '@preact/signals';
+import type { ReactNode } from 'preact/compat';
+import type { ComponentType } from 'preact';
+import type { RenderData } from './utils';
+import type { States } from '../web/views/inspector/utils';
+import type { ChangeReason, Render, createInstrumentation } from './instrumentation';
 
 let rootContainer: HTMLDivElement | null = null;
 let shadowRoot: ShadowRoot | null = null;
@@ -38,7 +33,7 @@ const initRootContainer = (): RootContainer => {
   }
 
   rootContainer = document.createElement('div');
-  rootContainer.id = 'react-scan-root';
+  rootContainer.id = 'evolu-scan-root';
 
   shadowRoot = rootContainer.attachShadow({ mode: 'open' });
 
@@ -64,7 +59,7 @@ export interface Options {
   enabled?: boolean;
 
   /**
-   * Force React Scan to run in production (not recommended)
+   * Force Evolu Scan to run in production (not recommended)
    *
    * @default false
    */
@@ -101,7 +96,7 @@ export interface Options {
    * corresponding dom subtree
    *
    *  @default false
-   *  @warning tracking unnecessary renders can add meaningful overhead to react-scan
+   *  @warning tracking unnecessary renders can add meaningful overhead to evolu-scan
    */
   trackUnnecessaryRenders?: boolean;
 
@@ -120,20 +115,26 @@ export interface Options {
   showNotificationCount?: boolean;
 
   /**
-   * Allow React Scan to run inside iframes
+   * Allow Evolu Scan to run inside iframes
    *
    * @default false
    */
   allowInIframe?: boolean;
 
   /**
-   * Should react scan log internal errors to the console.
+   * Should evolu scan log internal errors to the console.
    *
-   * Useful if react scan is not behaving expected and you want to provide information to maintainers when submitting an issue https://github.com/aidenybai/react-scan/issues
+   * Useful if evolu scan is not behaving expected and you want to provide information to maintainers when submitting an issue https://github.com/evoluhq/evolu-scan/issues
    *
    *  @default false
    */
   _debug?: 'verbose' | false;
+
+  /**
+   * Evolu database instance. When provided, a database export button
+   * appears in the toolbar allowing one-click SQLite database download.
+   */
+  evolu?: Evolu<any>;
 
   onCommitStart?: () => void;
   onRender?: (fiber: Fiber, renders: Array<Render>) => void;
@@ -163,7 +164,6 @@ export interface Internals {
   onRender: ((fiber: Fiber, renders: Array<Render>) => void) | null;
   Store: StoreType;
   version: string;
-  runInAllEnvironments: boolean;
 }
 
 export type FunctionalComponentStateChange = {
@@ -238,7 +238,6 @@ export const ReactScanInternals: Internals = {
     showNotificationCount: true,
     allowInIframe: false,
   }),
-  runInAllEnvironments: false,
   onRender: null,
   Store,
   version: packageJson.version,
@@ -250,7 +249,7 @@ if (IS_CLIENT && window.__REACT_SCAN_EXTENSION__) {
 
 export type LocalStorageOptions = Omit<
   Options,
-  'onCommitStart' | 'onRender' | 'onCommitFinish'
+  'onCommitStart' | 'onRender' | 'onCommitFinish' | 'evolu'
 >;
 
 const applyLocalStorageOptions = (options: Options): LocalStorageOptions => {
@@ -258,6 +257,7 @@ const applyLocalStorageOptions = (options: Options): LocalStorageOptions => {
     onCommitStart,
     onRender,
     onCommitFinish,
+    evolu,
     ...rest
   } = options;
   return rest;
@@ -316,6 +316,18 @@ const validateOptions = (options: Partial<Options>): Partial<Options> => {
           ) => void;
         }
         break;
+      case 'evolu':
+        if (
+          value != null &&
+          typeof (value as Options['evolu'])?.exportDatabase === 'function'
+        ) {
+          validOptions.evolu = value as Options['evolu'];
+        } else if (value != null) {
+          errors.push(
+            `- evolu must have an exportDatabase() method. Got "${value}"`,
+          );
+        }
+        break;
       default:
         errors.push(`- Unknown option "${key}"`);
     }
@@ -323,7 +335,7 @@ const validateOptions = (options: Partial<Options>): Partial<Options> => {
 
   if (errors.length > 0) {
     // oxlint-disable-next-line no-console
-    console.warn(`[React Scan] Invalid options:\n${errors.join('\n')}`);
+    console.warn(`[Evolu Scan] Invalid options:\n${errors.join('\n')}`);
   }
 
   return validOptions;
@@ -368,7 +380,7 @@ export const setOptions = (userOptions: Partial<Options>) => {
     // we actually don't care about any other local storage option other than enabled, we should not be syncing those to local storage
     try {
       const existing = readLocalStorage<undefined | Record<string, unknown>>(
-        'react-scan-options',
+        'evolu-scan-options',
       )?.enabled;
 
       if (typeof existing === 'boolean') {
@@ -378,7 +390,7 @@ export const setOptions = (userOptions: Partial<Options>) => {
       if (ReactScanInternals.options.value._debug === 'verbose') {
         // oxlint-disable-next-line no-console
         console.error(
-          '[React Scan Internal Error]',
+          '[Evolu Scan Internal Error]',
           'Failed to create notifications outline canvas',
           e,
         );
@@ -387,7 +399,7 @@ export const setOptions = (userOptions: Partial<Options>) => {
     }
 
     saveLocalStorage<LocalStorageOptions>(
-      'react-scan-options',
+      'evolu-scan-options',
       applyLocalStorageOptions(newOptions),
     );
 
@@ -400,7 +412,7 @@ export const setOptions = (userOptions: Partial<Options>) => {
     if (ReactScanInternals.options.value._debug === 'verbose') {
       // oxlint-disable-next-line no-console
       console.error(
-        '[React Scan Internal Error]',
+        '[Evolu Scan Internal Error]',
         'Failed to create notifications outline canvas',
         e,
       );
@@ -435,7 +447,6 @@ export const start = () => {
     }
 
     if (
-      !ReactScanInternals.runInAllEnvironments &&
       getIsProduction() &&
       !ReactScanInternals.options.value.dangerouslyForceRunInProduction
     ) {
@@ -443,7 +454,7 @@ export const start = () => {
     }
 
     const localStorageOptions =
-      readLocalStorage<LocalStorageOptions>('react-scan-options');
+      readLocalStorage<LocalStorageOptions>('evolu-scan-options');
 
     if (localStorageOptions) {
       const validLocalOptions = validateOptions(localStorageOptions);
@@ -467,7 +478,7 @@ export const start = () => {
         if (isInstrumentationActive()) return;
         // oxlint-disable-next-line no-console
         console.error(
-          '[React Scan] Failed to load. Must import React Scan before React runs.',
+          '[Evolu Scan] Failed to load. Must import Evolu Scan before React runs.',
         );
       }, 5000);
     }
@@ -475,7 +486,7 @@ export const start = () => {
     if (ReactScanInternals.options.value._debug === 'verbose') {
       // oxlint-disable-next-line no-console
       console.error(
-        '[React Scan Internal Error]',
+        '[Evolu Scan Internal Error]',
         'Failed to create notifications outline canvas',
         e,
       );
@@ -514,7 +525,7 @@ const createNotificationsOutlineCanvas = () => {
     if (ReactScanInternals.options.value._debug === 'verbose') {
       // oxlint-disable-next-line no-console
       console.error(
-        '[React Scan Internal Error]',
+        '[Evolu Scan Internal Error]',
         'Failed to create notifications outline canvas',
         e,
       );
@@ -528,8 +539,7 @@ export const scan = (options: Options = {}) => {
 
   if (
     isInIframe &&
-    !ReactScanInternals.options.value.allowInIframe &&
-    !ReactScanInternals.runInAllEnvironments
+    !ReactScanInternals.options.value.allowInIframe
   ) {
     return;
   }

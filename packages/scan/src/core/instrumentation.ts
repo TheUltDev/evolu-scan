@@ -21,12 +21,12 @@ import {
   traverseRenderedFibers,
 } from 'bippy';
 import { isValidElement } from 'preact';
-import { isEqual } from '~core/utils';
+import { isEqual } from './utils';
 import {
   collectContextChanges,
   collectPropsChanges,
   collectStateChanges,
-} from '~web/views/inspector/timeline/utils';
+} from '../web/views/inspector/timeline/utils';
 import {
   type Change,
   type ContextChange,
@@ -343,7 +343,7 @@ interface InstrumentationConfig {
   onPostCommitFiberRoot: () => void;
   // monitoring does not need to track changes, and it adds overhead to leave it on
   trackChanges: boolean;
-  // allows monitoring to continue tracking renders even if react scan dev mode is disabled
+  // allows monitoring to continue tracking renders even if evolu scan dev mode is disabled
   forceAlwaysTrackRenders?: boolean;
 }
 
@@ -522,7 +522,7 @@ export const createInstrumentation = (
     inited = true;
 
     instrument({
-      name: 'react-scan',
+      name: 'evolu-scan',
       onActive: config.onActive,
       onCommitFiberRoot(_rendererID, root) {
         instrumentation.fiberRoots.add(root);

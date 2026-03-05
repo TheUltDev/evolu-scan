@@ -1,6 +1,170 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@source "../../../../**/*.{js,jsx,ts,tsx}";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-mono: "Menlo", "Consolas", "Monaco", "Liberation Mono", "Lucida Console",
+    monospace;
+
+  --spacing-3_5: 0.875rem;
+  --spacing-4_5: 1.125rem;
+  --spacing-5_5: 1.375rem;
+  --spacing-6_5: 1.625rem;
+  --spacing-7_5: 1.875rem;
+  --spacing-8_5: 2.125rem;
+  --spacing-9_5: 2.375rem;
+
+  --color-inspect: #8e61e3;
+
+  --text-xxs: 0.5rem;
+
+  --animate-fade-in: fadeIn ease-in forwards;
+  --animate-fade-out: fadeOut ease-out forwards;
+  --animate-rotate: rotate linear infinite;
+  --animate-shake: shake 0.4s ease-in-out forwards;
+  --animate-count-flash: countFlash 0.3s ease-out forwards;
+  --animate-count-flash-shake: countFlashShake 0.3s ease-out forwards;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes shake {
+    0% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-5px);
+    }
+    50% {
+      transform: translateX(5px);
+    }
+    75% {
+      transform: translateX(-5px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes countFlash {
+    0% {
+      background-color: rgba(168, 85, 247, 0.3);
+      transform: scale(1.05);
+    }
+    100% {
+      background-color: rgba(168, 85, 247, 0.1);
+      transform: scale(1);
+    }
+  }
+
+  @keyframes countFlashShake {
+    0% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-5px);
+    }
+    50% {
+      transform: translateX(5px) scale(1.1);
+    }
+    75% {
+      transform: translateX(-5px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+}
+
+@utility pointer-events-bounding-box {
+  pointer-events: bounding-box;
+}
+
+@utility animation-duration-0 {
+  animation-duration: 0s;
+}
+
+@utility animation-delay-0 {
+  animation-delay: 0s;
+}
+
+@utility animation-duration-100 {
+  animation-duration: 0.1s;
+}
+
+@utility animation-delay-100 {
+  animation-delay: 0.1s;
+}
+
+@utility animation-delay-150 {
+  animation-delay: 0.15s;
+}
+
+@utility animation-duration-200 {
+  animation-duration: 0.2s;
+}
+
+@utility animation-delay-200 {
+  animation-delay: 0.2s;
+}
+
+@utility animation-duration-300 {
+  animation-duration: 0.3s;
+}
+
+@utility animation-delay-300 {
+  animation-delay: 0.3s;
+}
+
+@utility animation-duration-500 {
+  animation-duration: 0.5s;
+}
+
+@utility animation-delay-500 {
+  animation-delay: 0.5s;
+}
+
+@utility animation-duration-700 {
+  animation-duration: 0.7s;
+}
+
+@utility animation-delay-700 {
+  animation-delay: 0.7s;
+}
+
+@utility animation-duration-1000 {
+  animation-duration: 1s;
+}
+
+@utility animation-delay-1000 {
+  animation-delay: 1s;
+}
 
 * {
   outline: none !important;
@@ -58,7 +222,6 @@ input {
 }
 
 svg {
-  @apply w-auto h-auto;
   @apply pointer-events-none;
 }
 
@@ -82,6 +245,7 @@ svg {
 */
 .with-data-text {
   overflow: hidden;
+
   &::before {
     content: attr(data-text);
     @apply block;
@@ -89,7 +253,7 @@ svg {
   }
 }
 
-#react-scan-toolbar {
+#evolu-scan-toolbar {
   @apply fixed left-0 top-0;
   @apply flex flex-col;
   @apply shadow-lg;
@@ -129,7 +293,8 @@ svg {
   @apply transition-all;
 
   svg {
-    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+    @apply absolute top-1/2 left-1/2;
+    translate: -50% -50%;
   }
 }
 
@@ -146,33 +311,36 @@ svg {
 
   &:hover {
     .resize-line {
-      @apply translate-x-0;
+      translate: 0 0;
     }
   }
 }
+
 .resize-right {
   @apply right-0;
-  @apply translate-x-1/2;
+  translate: 50% 0;
 
   .resize-line-wrapper {
     @apply right-0;
   }
+
   .resize-line {
     @apply rounded-r-lg;
-    @apply -translate-x-full;
+    translate: -100% 0;
   }
 }
 
 .resize-left {
   @apply left-0;
-  @apply -translate-x-1/2;
+  translate: -50% 0;
 
   .resize-line-wrapper {
     @apply left-0;
   }
+
   .resize-line {
     @apply rounded-l-lg;
-    @apply translate-x-full;
+    translate: 100% 0;
   }
 }
 
@@ -189,46 +357,49 @@ svg {
 
   &:hover {
     .resize-line {
-      @apply translate-y-0;
+      translate: 0 0;
     }
   }
 }
+
 .resize-top {
   @apply top-0;
-  @apply -translate-y-1/2;
+  translate: 0 -50%;
 
   .resize-line-wrapper {
     @apply top-0;
   }
+
   .resize-line {
     @apply rounded-t-lg;
-    @apply translate-y-full;
+    translate: 0 100%;
   }
 }
 
 .resize-bottom {
   @apply bottom-0;
-  @apply translate-y-1/2;
+  translate: 0 50%;
 
   .resize-line-wrapper {
     @apply bottom-0;
   }
+
   .resize-line {
     @apply rounded-b-lg;
-    @apply -translate-y-full;
+    translate: 0 -100%;
   }
 }
 
-.react-scan-header {
+.evolu-scan-header {
   @apply flex items-center gap-x-2;
   @apply pl-3 pr-2;
   @apply min-h-9;
-  @apply border-b-1 border-[#222];
+  @apply border-b border-[#222];
   @apply whitespace-nowrap overflow-hidden;
 }
 
-.react-scan-replay-button,
-.react-scan-close-button {
+.evolu-scan-replay-button,
+.evolu-scan-close-button {
   @apply flex items-center;
   @apply p-1;
   @apply min-w-fit;
@@ -236,7 +407,7 @@ svg {
   @apply transition-all duration-300;
 }
 
-.react-scan-replay-button {
+.evolu-scan-replay-button {
   @apply relative;
   @apply overflow-hidden;
   @apply !bg-purple-500/50;
@@ -254,18 +425,16 @@ svg {
     content: "";
     @apply absolute;
     @apply inset-0;
-    @apply -translate-x-full;
+    translate: -100% 0;
     animation: shimmer 2s infinite;
-    background: linear-gradient(
-      to right,
-      transparent,
-      rgba(142, 97, 227, 0.3),
-      transparent
-    );
+    background: linear-gradient(to right,
+        transparent,
+        rgba(142, 97, 227, 0.3),
+        transparent);
   }
 }
 
-.react-scan-close-button {
+.evolu-scan-close-button {
   @apply bg-white/10;
 
   &:hover {
@@ -275,7 +444,7 @@ svg {
 
 @keyframes shimmer {
   100% {
-    @apply translate-x-full;
+    transform: translateX(100%);
   }
 }
 
@@ -285,81 +454,82 @@ svg {
   @apply px-3;
   @apply w-full h-7;
   @apply text-[#888] truncate;
-  @apply bg-[#0a0a0a] border-b-1 border-[#222];
+  @apply bg-[#0a0a0a] border-b border-[#222];
 }
 
-.react-scan-section {
+.evolu-scan-section {
   @apply flex flex-col;
   @apply px-2;
   @apply text-[#888];
   @apply before:content-[attr(data-section)] before:text-gray-500;
   @apply text-xs;
 
-  > .react-scan-property {
+  >.evolu-scan-property {
     @apply -ml-3.5;
   }
 }
 
-.react-scan-property {
+.evolu-scan-property {
   @apply relative;
   @apply flex flex-col;
   @apply pl-8;
-  @apply border-l-1 border-transparent;
+  @apply border-l border-transparent;
   @apply overflow-hidden;
 }
 
-.react-scan-property-content {
+.evolu-scan-property-content {
   @apply flex-1 flex flex-col;
   @apply min-h-7;
   @apply max-w-full;
   @apply overflow-hidden;
 }
 
-.react-scan-string {
+.evolu-scan-string {
   color: #9ecbff;
 }
 
-.react-scan-number {
+.evolu-scan-number {
   color: #79c7ff;
 }
 
-.react-scan-boolean {
+.evolu-scan-boolean {
   color: #56b6c2;
 }
 
-.react-scan-key {
+.evolu-scan-key {
   @apply w-fit max-w-60;
   @apply text-white whitespace-nowrap;
 }
 
-.react-scan-input {
+.evolu-scan-input {
   @apply text-white;
   @apply bg-black;
 }
 
 @keyframes blink {
   from {
-    @apply opacity-100;
+    opacity: 1;
   }
+
   to {
-    @apply opacity-0;
+    opacity: 0;
   }
 }
 
-.react-scan-arrow {
+.evolu-scan-arrow {
   @apply absolute top-0 left-7;
   @apply flex items-center justify-center;
   @apply cursor-pointer;
   @apply w-6 h-7;
-  @apply -translate-x-full;
+  translate: -100% 0;
   @apply z-10;
 
-  > svg {
+  >svg {
     @apply transition-transform;
   }
 }
 
-.react-scan-nested {
+.evolu-scan-nested {
   @apply relative;
   @apply overflow-hidden;
 
@@ -371,24 +541,24 @@ svg {
   }
 }
 
-.react-scan-settings {
+.evolu-scan-settings {
   @apply absolute inset-0;
   @apply flex flex-col gap-4;
   @apply py-2 px-4;
   @apply text-[#888];
 
-  > div {
+  >div {
     @apply flex items-center justify-between;
     @apply transition-colors duration-300;
   }
 }
 
-.react-scan-preview-line {
+.evolu-scan-preview-line {
   @apply relative;
   @apply flex items-center min-h-7 gap-x-2;
 }
 
-.react-scan-flash-overlay {
+.evolu-scan-flash-overlay {
   @apply absolute inset-0;
   @apply opacity-0;
   @apply z-50;
@@ -398,7 +568,7 @@ svg {
   @apply bg-purple-500/90;
 }
 
-.react-scan-toggle {
+.evolu-scan-toggle {
   @apply relative;
   @apply inline-flex;
   @apply w-10 h-6;
@@ -411,18 +581,18 @@ svg {
   }
 
   input:checked {
-    + div {
+    +div {
       @apply bg-[#5f3f9a];
 
       &::before {
-        @apply translate-x-full;
+        translate: 100% -50%;
         @apply left-auto;
         @apply border-[#5f3f9a];
       }
     }
   }
 
-  > div {
+  >div {
     @apply absolute inset-1;
     @apply bg-neutral-700;
     @apply rounded-full;
@@ -432,23 +602,23 @@ svg {
     &:before {
       @apply content-[''];
       @apply absolute top-1/2 left-0;
-      @apply -translate-y-1/2;
+      translate: 0 -50%;
       @apply w-4 h-4;
       @apply bg-white;
       @apply border-2 border-neutral-700;
       @apply rounded-full;
-      @apply shadow-sm;
+      @apply shadow-xs;
       @apply transition-all duration-300;
     }
   }
 }
 
-.react-scan-flash-active {
+.evolu-scan-flash-active {
   @apply opacity-40;
   @apply transition-opacity duration-300;
 }
 
-.react-scan-inspector-overlay {
+.evolu-scan-inspector-overlay {
   @apply flex flex-col;
   @apply opacity-0;
   @apply transition-opacity duration-200 ease-out;
@@ -463,7 +633,7 @@ svg {
   }
 }
 
-.react-scan-what-changed {
+.evolu-scan-what-changed {
   ul {
     @apply list-disc;
     @apply pl-4;
@@ -471,7 +641,8 @@ svg {
 
   li {
     @apply whitespace-nowrap;
-    > div {
+
+    >div {
       @apply flex items-center justify-between gap-x-2;
     }
   }
@@ -491,7 +662,8 @@ svg {
 }
 
 .count-flash-white {
-  @apply animate-count-flash-shake !delay-500;
+  @apply animate-count-flash-shake;
+  animation-delay: 500ms !important;
 }
 
 .change-scope {
@@ -500,7 +672,7 @@ svg {
   @apply text-xs;
   @apply font-mono;
 
-  > div {
+  >div {
     @apply px-1.5 py-0.5;
     @apply text-xs font-medium tabular-nums rounded-[4px];
     @apply origin-center;
@@ -512,18 +684,19 @@ svg {
   }
 }
 
-.react-scan-slider {
+.evolu-scan-slider {
   @apply relative;
   @apply min-h-6;
 
-  > input {
+  >input {
     @apply absolute inset-0;
     @apply opacity-0;
   }
 
   &:before {
     @apply content-[''];
-    @apply absolute inset-x-0 top-1/2 -translate-y-1/2;
+    @apply absolute inset-x-0 top-1/2;
+    translate: 0 -50%;
     @apply h-1.5;
     @apply bg-[#8e61e3]/40;
     @apply rounded-lg;
@@ -537,7 +710,8 @@ svg {
   }
 
   span {
-    @apply absolute left-0 top-1/2 -translate-y-1/2;
+    @apply absolute left-0 top-1/2;
+    translate: 0 -50%;
     @apply w-2.5 h-2.5;
     @apply rounded-lg;
     @apply bg-[#8e61e3];
@@ -554,7 +728,7 @@ svg {
 
   &:hover,
   &:active {
-    > span {
+    >span {
       @apply bg-[#222];
     }
 
@@ -565,21 +739,24 @@ svg {
 
   &::before {
     @apply content-[""];
-    @apply absolute inset-0 left-1/2 -translate-x-1/2;
+    @apply absolute inset-0 left-1/2;
+    translate: -50% 0;
     @apply w-[1px];
     @apply bg-[#222];
     @apply transition-colors;
   }
 
-  > span {
-    @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
+  >span {
+    @apply absolute left-1/2 top-1/2;
+    translate: -50% -50%;
     @apply w-1.5 h-4.5;
     @apply rounded;
     @apply transition-colors;
   }
 
   svg {
-    @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
+    @apply absolute left-1/2 top-1/2;
+    translate: -50% -50%;
     @apply text-neutral-400 rotate-90;
     @apply opacity-0;
     @apply transition-opacity;
@@ -616,7 +793,7 @@ svg {
   }
 }
 
-.react-scan-toolbar-notification {
+.evolu-scan-toolbar-notification {
   @apply absolute inset-x-0;
   @apply flex items-center gap-x-2;
   @apply p-1 pl-2 text-[10px];
@@ -632,55 +809,103 @@ svg {
   }
 
   &.position-top {
-    @apply top-full -translate-y-full;
+    @apply top-full;
+    translate: 0 -100%;
     @apply rounded-b-lg;
 
     &::before {
-      @apply top-0 -translate-y-full;
+      @apply top-0;
+      translate: 0 -100%;
     }
   }
 
   &.position-bottom {
-    @apply bottom-full translate-y-full;
+    @apply bottom-full;
+    translate: 0 100%;
     @apply rounded-t-lg;
 
     &::before {
-      @apply bottom-0 translate-y-full;
+      @apply bottom-0;
+      translate: 0 100%;
     }
   }
 
   &.is-open {
-    @apply translate-y-0;
+    translate: 0 0;
   }
 }
 
-.react-scan-header-item {
-  @apply absolute inset-0 -translate-y-[200%];
+.evolu-scan-header-item {
+  @apply absolute inset-0;
+  @apply flex items-center;
+  translate: 0 -200%;
   @apply transition-transform duration-300;
 
   &.is-visible {
-    @apply translate-y-0;
+    translate: 0 0;
   }
 }
 
-.react-scan-components-tree:has(.resize-v-line:hover, .resize-v-line:active)
-  .tree {
+.evolu-scan-components-tree:has(.resize-v-line:hover, .resize-v-line:active) .tree {
   overflow: hidden;
 }
 
-.react-scan-expandable {
+.evolu-scan-expandable {
   display: grid;
   grid-template-rows: 0fr;
   @apply overflow-hidden;
   @apply transition-all duration-75;
   transition-timing-function: ease-out;
 
-  > * {
+  >* {
     min-height: 0;
   }
 
-  &.react-scan-expanded {
+  &.evolu-scan-expanded {
     grid-template-rows: 1fr;
     transition-duration: 100ms;
+  }
+}
+
+@keyframes evoluCellFlash {
+  0% {
+    background-color: rgba(142, 97, 227, 0.4);
+    box-shadow: inset 0 0 0 1px rgba(142, 97, 227, 0.6);
+  }
+
+  100% {
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
+
+@keyframes evoluRowFlash {
+  0% {
+    background-color: rgba(142, 97, 227, 0.25);
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}
+
+.evolu-cell-flash {
+  animation: evoluCellFlash 1.2s ease-out forwards;
+}
+
+.evolu-row-flash {
+  animation: evoluRowFlash 1.2s ease-out forwards;
+}
+
+.evolu-scan-popover {
+  &::after {
+    @apply content-[""] absolute;
+    top: 100%;
+    left: 50%;
+    translate: -50% 0;
+    @apply w-[10px] h-[6px];
+    @apply border-l-[5px] border-l-transparent;
+    @apply border-r-[5px] border-r-transparent;
+    @apply border-t-[6px] border-t-white;
   }
 }

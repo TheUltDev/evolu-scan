@@ -2,11 +2,11 @@ import { computed, untracked, useSignalEffect } from '@preact/signals';
 import type { Fiber } from 'bippy';
 import { Component } from 'preact';
 import { useEffect, useRef } from 'preact/hooks';
-import { Store } from '~core/index';
-import { Icon } from '~web/components/icon';
-import { signalIsSettingsOpen, signalWidgetViews } from '~web/state';
-import { cn } from '~web/utils/helpers';
-import { constant } from '~web/utils/preact/constant';
+import { Store } from '../../../core/index';
+import { Icon } from '../../components/icon';
+import { signalIsSettingsOpen, signalWidgetViews } from '../../state';
+import { cn } from '../../utils/helpers';
+import { constant } from '../../utils/preact/constant';
 import { ComponentsTree } from './components-tree';
 import { flashManager } from './flash-overlay';
 import {
@@ -78,7 +78,7 @@ class InspectorErrorBoundary extends Component {
 
 const inspectorContainerClassName = computed(() =>
   cn(
-    'react-scan-inspector',
+    'evolu-scan-inspector',
     'flex-1',
     'opacity-0',
     'overflow-y-auto overflow-x-hidden',

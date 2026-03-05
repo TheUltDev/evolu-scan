@@ -8,9 +8,9 @@ import {
   isHostFiber,
   traverseFiber,
 } from 'bippy';
-import { type PropsChange, ReactScanInternals } from '~core/index';
-import { ChangeReason } from '~core/instrumentation';
-import { isEqual } from '~core/utils';
+import { type PropsChange, ReactScanInternals } from '../../../core/index';
+import { ChangeReason } from '../../../core/instrumentation';
+import { isEqual } from '../../../core/utils';
 import { globalInspectorState } from '.';
 import type { ExtendedReactRenderer } from '../../../types';
 import { TIMELINE_MAX_UPDATES } from './states';

@@ -1,8 +1,8 @@
-import { cn } from '~web/utils/helpers';
+import { cn } from '../../utils/helpers';
 import { NotificationEvent, useNotificationsContext } from './data';
 import { Popover } from './popover';
 import { VolumeOffIcon, VolumeOnIcon } from './icons';
-import { playNotificationSound } from '~core/utils';
+import { playNotificationSound } from '../../../core/utils';
 
 export const NotificationTabs = ({
   selectedEvent: _,
@@ -85,7 +85,7 @@ export const NotificationTabs = ({
                 }
                 const prevEnabledState = prev.audioNotificationsOptions.enabled;
                 localStorage.setItem(
-                  'react-scan-notifications-audio',
+                  'evolu-scan-notifications-audio',
                   String(!prevEnabledState),
                 );
 

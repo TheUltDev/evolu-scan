@@ -1,6 +1,6 @@
 import { memo } from 'preact/compat';
 import { useCallback, useRef, useState } from 'preact/hooks';
-import type { useMergedRefs } from '~web/hooks/use-merged-refs';
+import type { useMergedRefs } from '../../hooks/use-merged-refs';
 
 interface StickyRenderProps {
   refSticky: ReturnType<typeof useMergedRefs<HTMLElement>>;

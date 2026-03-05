@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'preact/hooks';
-import { getFPS } from '~core/instrumentation';
-import { cn } from '~web/utils/helpers';
+import { getFPS } from '../../core/instrumentation';
+import { cn } from '../utils/helpers';
 
 export const FpsMeterInner = ({fps}:{fps: number}) => {
 

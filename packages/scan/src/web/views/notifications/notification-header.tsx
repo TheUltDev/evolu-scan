@@ -1,4 +1,4 @@
-import { cn } from '~web/utils/helpers';
+import { cn } from '../../utils/helpers';
 import {
   NotificationEvent,
   getComponentName,
@@ -6,7 +6,7 @@ import {
   getTotalTime,
 } from './data';
 import { CloseIcon } from './icons';
-import { signalWidgetViews } from '~web/state';
+import { signalWidgetViews } from '../../state';
 
 export const NotificationHeader = ({
   selectedEvent,

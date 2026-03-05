@@ -1,4 +1,10 @@
 packages:
-  - 'packages/*'
-  - 'kitchen-sink'
-  
+  - "packages/*"
+  - "demo"
+
+catalog:
+  "@evolu/common": "^7.4.1"
+  "@types/node": "^25.3.3"
+  "@types/react": "^19.2.14"
+  "@types/react-dom": "^19.2.3"
+  typescript: "^5.9.3"

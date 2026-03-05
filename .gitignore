@@ -1,16 +1,17 @@
-node_modules
+# General
 .DS_Store
+
+# Node.js
+node_modules
+
+# Project
 .env
 dist
-**/*.tgz
-*.log
 build
-!packages/extension/build/
+*.log
+**/*.tgz
 playgrounds
-# SSL Certificates
-bin/certs/*.pem
-bin/certs/*.key
-.cursor
+
 # Playwright
 test-results/
 playwright-report/

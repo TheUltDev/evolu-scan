@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useRef, useState } from 'preact/compat';
-import { playNotificationSound } from '~core/utils';
-import { cn } from '~web/utils/helpers';
+import { playNotificationSound } from '../../../core/utils';
+import { cn } from '../../utils/helpers';
 import { useNotificationsContext } from './data';
 import { CloseIcon } from './icons';
 import { NotificationTabs } from './notification-tabs';
@@ -8,7 +8,7 @@ import { Optimize } from './optimize';
 import { OtherVisualization } from './other-visualization';
 import { RenderBarChart } from './render-bar-chart';
 import { RenderExplanation } from './render-explanation';
-import { signalWidgetViews } from '~web/state';
+import { signalWidgetViews } from '../../state';
 
 export const DetailsRoutes = () => {
   const { notificationState, setNotificationState } = useNotificationsContext();
@@ -70,7 +70,7 @@ export const DetailsRoutes = () => {
               </p>
             )}
             <p className={cn(['text-zinc-600 text-xs'])}>
-              You don't need to keep this panel open for React Scan to record
+              You don't need to keep this panel open for Evolu Scan to record
               slowdowns
             </p>
             <p className={cn(['text-zinc-600 text-xs'])}>
@@ -87,7 +87,7 @@ export const DetailsRoutes = () => {
                     ) {
                       prev.audioNotificationsOptions.audioContext?.close();
                     }
-                    localStorage.setItem('react-scan-notifications-audio', 'false');
+                    localStorage.setItem('evolu-scan-notifications-audio', 'false');
                     return {
                       ...prev,
                       audioNotificationsOptions: {
@@ -98,7 +98,7 @@ export const DetailsRoutes = () => {
                   });
                   return;
                 }
-                localStorage.setItem('react-scan-notifications-audio', 'true');
+                localStorage.setItem('evolu-scan-notifications-audio', 'true');
                 const audioContext = new AudioContext();
                 playNotificationSound(audioContext);
                 setNotificationState((prev) => ({

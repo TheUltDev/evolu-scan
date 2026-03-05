@@ -1,14 +1,14 @@
 import { createContext, type JSX } from "preact";
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
-import { Store, ReactScanInternals } from "~core/index";
+import { Store, ReactScanInternals } from "../../core/index";
 import {
   cn,
   saveLocalStorage,
   removeLocalStorage,
   readLocalStorage,
-} from "~web/utils/helpers";
-import { Content } from "~web/views";
-import { ScanOverlay } from "~web/views/inspector/overlay";
+} from "../utils/helpers";
+import { Content } from "../views";
+import { ScanOverlay } from "../views/inspector/overlay";
 import {
   LOCALSTORAGE_KEY,
   LOCALSTORAGE_COLLAPSED_KEY,
@@ -30,8 +30,8 @@ import {
   getBestCorner,
 } from "./helpers";
 import { ResizeHandle } from "./resize-handle";
-import { signalWidgetCollapsed } from "~web/state";
-import { Icon } from "~web/components/icon";
+import { signalWidgetCollapsed } from "../state";
+import { Icon } from "../components/icon";
 import { Corner } from "./types";
 import type { CollapsedPosition } from "./types";
 
@@ -180,7 +180,7 @@ export const Widget = () => {
     (e: JSX.TargetedPointerEvent<HTMLDivElement>) => {
       e.preventDefault();
 
-      if (!refWidget.current || (e.target as HTMLElement).closest("button"))
+      if (!refWidget.current || (e.target as HTMLElement).closest("button, th, [data-resize-handle], [data-sidebar-resize]"))
         return;
 
       const container = refWidget.current;
@@ -662,7 +662,7 @@ export const Widget = () => {
       <ScanOverlay />
       <ToolbarElementContext.Provider value={refWidget.current}>
         <div
-          id="react-scan-toolbar"
+          id="evolu-scan-toolbar"
           dir="ltr"
           ref={refWidget}
           onPointerDown={!isCollapsed ? handleDrag : handleCollapsedDrag}

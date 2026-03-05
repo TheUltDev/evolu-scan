@@ -27,7 +27,7 @@ export const flashManager = {
 
   create(container: HTMLElement) {
     const existingOverlay = container.querySelector(
-      '.react-scan-flash-overlay',
+      '.evolu-scan-flash-overlay',
     );
 
     const overlay =
@@ -35,11 +35,11 @@ export const flashManager = {
         ? existingOverlay
         : (() => {
             const newOverlay = document.createElement('div');
-            newOverlay.className = 'react-scan-flash-overlay';
+            newOverlay.className = 'evolu-scan-flash-overlay';
             container.appendChild(newOverlay);
 
             const scrollCleanup = trackElementPosition(container, () => {
-              if (container.querySelector('.react-scan-flash-overlay')) {
+              if (container.querySelector('.evolu-scan-flash-overlay')) {
                 this.create(container);
               }
             });

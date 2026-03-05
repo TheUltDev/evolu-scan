@@ -1,5 +1,5 @@
-import { signalIsSettingsOpen } from '~web/state';
-import { cn } from '~web/utils/helpers';
+import { signalIsSettingsOpen } from '../../state';
+import { cn } from '../../utils/helpers';
 
 export const HeaderSettings = () => {
   const isSettingsOpen = signalIsSettingsOpen.value;
@@ -7,10 +7,9 @@ export const HeaderSettings = () => {
     <span
       data-text="Settings"
       className={cn(
-        'absolute inset-0 flex items-center',
+        'evolu-scan-header-item',
         'with-data-text',
-        'transition-transform duration-300',
-        isSettingsOpen ? 'translate-y-0' : '-translate-y-[200%]',
+        isSettingsOpen && 'is-visible',
       )}
     />
   );

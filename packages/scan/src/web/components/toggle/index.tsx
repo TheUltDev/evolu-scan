@@ -1,5 +1,5 @@
 import type { JSX } from 'preact';
-import { cn } from '~web/utils/helpers';
+import { cn } from '../../utils/helpers';
 
 interface ToggleProps extends JSX.HTMLAttributes<HTMLInputElement> {
   checked: boolean;
@@ -12,7 +12,7 @@ export const Toggle = ({
   ...props
 }: ToggleProps) => {
   return (
-    <div className={cn('react-scan-toggle', className)}>
+    <div className={cn('evolu-scan-toggle', className)}>
       <input
         type="checkbox"
         {...props}

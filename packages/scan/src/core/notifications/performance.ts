@@ -11,21 +11,21 @@ import { Store } from '../..';
 import {
   BoundedArray,
   invariantError,
-} from '~core/notifications/performance-utils';
+} from './performance-utils';
 import {
   SectionData,
   collectInspectorDataWithoutCounts,
-} from '~web/views/inspector/timeline/utils';
+} from '../../web/views/inspector/timeline/utils';
 import {
   getFiberFromElement,
   getParentCompositeFiber,
-} from '~web/views/inspector/utils';
+} from '../../web/views/inspector/utils';
 import { performanceEntryChannels } from './performance-store';
 import type {
   PerformanceInteraction,
   PerformanceInteractionEntry,
 } from './types';
-import { not_globally_unique_generateId } from '~core/utils';
+import { not_globally_unique_generateId } from '../utils';
 
 interface PathFilters {
   skipProviders: boolean;
@@ -323,8 +323,8 @@ const setupPerformanceListener = (
       let current: Element | null = entry.target;
       while (current) {
         if (
-          current.id === 'react-scan-toolbar-root' ||
-          current.id === 'react-scan-root'
+          current.id === 'evolu-scan-toolbar-root' ||
+          current.id === 'evolu-scan-root'
         ) {
           return;
         }
@@ -645,7 +645,7 @@ export const setupDetailedPointerTimingListener = (
     const path = e.composedPath();
     if (
       path.some(
-        (el) => el instanceof Element && el.id === 'react-scan-toolbar-root',
+        (el) => el instanceof Element && el.id === 'evolu-scan-toolbar-root',
       )
     ) {
       return;

@@ -1,0 +1,43 @@
+name: Preview Package
+
+on:
+  workflow_dispatch:
+
+# Disabled — was triggered on pull_request for all branches.
+# To re-enable, replace `workflow_dispatch` with:
+#   pull_request:
+#     branches: ["**"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [24]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --strict-peer-dependencies=false
+
+      - name: Build scan package
+        run: |
+          cd packages/scan
+          NODE_ENV=production pnpm build
+        env:
+          NODE_ENV: production
+
+      - name: Publish to pkg-pr-new
+        run: pnpx pkg-pr-new publish ./packages/scan
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -6,9 +6,9 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
-import { CopyToClipboard } from '~web/components/copy-to-clipboard';
-import { Icon } from '~web/components/icon';
-import { cn, throttle } from '~web/utils/helpers';
+import { CopyToClipboard } from '../../components/copy-to-clipboard';
+import { Icon } from '../../components/icon';
+import { cn, throttle } from '../../utils/helpers';
 import { DiffValueView } from './diff-value';
 import { timelineState } from './states';
 import {
@@ -23,7 +23,7 @@ import {
   useInspectedFiberChangeStore,
 } from './whats-changed/use-change-store';
 import { getDisplayName, getType } from 'bippy';
-import { Store } from '~core/index';
+import { Store } from '../../../core/index';
 
 export type Setter<T> = Dispatch<StateUpdater<T>>;
 
@@ -236,7 +236,7 @@ const WhatsChangedHeader = memo(() => {
         'transition-[max-height]',
       )}
     >
-      <div className={cn('flex-1 react-scan-expandable')}>
+      <div className={cn('flex-1 evolu-scan-expandable')}>
         <div className="overflow-hidden">
           <div className="flex items-center whitespace-nowrap">
             <div className="flex items-center gap-x-2">What changed?</div>
@@ -334,11 +334,11 @@ const Section = /* @__PURE__ */ memo(
                   </div>
                 </button>
                 <div
-                  className={cn('react-scan-expandable', {
-                    'react-scan-expanded': isEntryExpanded,
+                  className={cn('evolu-scan-expandable', {
+                    'evolu-scan-expanded': isEntryExpanded,
                   })}
                 >
-                  <div className="pl-3 text-xs font-mono border-l-1 border-[#333]">
+                  <div className="pl-3 text-xs font-mono border-l border-[#333]">
                     <div className="flex flex-col gap-0.5">
                       {prevError || currError ? (
                         <AccessError

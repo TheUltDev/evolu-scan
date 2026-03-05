@@ -6,12 +6,12 @@ test.describe('Toolbar', () => {
     await gotoFixture(page);
   });
 
-  test('React Scan initializes and attaches to the page', async ({ page }) => {
+  test('Evolu Scan initializes and attaches to the page', async ({ page }) => {
     const active = await isReactScanActive(page);
     expect(active).toBe(true);
   });
 
-  test('React Scan internals are accessible', async ({ page }) => {
+  test('Evolu Scan internals are accessible', async ({ page }) => {
     const hasInternals = await page.evaluate(() => {
       const scan = (window as any).__REACT_SCAN__;
       return (
@@ -49,7 +49,7 @@ test.describe('Toolbar', () => {
   test('toolbar has content in shadow DOM', async ({ page }) => {
     await page.waitForTimeout(1000);
     const childCount = await page.evaluate(() => {
-      const root = document.getElementById('react-scan-root');
+      const root = document.getElementById('evolu-scan-root');
       return root?.shadowRoot?.children.length ?? 0;
     });
     expect(childCount).toBeGreaterThan(0);

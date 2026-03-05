@@ -3,24 +3,9 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist",
-    "baseUrl": ".",
     "types": [
       "node"
-    ],
-    "paths": {
-      "~web/*": [
-        "src/web/*"
-      ],
-      "~core/*": [
-        "src/core/*"
-      ],
-      "~monitor/*": [
-        "src/monitor/*"
-      ],
-      "~instrumentation/*": [
-        "src/instrumentation/*"
-      ]
-    }
+    ]
   },
   "include": [
     "src",

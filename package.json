@@ -2,41 +2,33 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "build": "node scripts/workspace.mjs build",
-    "postbuild": "node scripts/version-warning.mjs",
-    "dev": "node scripts/workspace.mjs dev",
-    "pack": "node scripts/workspace.mjs pack",
-    "pack:bump": "pnpm --filter scan pack:bump",
+    "build": "pnpm --filter @evolu/scan build",
+    "build:demo": "pnpm --filter @evolu/scan-demo build",
+    "dev": "pnpm --filter @evolu/scan dev",
+    "dev:demo": "pnpm --filter @evolu/scan-demo dev",
     "lint": "pnpm -r lint",
     "lint:all": "oxlint .",
-    "changeset": "changeset add",
-    "version": "changeset version",
-    "release": "changeset publish",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.12",
-    "@playwright/test": "^1.58.2",
-    "@types/node": "^22.10.2",
-    "autoprefixer": "^10.4.20",
-    "boxen": "^8.0.1",
-    "chalk": "^5.3.0",
+    "@evolu/common": "catalog:",
+    "@playwright/test": "latest",
+    "@types/node": "catalog:",
     "oxlint": "latest",
-    "postcss": "^8.5.3",
-    "rimraf": "^6.0.1",
-    "tailwindcss": "^3.4.17",
-    "typescript": "latest",
-    "vite-tsconfig-paths": "^5.1.4"
+    "typescript": "catalog:"
   },
-  "packageManager": "pnpm@9.1.0",
-  "dependencies": {
-    "@vercel/speed-insights": "^1.1.0"
-  },
+  "packageManager": "pnpm@10.30.3",
   "pnpm": {
+    "onlyBuiltDependencies": [
+      "@evolu/sqlite-wasm",
+      "@playwright/test"
+    ],
     "overrides": {
-      "@jridgewell/gen-mapping": "0.3.2",
-      "@jridgewell/sourcemap-codec": "1.4.15"
+      "@jridgewell/gen-mapping": "0.3.13",
+      "@jridgewell/sourcemap-codec": "1.5.5",
+      "@types/react": "catalog:",
+      "@types/react-dom": "catalog:"
     }
   }
 }

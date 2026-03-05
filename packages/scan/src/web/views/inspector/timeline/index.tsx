@@ -1,9 +1,9 @@
 import { isInstrumentationActive } from 'bippy';
 import { memo } from 'preact/compat';
 import { useCallback, useEffect, useMemo, useRef } from 'preact/hooks';
-import { Icon } from '~web/components/icon';
-import { Slider } from '~web/components/slider';
-import type { useMergedRefs } from '~web/hooks/use-merged-refs';
+import { Icon } from '../../../components/icon';
+import { Slider } from '../../../components/slider';
+import type { useMergedRefs } from '../../../hooks/use-merged-refs';
 import { timelineActions, timelineState } from '../states';
 import { calculateSliderValues } from '../utils';
 

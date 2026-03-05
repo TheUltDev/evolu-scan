@@ -9,15 +9,15 @@ import {
   type LocalStorageOptions,
   ReactScanInternals,
   Store,
-} from '~core/index';
-import { Icon } from '~web/components/icon';
-import { Toggle } from '~web/components/toggle';
-import { signalWidgetViews } from '~web/state';
-import { cn, readLocalStorage, saveLocalStorage } from '~web/utils/helpers';
-import { constant } from '~web/utils/preact/constant';
-import { FPSMeter } from '~web/widget/fps-meter';
+} from '../../../core/index';
+import { Icon } from '../../components/icon';
+import { Toggle } from '../../components/toggle';
+import { signalWidgetViews } from '../../state';
+import { cn, readLocalStorage, saveLocalStorage } from '../../utils/helpers';
+import { constant } from '../../utils/preact/constant';
+import { FPSMeter } from '../../widget/fps-meter';
 import { getEventSeverity } from '../notifications/data';
-import { Notification } from '../notifications/icons';
+import { TimerIcon } from '../notifications/icons';
 import { useAppNotifications } from '../notifications/notifications';
 
 export const Toolbar = constant(() => {
@@ -93,8 +93,8 @@ export const Toolbar = constant(() => {
     const isPaused = !ReactScanInternals.instrumentation.isPaused.value;
     ReactScanInternals.instrumentation.isPaused.value = isPaused;
     const existingLocalStorageOptions =
-      readLocalStorage<LocalStorageOptions>('react-scan-options');
-    saveLocalStorage('react-scan-options', {
+      readLocalStorage<LocalStorageOptions>('evolu-scan-options');
+    saveLocalStorage('evolu-scan-options', {
       ...existingLocalStorageOptions,
       enabled: !isPaused,
     });
@@ -137,8 +137,8 @@ export const Toolbar = constant(() => {
       <div className="h-full flex items-center min-w-fit">
         <button
           type="button"
-          id="react-scan-inspect-element"
-          title="Inspect element"
+          id="evolu-scan-inspect-element"
+          title="Inspector"
           onClick={onToggleInspect}
           className="button flex items-center justify-center h-full w-full pl-3 pr-2.5"
           style={{ color: inspectColor }}
@@ -147,11 +147,15 @@ export const Toolbar = constant(() => {
         </button>
       </div>
 
+      {ReactScanInternals.options.value.evolu && (
+        <EvoluDbButton />
+      )}
+
       <div className="h-full flex items-center justify-center">
         <button
           type="button"
-          id="react-scan-notifications"
-          title="Notifications"
+          id="evolu-scan-notifications"
+          title="Profiler"
           onClick={() => {
             if (Store.inspectState.value.kind !== 'inspect-off') {
               Store.inspectState.value = {
@@ -177,6 +181,14 @@ export const Toolbar = constant(() => {
                 };
                 return;
               }
+              case 'evolu': {
+                const ids = new Set(events.map((event) => event.id));
+                setSeenEvents([...ids.values()]);
+                signalWidgetViews.value = {
+                  view: 'notifications',
+                };
+                return;
+              }
               case 'none': {
                 const ids = new Set(events.map((event) => event.id));
                 setSeenEvents([...ids.values()]);
@@ -190,7 +202,7 @@ export const Toolbar = constant(() => {
           className="button flex items-center justify-center h-full pl-2.5 pr-2.5"
           style={{ color: inspectColor }}
         >
-          <Notification
+          <TimerIcon
             events={laggedEvents
               .filter((event) => !seenEvents.includes(event.id))
               .map((event) => getEventSeverity(event) === 'high')}
@@ -216,3 +228,32 @@ export const Toolbar = constant(() => {
     </div>
   );
 });
+
+function EvoluDbButton() {
+  const isActive = signalWidgetViews.value.view === 'evolu';
+
+  const onClick = useCallback(() => {
+    if (Store.inspectState.value.kind !== 'inspect-off') {
+      Store.inspectState.value = { kind: 'inspect-off' };
+    }
+    if (isActive) {
+      signalWidgetViews.value = { view: 'none' };
+    } else {
+      signalWidgetViews.value = { view: 'evolu' };
+    }
+  }, [isActive]);
+
+  return (
+    <div className="h-full flex items-center justify-center">
+      <button
+        type="button"
+        title={isActive ? 'Close database' : 'Database'}
+        onClick={onClick}
+        className="button flex items-center justify-center h-full pl-2.5 pr-2.5"
+        style={{ color: isActive ? '#8e61e3' : '#999' }}
+      >
+        <Icon name="icon-database" />
+      </button>
+    </div>
+  );
+}

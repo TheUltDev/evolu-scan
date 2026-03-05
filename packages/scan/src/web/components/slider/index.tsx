@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from "preact/hooks";
-import { cn } from "~web/utils/helpers";
+import { cn } from "../../utils/helpers";
 
 interface SliderProps {
   className?: string;
@@ -60,7 +60,7 @@ export const Slider = ({
         e.stopPropagation();
       }}
       className={cn(
-        'react-scan-slider relative',
+        'evolu-scan-slider relative',
         'flex-1',
         className
       )}
@@ -72,7 +72,7 @@ export const Slider = ({
         max={max}
         onChange={handleChange}
         className={cn(
-          'react-scan-slider',
+          'evolu-scan-slider',
           'flex-1',
           'h-1.5',
           'bg-gray-200',

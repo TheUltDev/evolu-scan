@@ -1,8 +1,8 @@
 // @ts-nocheck
 import { type Fiber, getType } from 'bippy';
-import { ReactScanInternals } from '~core/index';
+import { ReactScanInternals } from './index';
 import type { AggregatedChange, AggregatedRender, Render } from './instrumentation';
-import { IS_CLIENT } from '~web/utils/constants';
+import { IS_CLIENT } from '../web/utils/constants';
 
 export const aggregateChanges = (
   changes: Array<Change>,

@@ -7,11 +7,11 @@ import {
   useState,
 } from 'preact/hooks';
 
-import { isEqual } from '~core/utils';
-import { CopyToClipboard } from '~web/components/copy-to-clipboard';
-import { Icon } from '~web/components/icon';
-import { useMergedRefs } from '~web/hooks/use-merged-refs';
-import { cn, tryOrElse } from '~web/utils/helpers';
+import { isEqual } from '../../../core/utils';
+import { CopyToClipboard } from '../../components/copy-to-clipboard';
+import { Icon } from '../../components/icon';
+import { useMergedRefs } from '../../hooks/use-merged-refs';
+import { cn, tryOrElse } from '../../utils/helpers';
 import { globalInspectorState } from '.';
 import { flashManager } from './flash-overlay';
 import { timelineState } from './states';
@@ -145,7 +145,7 @@ export const EditableValue = ({
     <input
       ref={refInput}
       type={value instanceof Date ? 'datetime-local' : 'text'}
-      className="react-scan-input flex-1"
+      className="evolu-scan-input flex-1"
       value={editValue}
       onChange={handleChange}
       onKeyDown={handleKeyDown}
@@ -383,7 +383,7 @@ export const PropertyElement = ({
           if (entries.length === 0) return null;
 
           return (
-            <div className="react-scan-nested">
+            <div className="evolu-scan-nested">
               {entries.map(([key, val]) => (
                 <PropertyElement
                   key={`${currentPath}-entry-${key}`}
@@ -404,7 +404,7 @@ export const PropertyElement = ({
         if ('items' in metadata && Array.isArray(metadata.items)) {
           if (metadata.items.length === 0) return null;
           return (
-            <div className="react-scan-nested">
+            <div className="evolu-scan-nested">
               {metadata.items.map((item, i) => {
                 const itemKey = `${currentPath}-item-${item.type}-${i}`;
                 return (
@@ -461,7 +461,7 @@ export const PropertyElement = ({
       );
 
       return (
-        <div className="react-scan-nested">
+        <div className="evolu-scan-nested">
           {entries.map(([key, val]) => {
             const itemKey = `${currentPath}-${typeof key === 'number' ? `item-${key}` : key}`;
             return (
@@ -486,10 +486,10 @@ export const PropertyElement = ({
 
   if (checkCircularInValue) {
     return (
-      <div className="react-scan-property">
-        <div className="react-scan-property-content">
-          <div className="react-scan-preview-line">
-            <div className="react-scan-key">{name}:</div>
+      <div className="evolu-scan-property">
+        <div className="evolu-scan-property-content">
+          <div className="evolu-scan-preview-line">
+            <div className="evolu-scan-key">{name}:</div>
             <span className="text-yellow-500">[Circular Reference]</span>
           </div>
         </div>
@@ -498,13 +498,13 @@ export const PropertyElement = ({
   }
 
   return (
-    <div ref={refElement} className="react-scan-property">
-      <div className="react-scan-property-content">
+    <div ref={refElement} className="evolu-scan-property">
+      <div className="evolu-scan-property-content">
         {isExpandableValue && (
           <button
             type="button"
             onClick={handleToggleExpand}
-            className="react-scan-arrow"
+            className="evolu-scan-arrow"
           >
             <Icon
               name="icon-chevron-right"
@@ -517,11 +517,11 @@ export const PropertyElement = ({
         <div
           className={cn(
             'group',
-            'react-scan-preview-line',
-            isChanged && 'react-scan-highlight',
+            'evolu-scan-preview-line',
+            isChanged && 'evolu-scan-highlight',
           )}
         >
-          <div className="react-scan-key">{name}:</div>
+          <div className="evolu-scan-key">{name}:</div>
           {isEditing && isEditableValue(value, parentPath) ? (
             <EditableValue
               value={value}
@@ -542,12 +542,12 @@ export const PropertyElement = ({
         </div>
         <div
           className={cn(
-            'react-scan-expandable',
-            isExpanded && 'react-scan-expanded',
+            'evolu-scan-expandable',
+            isExpanded && 'evolu-scan-expanded',
           )}
         >
           {isExpandableValue && isExpanded && (
-            <div className="react-scan-nested">
+            <div className="evolu-scan-nested">
               {renderNestedProperties(value)}
             </div>
           )}
@@ -645,11 +645,11 @@ export const PropertySection = ({
           {section} {!isExpanded && propertyCount > 0 && `(${propertyCount})`}
         </span>
       </button>
-      <div className="react-scan-section">
+      <div className="evolu-scan-section">
         <div
           className={cn(
-            'react-scan-expandable',
-            isExpanded && 'react-scan-expanded',
+            'evolu-scan-expandable',
+            isExpanded && 'evolu-scan-expanded',
           )}
         >
           <div className="overflow-hidden">

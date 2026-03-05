@@ -1,4 +1,4 @@
-import { BoundedArray } from "~core/notifications/performance-utils";
+import { BoundedArray } from "./performance-utils";
 import { CompletedInteraction } from "./performance";
 
 type Subscriber<T> = (data: T) => void;
