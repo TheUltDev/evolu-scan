@@ -338,7 +338,7 @@ const Section = /* @__PURE__ */ memo(
                     'evolu-scan-expanded': isEntryExpanded,
                   })}
                 >
-                  <div className="pl-3 text-xs font-mono border-l-1 border-[#333]">
+                  <div className="pl-3 text-xs font-mono border-l border-[#333]">
                     <div className="flex flex-col gap-0.5">
                       {prevError || currError ? (
                         <AccessError

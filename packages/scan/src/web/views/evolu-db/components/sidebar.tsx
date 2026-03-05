@@ -57,7 +57,7 @@ export const Sidebar = ({
 
   return (
     <div
-      className="relative overflow-y-auto flex-shrink-0"
+      className="relative overflow-y-auto shrink-0"
       style={{ width: `${width}px` }}
     >
       {tables.map((table) => (
@@ -77,7 +77,7 @@ export const Sidebar = ({
         >
           <div className="flex items-center justify-between gap-x-1">
             <span className="truncate">{table.name}</span>
-            <span className="text-[10px] text-neutral-600 flex-shrink-0">
+            <span className="text-[10px] text-neutral-600 shrink-0">
               {table.rowCount}
             </span>
           </div>

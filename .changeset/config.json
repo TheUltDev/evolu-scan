@@ -1,18 +1,14 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.0.5/schema.json",
   "changelog": "@changesets/cli/changelog",
+  "updateInternalDependencies": "patch",
+  "baseBranch": "main",
+  "access": "public",
   "commit": false,
   "fixed": [],
   "linked": [
     [
-      "evolu-scan",
-      "@evolu-scan/extension"
+      "@evolu/scan"
     ]
-  ],
-  "access": "public",
-  "baseBranch": "main",
-  "updateInternalDependencies": "patch",
-  "ignore": [
-    "@evolu-scan/website"
   ]
 }

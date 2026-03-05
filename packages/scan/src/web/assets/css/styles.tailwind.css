@@ -1,6 +1,170 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@source "../../../../**/*.{js,jsx,ts,tsx}";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-mono: "Menlo", "Consolas", "Monaco", "Liberation Mono", "Lucida Console",
+    monospace;
+
+  --spacing-3_5: 0.875rem;
+  --spacing-4_5: 1.125rem;
+  --spacing-5_5: 1.375rem;
+  --spacing-6_5: 1.625rem;
+  --spacing-7_5: 1.875rem;
+  --spacing-8_5: 2.125rem;
+  --spacing-9_5: 2.375rem;
+
+  --color-inspect: #8e61e3;
+
+  --text-xxs: 0.5rem;
+
+  --animate-fade-in: fadeIn ease-in forwards;
+  --animate-fade-out: fadeOut ease-out forwards;
+  --animate-rotate: rotate linear infinite;
+  --animate-shake: shake 0.4s ease-in-out forwards;
+  --animate-count-flash: countFlash 0.3s ease-out forwards;
+  --animate-count-flash-shake: countFlashShake 0.3s ease-out forwards;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes shake {
+    0% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-5px);
+    }
+    50% {
+      transform: translateX(5px);
+    }
+    75% {
+      transform: translateX(-5px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes countFlash {
+    0% {
+      background-color: rgba(168, 85, 247, 0.3);
+      transform: scale(1.05);
+    }
+    100% {
+      background-color: rgba(168, 85, 247, 0.1);
+      transform: scale(1);
+    }
+  }
+
+  @keyframes countFlashShake {
+    0% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-5px);
+    }
+    50% {
+      transform: translateX(5px) scale(1.1);
+    }
+    75% {
+      transform: translateX(-5px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+}
+
+@utility pointer-events-bounding-box {
+  pointer-events: bounding-box;
+}
+
+@utility animation-duration-0 {
+  animation-duration: 0s;
+}
+
+@utility animation-delay-0 {
+  animation-delay: 0s;
+}
+
+@utility animation-duration-100 {
+  animation-duration: 0.1s;
+}
+
+@utility animation-delay-100 {
+  animation-delay: 0.1s;
+}
+
+@utility animation-delay-150 {
+  animation-delay: 0.15s;
+}
+
+@utility animation-duration-200 {
+  animation-duration: 0.2s;
+}
+
+@utility animation-delay-200 {
+  animation-delay: 0.2s;
+}
+
+@utility animation-duration-300 {
+  animation-duration: 0.3s;
+}
+
+@utility animation-delay-300 {
+  animation-delay: 0.3s;
+}
+
+@utility animation-duration-500 {
+  animation-duration: 0.5s;
+}
+
+@utility animation-delay-500 {
+  animation-delay: 0.5s;
+}
+
+@utility animation-duration-700 {
+  animation-duration: 0.7s;
+}
+
+@utility animation-delay-700 {
+  animation-delay: 0.7s;
+}
+
+@utility animation-duration-1000 {
+  animation-duration: 1s;
+}
+
+@utility animation-delay-1000 {
+  animation-delay: 1s;
+}
 
 * {
   outline: none !important;
@@ -230,7 +394,7 @@ svg {
   @apply flex items-center gap-x-2;
   @apply pl-3 pr-2;
   @apply min-h-9;
-  @apply border-b-1 border-[#222];
+  @apply border-b border-[#222];
   @apply whitespace-nowrap overflow-hidden;
 }
 
@@ -280,7 +444,7 @@ svg {
 
 @keyframes shimmer {
   100% {
-    @apply translate-x-full;
+    transform: translateX(100%);
   }
 }
 
@@ -290,7 +454,7 @@ svg {
   @apply px-3;
   @apply w-full h-7;
   @apply text-[#888] truncate;
-  @apply bg-[#0a0a0a] border-b-1 border-[#222];
+  @apply bg-[#0a0a0a] border-b border-[#222];
 }
 
 .evolu-scan-section {
@@ -309,7 +473,7 @@ svg {
   @apply relative;
   @apply flex flex-col;
   @apply pl-8;
-  @apply border-l-1 border-transparent;
+  @apply border-l border-transparent;
   @apply overflow-hidden;
 }
 
@@ -344,11 +508,11 @@ svg {
 
 @keyframes blink {
   from {
-    @apply opacity-100;
+    opacity: 1;
   }
 
   to {
-    @apply opacity-0;
+    opacity: 0;
   }
 }
 
@@ -443,7 +607,7 @@ svg {
       @apply bg-white;
       @apply border-2 border-neutral-700;
       @apply rounded-full;
-      @apply shadow-sm;
+      @apply shadow-xs;
       @apply transition-all duration-300;
     }
   }
@@ -498,7 +662,8 @@ svg {
 }
 
 .count-flash-white {
-  @apply animate-count-flash-shake !delay-500;
+  @apply animate-count-flash-shake;
+  animation-delay: 500ms !important;
 }
 
 .change-scope {

@@ -16,14 +16,14 @@
     "@evolu/react-web": "^2.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "@evolu/scan": "workspace:*",
-    "tailwindcss": "^3.4.17"
+    "@evolu/scan": "workspace:*"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.2.1",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "@vitejs/plugin-react": "^4.3.4",
-    "postcss": "^8.5.3",
+    "tailwindcss": "^4.2.1",
     "typescript": "^5.7.3",
     "vite": "^6.3.0"
   }

@@ -1,7 +1,7 @@
+import atTailwind from '@tailwindcss/postcss';
 import autoprefixer from 'autoprefixer';
-import tailwindcss from 'tailwindcss';
 import remToPx from './postcss.rem2px.mjs';
 
 export default {
-  plugins: [remToPx({ baseValue: 16 }), tailwindcss, autoprefixer],
+  plugins: [remToPx({ baseValue: 16 }), atTailwind, autoprefixer],
 };

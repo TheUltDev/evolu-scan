@@ -16,27 +16,33 @@
     "test:e2e:ui": "playwright test --ui"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.12",
+    "@changesets/cli": "^2.30.0",
     "@playwright/test": "^1.58.2",
-    "@types/node": "^22.10.2",
-    "autoprefixer": "^10.4.20",
+    "@types/node": "^25.3.3",
+    "@tailwindcss/postcss": "^4.2.1",
+    "autoprefixer": "^10.4.27",
     "boxen": "^8.0.1",
-    "chalk": "^5.3.0",
-    "esbuild": "^0.25.0",
+    "chalk": "^5.6.2",
+    "esbuild": "^0.27.3",
     "oxlint": "latest",
-    "postcss": "^8.5.3",
-    "rimraf": "^6.0.1",
-    "tailwindcss": "^3.4.17",
+    "postcss": "^8.5.8",
+    "rimraf": "^6.1.3",
+    "tailwindcss": "^4.2.1",
     "typescript": "latest",
     "vite-tsconfig-paths": "^6.1.1"
   },
-  "packageManager": "pnpm@9.1.0",
+  "packageManager": "pnpm@10.30.3",
   "pnpm": {
+    "onlyBuiltDependencies": [
+      "@evolu/sqlite-wasm",
+      "esbuild",
+      "@playwright/test"
+    ],
     "overrides": {
-      "@jridgewell/gen-mapping": "0.3.2",
-      "@jridgewell/sourcemap-codec": "1.4.15",
-      "@types/react": "^19.0.10",
-      "@types/react-dom": "^19.0.4"
+      "@jridgewell/gen-mapping": "0.3.13",
+      "@jridgewell/sourcemap-codec": "1.5.5",
+      "@types/react": "^19.2.14",
+      "@types/react-dom": "^19.2.3"
     }
   }
 }
