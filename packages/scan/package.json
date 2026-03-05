@@ -39,11 +39,6 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
-    },
-    "./all-environments": {
-      "types": "./dist/core/all-environments.d.ts",
-      "import": "./dist/core/all-environments.mjs",
-      "require": "./dist/core/all-environments.js"
     }
   },
   "main": "dist/index.js",

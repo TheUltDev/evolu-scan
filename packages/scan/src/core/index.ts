@@ -164,7 +164,6 @@ export interface Internals {
   onRender: ((fiber: Fiber, renders: Array<Render>) => void) | null;
   Store: StoreType;
   version: string;
-  runInAllEnvironments: boolean;
 }
 
 export type FunctionalComponentStateChange = {
@@ -239,7 +238,6 @@ export const ReactScanInternals: Internals = {
     showNotificationCount: true,
     allowInIframe: false,
   }),
-  runInAllEnvironments: false,
   onRender: null,
   Store,
   version: packageJson.version,
@@ -449,7 +447,6 @@ export const start = () => {
     }
 
     if (
-      !ReactScanInternals.runInAllEnvironments &&
       getIsProduction() &&
       !ReactScanInternals.options.value.dangerouslyForceRunInProduction
     ) {
@@ -542,8 +539,7 @@ export const scan = (options: Options = {}) => {
 
   if (
     isInIframe &&
-    !ReactScanInternals.options.value.allowInIframe &&
-    !ReactScanInternals.runInAllEnvironments
+    !ReactScanInternals.options.value.allowInIframe
   ) {
     return;
   }

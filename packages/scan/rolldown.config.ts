@@ -47,7 +47,6 @@ const sharedOptions = {
 
 const libraryInput = {
   index: './src/index.ts',
-  'core/all-environments': './src/core/all-environments.ts',
 };
 
 export default defineConfig([
