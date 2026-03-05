@@ -17,7 +17,7 @@ import { cn, readLocalStorage, saveLocalStorage } from '../../utils/helpers';
 import { constant } from '../../utils/preact/constant';
 import { FPSMeter } from '../../widget/fps-meter';
 import { getEventSeverity } from '../notifications/data';
-import { Notification } from '../notifications/icons';
+import { TimerIcon } from '../notifications/icons';
 import { useAppNotifications } from '../notifications/notifications';
 
 export const Toolbar = constant(() => {
@@ -138,7 +138,7 @@ export const Toolbar = constant(() => {
         <button
           type="button"
           id="evolu-scan-inspect-element"
-          title="Inspect element"
+          title="Inspector"
           onClick={onToggleInspect}
           className="button flex items-center justify-center h-full w-full pl-3 pr-2.5"
           style={{ color: inspectColor }}
@@ -147,11 +147,15 @@ export const Toolbar = constant(() => {
         </button>
       </div>
 
+      {ReactScanInternals.options.value.evolu && (
+        <EvoluDbButton />
+      )}
+
       <div className="h-full flex items-center justify-center">
         <button
           type="button"
           id="evolu-scan-notifications"
-          title="Notifications"
+          title="Profiler"
           onClick={() => {
             if (Store.inspectState.value.kind !== 'inspect-off') {
               Store.inspectState.value = {
@@ -195,7 +199,7 @@ export const Toolbar = constant(() => {
           className="button flex items-center justify-center h-full pl-2.5 pr-2.5"
           style={{ color: inspectColor }}
         >
-          <Notification
+          <TimerIcon
             events={laggedEvents
               .filter((event) => !seenEvents.includes(event.id))
               .map((event) => getEventSeverity(event) === 'high')}
@@ -208,10 +212,6 @@ export const Toolbar = constant(() => {
           />
         </button>
       </div>
-
-      {ReactScanInternals.options.value.evolu && (
-        <EvoluDbButton />
-      )}
 
       <Toggle
         checked={!ReactScanInternals.instrumentation?.isPaused.value}
@@ -244,7 +244,7 @@ function EvoluDbButton() {
     <div className="h-full flex items-center justify-center">
       <button
         type="button"
-        title={isActive ? 'Close Evolu database viewer' : 'Open Evolu database viewer'}
+        title={isActive ? 'Close database' : 'Database'}
         onClick={onClick}
         className="button flex items-center justify-center h-full pl-2.5 pr-2.5"
         style={{ color: isActive ? '#8e61e3' : '#999' }}
