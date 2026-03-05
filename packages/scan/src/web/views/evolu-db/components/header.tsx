@@ -1,8 +1,10 @@
-import { type Signal } from '@preact/signals';
 import { Store } from '../../../../core/index';
 import { Icon } from '../../../components/icon';
 import { signalWidgetViews } from '../../../state';
+import { formatBytes } from '../utils/format-bytes';
 import { cn } from '../../../utils/helpers';
+
+import type { Signal } from '@preact/signals';
 import type { DbSnapshot } from '../types';
 
 export const Header = ({
@@ -41,7 +43,7 @@ export const Header = ({
       <Icon name="icon-database" size={14} className="text-[#8e61e3]" />
       <span className="text-neutral-300 text-xs font-medium">Database</span>
       <span className="text-[10px] text-neutral-500">
-        {snapshot.tables.length} table{snapshot.tables.length !== 1 && 's'}
+        {snapshot.tables.length} table{snapshot.tables.length !== 1 && 's'} — {formatBytes(snapshot.byteSize)}
       </span>
       {dbLoading.value && (
         <span className="text-[10px] text-[#8e61e3] animate-pulse">syncing</span>

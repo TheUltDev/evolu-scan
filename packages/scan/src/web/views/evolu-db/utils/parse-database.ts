@@ -106,7 +106,7 @@ export async function parseDatabase(bytes: Uint8Array): Promise<DbSnapshot> {
   }
 
   db.close();
-  return { tables, tableData };
+  return { tables, tableData, byteSize: bytes.length };
 }
 
 async function getSqliteWasm(): Promise<typeof cachedSqlite3> {

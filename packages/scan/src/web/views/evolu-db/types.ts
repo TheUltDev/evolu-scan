@@ -12,4 +12,5 @@ export interface TableData {
 export interface DbSnapshot {
   tables: TableInfo[];
   tableData: Map<string, TableData>;
+  byteSize: number;
 }
