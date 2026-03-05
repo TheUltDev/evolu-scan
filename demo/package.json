@@ -1,5 +1,5 @@
 {
-  "name": "@evolu-scan/demo",
+  "name": "@evolu/scan-demo",
   "type": "module",
   "private": true,
   "publishConfig": {
@@ -19,11 +19,9 @@
     "@evolu/scan": "workspace:*"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.2.1",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "^5.1.4",
-    "tailwindcss": "catalog:",
     "typescript": "catalog:",
     "vite": "^7.3.1"
   }

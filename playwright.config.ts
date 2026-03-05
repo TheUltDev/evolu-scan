@@ -13,22 +13,19 @@ export default defineConfig({
   expect: {
     timeout: 10_000,
   },
-
   use: {
     baseURL: `http://localhost:${PORT}`,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
   },
-
   projects: [
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
   ],
-
   webServer: {
-    command: 'pnpm --filter @evolu-scan/demo dev',
+    command: 'pnpm --filter @evolu/scan-demo dev',
     url: `http://localhost:${PORT}`,
     reuseExistingServer: !process.env.CI,
     timeout: 30_000,

@@ -1,7 +1,78 @@
-@import "tailwindcss";
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 body {
   overflow: hidden;
   background-color: #111111;
   color: #e5e5e5;
+  font-family: 'Geist', system-ui, sans-serif;
+}
+
+.shell {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background-color: #111111;
+  color: #e5e5e5;
+}
+
+.header {
+  display: flex;
+  flex-shrink: 0;
+  border-bottom: 1px solid #262626;
+}
+
+.header h1 {
+  margin: 2rem;
+  font-weight: 700;
+  font-size: 1.875rem;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.sidebar {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  border-right: 1px solid #262626;
+}
+
+.sidebar-btn {
+  padding: 1rem 2rem;
+  border: none;
+  border-bottom: 1px solid #262626;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.15s;
+}
+
+.sidebar-btn:hover {
+  background-color: #171717;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.main iframe {
+  flex: 1;
+  height: 100%;
+  border: none;
 }

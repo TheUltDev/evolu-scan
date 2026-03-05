@@ -24,14 +24,14 @@
     "package.json"
   ],
   "scripts": {
-    "build": "pnpm run build:css && cross-env NODE_ENV=production rolldown -c rolldown.config.ts && tsc -p tsconfig.build.json",
+    "dev": "pnpm run --parallel \"/^dev:(css|rolldown)/\"",
     "dev:css": "postcss ./src/web/assets/css/styles.tailwind.css -o ./src/web/assets/css/styles.css --watch",
     "dev:rolldown": "cross-env NODE_ENV=development rolldown -c rolldown.config.ts --watch",
-    "dev": "pnpm run --parallel \"/^dev:(css|rolldown)/\"",
+    "build": "pnpm run build:css && cross-env NODE_ENV=production rolldown -c rolldown.config.ts && tsc -p tsconfig.build.json",
     "build:css": "postcss ./src/web/assets/css/styles.tailwind.css -o ./src/web/assets/css/styles.css",
+    "typecheck": "tsc --noEmit",
     "test": "vitest",
-    "lint": "oxlint src && pnpm typecheck",
-    "typecheck": "tsc --noEmit"
+    "lint": "oxlint src && pnpm typecheck"
   },
   "exports": {
     "./package.json": "./package.json",
@@ -55,7 +55,11 @@
     "@types/react": "catalog:",
     "clsx": "^2.1.1",
     "cross-env": "^10.1.0",
+    "@tailwindcss/postcss": "^4.2.1",
+    "autoprefixer": "^10.4.27",
+    "postcss": "^8.5.8",
     "postcss-cli": "^11.0.1",
+    "tailwindcss": "^4.2.1",
     "react": "*",
     "react-dom": "*",
     "rolldown": "^1.0.0-rc.6",

@@ -15,18 +15,16 @@ export default function Home(): JSX.Element {
   const [example, setExample] = useState(0);
 
   return (
-    <div className="flex flex-col w-screen h-screen bg-[#111111] text-neutral-200">
-      <div className="flex flex-none border-b border-neutral-800">
-        <h1 className="m-8 font-bold text-3xl">evolu-scan</h1>
+    <div className="shell">
+      <div className="header">
+        <h1>evolu-scan</h1>
       </div>
-      <div className="flex flex-1">
-        {/* content */}
-        <div className="flex flex-none flex-col border-r border-neutral-800">
-          {/* sidebar */}
+      <div className="content">
+        <div className="sidebar">
           {examples.map((item, index) => (
             <button
               key={item.url}
-              className="px-8 py-4 border-b border-neutral-800 hover:bg-neutral-900 transition-colors"
+              className="sidebar-btn"
               type="button"
               onClick={() => setExample(index)}
             >
@@ -34,9 +32,8 @@ export default function Home(): JSX.Element {
             </button>
           ))}
         </div>
-        <div className="flex-1 flex items-center justify-center">
-          {/* iframe */}
-          <iframe className="flex-1 h-full" src={examples[example].url} />
+        <div className="main">
+          <iframe title="example" src={examples[example].url} />
         </div>
       </div>
     </div>
