@@ -81,4 +81,7 @@ jobs:
 
       - run: pnpm install --frozen-lockfile --strict-peer-dependencies=false
 
+      - name: Build CSS
+        run: pnpm --filter @evolu/scan build:css
+
       - run: pnpm --filter @evolu/scan test -- --run
