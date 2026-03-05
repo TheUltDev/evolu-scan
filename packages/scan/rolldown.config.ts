@@ -1,6 +1,6 @@
 import * as fs from 'node:fs';
 import path from 'node:path';
-import { defineConfig } from 'rolldown';
+import { defineConfig, type InputOptions } from 'rolldown';
 import { dts } from 'rolldown-plugin-dts';
 import { workerPlugin } from './worker-plugin';
 
@@ -57,31 +57,27 @@ fs.mkdirSync(DIST_PATH, { recursive: true });
 const nodeEnv = process.env.NODE_ENV ?? 'development';
 const isProduction = nodeEnv === 'production';
 
-const envDefine = {
-  'process.env.NODE_ENV': JSON.stringify(nodeEnv),
-};
+const sharedOptions = {
+  platform: 'browser',
+  tsconfig: './tsconfig.json',
+  transform: {
+    define: { 'process.env.NODE_ENV': JSON.stringify(nodeEnv) },
+  },
+  moduleTypes: { '.css': 'text' },
+  external: ['react', 'react-dom', '@evolu/sqlite-wasm'],
+  plugins: [workerPlugin],
+} satisfies Partial<InputOptions>;
 
-const sharedExternal = [
-  'react',
-  'react-dom',
-  'next',
-  'next/navigation',
-  'react-router',
-  'react-router-dom',
-  '@evolu/sqlite-wasm',
-];
+const libraryInput = {
+  index: './src/index.ts',
+  'install-hook': './src/install-hook.ts',
+  'core/all-environments': './src/core/all-environments.ts',
+};
 
 export default defineConfig([
   {
+    ...sharedOptions,
     input: './src/install-hook.ts',
-    platform: 'browser',
-    tsconfig: './tsconfig.json',
-    transform: { define: envDefine },
-    moduleTypes: {
-      '.css': 'text',
-    },
-    external: sharedExternal,
-    plugins: [workerPlugin],
     output: {
       file: `${DIST_PATH}/install-hook.global.js`,
       format: 'iife',
@@ -91,18 +87,8 @@ export default defineConfig([
     },
   },
   {
-    input: {
-      index: './src/index.ts',
-      'install-hook': './src/install-hook.ts',
-      'core/all-environments': './src/core/all-environments.ts',
-    },
-    platform: 'browser',
-    tsconfig: './tsconfig.json',
-    transform: { define: envDefine },
-    moduleTypes: {
-      '.css': 'text',
-    },
-    external: sharedExternal,
+    ...sharedOptions,
+    input: libraryInput,
     plugins: [workerPlugin, dts()],
     output: {
       dir: DIST_PATH,
@@ -112,18 +98,8 @@ export default defineConfig([
     },
   },
   {
-    input: {
-      index: './src/index.ts',
-      'install-hook': './src/install-hook.ts',
-      'core/all-environments': './src/core/all-environments.ts',
-    },
-    platform: 'browser',
-    tsconfig: './tsconfig.json',
-    transform: { define: envDefine },
-    moduleTypes: {
-      '.css': 'text',
-    },
-    external: sharedExternal,
+    ...sharedOptions,
+    input: libraryInput,
     plugins: [
       workerPlugin,
       {
