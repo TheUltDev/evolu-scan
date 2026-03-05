@@ -1,33 +1,10 @@
 import * as fs from 'node:fs';
-import path from 'node:path';
 import { defineConfig, type InputOptions } from 'rolldown';
 import { dts } from 'rolldown-plugin-dts';
 import { workerPlugin } from './worker-plugin';
 
-const DIST_PATH = './dist';
-
-const addDirectivesToChunkFiles = async (readPath: string): Promise<void> => {
-  const fsPromise = await import('node:fs/promises');
-  try {
-    const files = await fsPromise.readdir(readPath, { recursive: true });
-    for (const file of files) {
-      const fileName = String(file);
-      if (!fileName.endsWith('.mjs') && !fileName.endsWith('.js')) continue;
-      if (fileName.endsWith('.global.js')) continue;
-      const filePath = path.join(readPath, fileName);
-      const stat = await fsPromise.stat(filePath);
-      if (!stat.isFile()) continue;
-      const data = await fsPromise.readFile(filePath, 'utf8');
-      const updatedContent = `'use client';\n${data}`;
-      await fsPromise.writeFile(filePath, updatedContent, 'utf8');
-    }
-  } catch (err) {
-    // oxlint-disable-next-line no-console
-    console.error('Error:', err);
-  }
-};
-
-const banner = `/**
+const distPath = './dist';
+const license = `/**
  * The MIT License (MIT)
  * 
  * Copyright 2025 Evolu
@@ -49,10 +26,12 @@ const banner = `/**
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */`;
 
-if (fs.existsSync(DIST_PATH)) {
-  fs.rmSync(DIST_PATH, { recursive: true });
+const banner = `'use client';\n${license}`;
+
+if (fs.existsSync(distPath)) {
+  fs.rmSync(distPath, { recursive: true });
 }
-fs.mkdirSync(DIST_PATH, { recursive: true });
+fs.mkdirSync(distPath, { recursive: true });
 
 const nodeEnv = process.env.NODE_ENV ?? 'development';
 const isProduction = nodeEnv === 'production';
@@ -79,10 +58,10 @@ export default defineConfig([
     ...sharedOptions,
     input: './src/install-hook.ts',
     output: {
-      file: `${DIST_PATH}/install-hook.global.js`,
+      file: `${distPath}/install-hook.global.js`,
       format: 'iife',
       name: 'evoluScanInstallHook',
-      banner,
+      banner: license,
       minify: isProduction,
     },
   },
@@ -91,7 +70,7 @@ export default defineConfig([
     input: libraryInput,
     plugins: [workerPlugin, dts()],
     output: {
-      dir: DIST_PATH,
+      dir: distPath,
       format: 'esm',
       banner,
       entryFileNames: '[name].mjs',
@@ -100,17 +79,8 @@ export default defineConfig([
   {
     ...sharedOptions,
     input: libraryInput,
-    plugins: [
-      workerPlugin,
-      {
-        name: 'add-use-client',
-        async writeBundle() {
-          await addDirectivesToChunkFiles(DIST_PATH);
-        },
-      },
-    ],
     output: {
-      dir: DIST_PATH,
+      dir: distPath,
       format: 'cjs',
       banner,
       entryFileNames: '[name].js',
