@@ -116,80 +116,12 @@
     },
     "./dist/*": "./dist/*.js",
     "./dist/*.js": "./dist/*.js",
-    "./dist/*.mjs": "./dist/*.mjs",
-    "./react-component-name/vite": {
-      "types": "./dist/react-component-name/vite.d.ts",
-      "import": "./dist/react-component-name/vite.mjs",
-      "require": "./dist/react-component-name/vite.js"
-    },
-    "./react-component-name/webpack": {
-      "types": "./dist/react-component-name/webpack.d.ts",
-      "import": "./dist/react-component-name/webpack.mjs",
-      "require": "./dist/react-component-name/webpack.js"
-    },
-    "./react-component-name/esbuild": {
-      "types": "./dist/react-component-name/esbuild.d.ts",
-      "import": "./dist/react-component-name/esbuild.mjs",
-      "require": "./dist/react-component-name/esbuild.js"
-    },
-    "./react-component-name/rspack": {
-      "types": "./dist/react-component-name/rspack.d.ts",
-      "import": "./dist/react-component-name/rspack.mjs",
-      "require": "./dist/react-component-name/rspack.js"
-    },
-    "./react-component-name/rolldown": {
-      "types": "./dist/react-component-name/rolldown.d.ts",
-      "import": "./dist/react-component-name/rolldown.mjs",
-      "require": "./dist/react-component-name/rolldown.js"
-    },
-    "./react-component-name/rollup": {
-      "types": "./dist/react-component-name/rollup.d.ts",
-      "import": "./dist/react-component-name/rollup.mjs",
-      "require": "./dist/react-component-name/rollup.js"
-    },
-    "./react-component-name/astro": {
-      "types": "./dist/react-component-name/astro.d.ts",
-      "import": "./dist/react-component-name/astro.mjs",
-      "require": "./dist/react-component-name/astro.js"
-    },
-    "./react-component-name/loader": {
-      "types": "./dist/react-component-name/loader.d.ts",
-      "import": "./dist/react-component-name/loader.mjs",
-      "require": "./dist/react-component-name/loader.js"
-    }
+    "./dist/*.mjs": "./dist/*.mjs"
   },
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "browser": "dist/auto.global.js",
   "types": "dist/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "react-component-name/vite": [
-        "./dist/react-component-name/vite.d.ts"
-      ],
-      "react-component-name/webpack": [
-        "./dist/react-component-name/webpack.d.ts"
-      ],
-      "react-component-name/esbuild": [
-        "./dist/react-component-name/esbuild.d.ts"
-      ],
-      "react-component-name/rspack": [
-        "./dist/react-component-name/rspack.d.ts"
-      ],
-      "react-component-name/rolldown": [
-        "./dist/react-component-name/rolldown.d.ts"
-      ],
-      "react-component-name/rollup": [
-        "./dist/react-component-name/rollup.d.ts"
-      ],
-      "react-component-name/astro": [
-        "./dist/react-component-name/astro.d.ts"
-      ],
-      "react-component-name/loader": [
-        "./dist/react-component-name/loader.d.ts"
-      ]
-    }
-  },
   "dependencies": {
     "@babel/core": "^7.29.0",
     "@babel/types": "^7.29.0",
