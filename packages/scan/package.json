@@ -25,15 +25,11 @@
   ],
   "scripts": {
     "build": "pnpm run build:css && cross-env NODE_ENV=production tsup",
-    "postbuild": "node ../../scripts/version-warning.mjs",
     "build:copy": "pnpm run build:css && cross-env NODE_ENV=production tsup && cat dist/auto.global.js | pbcopy",
     "dev:css": "postcss ./src/web/assets/css/styles.tailwind.css -o ./src/web/assets/css/styles.css --watch",
     "dev:tsup": "cross-env NODE_ENV=development tsup --watch",
     "dev": "pnpm run --parallel \"/^dev:(css|tsup)/\"",
     "build:css": "postcss ./src/web/assets/css/styles.tailwind.css -o ./src/web/assets/css/styles.css",
-    "pack": "pnpm version patch && pnpm build && pnpm pack",
-    "pack:bump": "bun scripts/bump-version.js && nr pack && echo $(pwd)/evolu-scan-$(node -p \"require('./package.json').version\").tgz | pbcopy",
-    "publint": "publint",
     "test": "vitest",
     "lint": "oxlint src && pnpm typecheck",
     "typecheck": "tsc --noEmit"
@@ -147,7 +143,6 @@
     "es-module-lexer": "^2.0.0",
     "next": "*",
     "postcss-cli": "^11.0.1",
-    "publint": "^0.3.18",
     "react": "*",
     "react-dom": "*",
     "react-router": "^7.13.1",
