@@ -1,8 +1,12 @@
 name: Preview Package
 
 on:
-  pull_request:
-    branches: ["**"]
+  workflow_dispatch:
+
+# Disabled — was triggered on pull_request for all branches.
+# To re-enable, replace `workflow_dispatch` with:
+#   pull_request:
+#     branches: ["**"]
 
 jobs:
   build:
