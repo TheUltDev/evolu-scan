@@ -1,11 +1,8 @@
 name: Preview Package
+
 on:
-  push:
-    branches:
-      - "**"
   pull_request:
-    branches:
-      - "**"
+    branches: ["**"]
 
 jobs:
   build:
