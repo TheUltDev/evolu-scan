@@ -62,7 +62,7 @@ export const Header = ({
           onClick={onFollowToggle}
           title={followActive ? 'Stop following changes' : 'Follow changes'}
           className="button rounded w-6 h-6 flex items-center justify-center text-neutral-500 hover:text-neutral-300"
-          style={{ color: followActive ? '#4ade80' : undefined }}
+          style={{ color: followActive ? '#8e61e3' : undefined }}
         >
           <Icon name="icon-crosshair" size={14} />
         </button>
