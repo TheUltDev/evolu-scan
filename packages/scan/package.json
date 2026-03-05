@@ -24,11 +24,11 @@
     "package.json"
   ],
   "scripts": {
-    "build": "pnpm run build:css && cross-env NODE_ENV=production tsup",
-    "build:copy": "pnpm run build:css && cross-env NODE_ENV=production tsup && cat dist/auto.global.js | pbcopy",
+    "build": "pnpm run build:css && cross-env NODE_ENV=production rolldown -c rolldown.config.ts",
+    "build:copy": "pnpm run build:css && cross-env NODE_ENV=production rolldown -c rolldown.config.ts && cat dist/install-hook.global.js | pbcopy",
     "dev:css": "postcss ./src/web/assets/css/styles.tailwind.css -o ./src/web/assets/css/styles.css --watch",
-    "dev:tsup": "cross-env NODE_ENV=development tsup --watch",
-    "dev": "pnpm run --parallel \"/^dev:(css|tsup)/\"",
+    "dev:rolldown": "cross-env NODE_ENV=development rolldown -c rolldown.config.ts --watch",
+    "dev": "pnpm run --parallel \"/^dev:(css|rolldown)/\"",
     "build:css": "postcss ./src/web/assets/css/styles.tailwind.css -o ./src/web/assets/css/styles.css",
     "test": "vitest",
     "lint": "oxlint src && pnpm typecheck",
@@ -37,42 +37,9 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "production": {
-        "import": {
-          "types": "./dist/index.d.mts",
-          "react-server": "./dist/rsc-shim.mjs",
-          "default": "./dist/index.mjs"
-        },
-        "require": {
-          "types": "./dist/index.d.mts",
-          "react-server": "./dist/rsc-shim.js",
-          "default": "./dist/index.mjs"
-        }
-      },
-      "development": {
-        "import": {
-          "types": "./dist/index.d.mts",
-          "react-server": "./dist/rsc-shim.mjs",
-          "default": "./dist/index.mjs"
-        },
-        "require": {
-          "types": "./dist/index.d.ts",
-          "react-server": "./dist/rsc-shim.js",
-          "default": "./dist/index.js"
-        }
-      },
-      "default": {
-        "import": {
-          "types": "./dist/index.d.mts",
-          "react-server": "./dist/rsc-shim.mjs",
-          "default": "./dist/index.mjs"
-        },
-        "require": {
-          "types": "./dist/index.d.ts",
-          "react-server": "./dist/rsc-shim.js",
-          "default": "./dist/index.js"
-        }
-      }
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
     },
     "./all-environments": {
       "types": "./dist/core/all-environments.d.ts",
@@ -84,39 +51,12 @@
       "import": "./dist/install-hook.mjs",
       "require": "./dist/install-hook.js"
     },
-    "./auto": {
-      "production": {
-        "import": {
-          "types": "./dist/rsc-shim.d.mts",
-          "react-server": "./dist/rsc-shim.mjs",
-          "default": "./dist/rsc-shim.mjs"
-        },
-        "require": {
-          "types": "./dist/rsc-shim.d.ts",
-          "react-server": "./dist/rsc-shim.js",
-          "default": "./dist/rsc-shim.js"
-        }
-      },
-      "development": {
-        "import": {
-          "types": "./dist/auto.d.mts",
-          "react-server": "./dist/rsc-shim.mjs",
-          "default": "./dist/auto.mjs"
-        },
-        "require": {
-          "types": "./dist/auto.d.ts",
-          "react-server": "./dist/rsc-shim.js",
-          "default": "./dist/auto.js"
-        }
-      }
-    },
     "./dist/*": "./dist/*.js",
     "./dist/*.js": "./dist/*.js",
     "./dist/*.mjs": "./dist/*.mjs"
   },
   "main": "dist/index.js",
   "module": "dist/index.mjs",
-  "browser": "dist/auto.global.js",
   "types": "dist/index.d.ts",
   "dependencies": {
     "@babel/core": "^7.29.0",
@@ -127,29 +67,25 @@
     "@types/node": "catalog:",
     "bippy": "^0.5.30",
     "commander": "^14.0.3",
-    "esbuild": "catalog:",
     "picocolors": "^1.1.1",
     "preact": "^10.28.4",
     "prompts": "^2.4.2"
   },
   "devDependencies": {
-    "@esbuild-plugins/tsconfig-paths": "^0.1.2",
-    "@remix-run/react": "*",
     "@types/babel__core": "^7.20.5",
     "@types/prompts": "^2.4.9",
     "@types/react": "catalog:",
     "clsx": "^2.1.1",
     "cross-env": "^10.1.0",
-    "es-module-lexer": "^2.0.0",
     "next": "*",
     "postcss-cli": "^11.0.1",
     "react": "*",
     "react-dom": "*",
     "react-router": "^7.13.1",
     "react-router-dom": "^7.13.1",
+    "rolldown": "^1.0.0-rc.6",
+    "rolldown-plugin-dts": "^0.22.3",
     "tailwind-merge": "^3.5.0",
-    "terser": "^5.46.0",
-    "tsup": "^8.5.1",
     "vitest": "^4.0.18"
   },
   "peerDependencies": {
