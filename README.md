@@ -1,6 +1,6 @@
 # Evolu Scan
 
-> This project is based on [React Scan](https://github.com/aidenybai/react-scan) by [Aiden Bai](https://github.com/aidenybai).
+> This project is based on [React Scan](https://github.com/aidenybai/react-scan) by [Aiden Bai](https://github.com/sponsors/aidenybai).
 
 ## Installation
 
