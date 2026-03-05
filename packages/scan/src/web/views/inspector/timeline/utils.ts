@@ -102,23 +102,23 @@ const extractEvoluQueryResults = (fiber: Fiber): Array<EvoluQueryResult> => {
     return [];
   }
 
-  const fiberResults = collectQueryResultsFromHookChain(fiber.memoizedState);
-  const altResults = fiber.alternate
-    ? collectQueryResultsFromHookChain(fiber.alternate.memoizedState)
-    : [];
-
-  if (fiberResults.length === 0 && altResults.length === 0) return [];
-  if (altResults.length === 0) return fiberResults;
-  if (fiberResults.length === 0) return altResults;
-
-  const fiberTime = fiber.actualStartTime ?? 0;
-  const altTime = fiber.alternate?.actualStartTime ?? 0;
-
-  if (fiberTime !== altTime) {
-    return fiberTime > altTime ? fiberResults : altResults;
+  if (!fiber.alternate) {
+    return collectQueryResultsFromHookChain(fiber.memoizedState);
   }
 
-  return fiberResults.length >= altResults.length ? fiberResults : altResults;
+  const fiberTime = fiber.actualStartTime ?? 0;
+  const altTime = fiber.alternate.actualStartTime ?? 0;
+
+  if (altTime > fiberTime) {
+    return collectQueryResultsFromHookChain(fiber.alternate.memoizedState);
+  }
+  if (fiberTime > altTime) {
+    return collectQueryResultsFromHookChain(fiber.memoizedState);
+  }
+
+  const fiberResults = collectQueryResultsFromHookChain(fiber.memoizedState);
+  if (fiberResults.length > 0) return fiberResults;
+  return collectQueryResultsFromHookChain(fiber.alternate.memoizedState);
 };
 
 export const detectEvoluHooks = (fiber: Fiber): Array<EvoluHookInfo> => {
