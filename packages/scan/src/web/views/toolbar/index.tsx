@@ -181,11 +181,14 @@ export const Toolbar = constant(() => {
                 };
                 return;
               }
-              case 'evolu':
+              case 'evolu': {
+                const ids = new Set(events.map((event) => event.id));
+                setSeenEvents([...ids.values()]);
                 signalWidgetViews.value = {
-                  view: 'none',
+                  view: 'notifications',
                 };
                 return;
+              }
               case 'none': {
                 const ids = new Set(events.map((event) => event.id));
                 setSeenEvents([...ids.values()]);
