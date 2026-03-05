@@ -17,7 +17,7 @@ export default function Home(): JSX.Element {
   return (
     <div className="shell">
       <div className="header">
-        <h1>evolu-scan</h1>
+        <h1>Evolu Scan</h1>
       </div>
       <div className="content">
         <div className="sidebar">
