@@ -1,7 +1,6 @@
 /**
  *  Modified version of https://github.com/ryansolid/solid-sierpinski-triangle-demo
  **/
-// import { Analytics } from '@vercel/analytics/react';
 import { useEffect, useMemo, useState } from 'react';
 import { scan, Store } from '@evolu/scan';
 

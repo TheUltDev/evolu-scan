@@ -36,8 +36,7 @@ First off, thanks for taking the time to contribute! ❤️
 
 4. **Running the demo app**
    ```bash
-   cd demo
-   pnpm dev
+   pnpm dev:demo
    ```
    - Opens a Vite dev server with a React app that imports `@evolu/scan`. Use this to test changes locally.
    - Make sure to run `pnpm build` (or `pnpm dev` from the root) at least once before starting the demo so the scan package is built.

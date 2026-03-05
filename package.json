@@ -3,7 +3,9 @@
   "private": true,
   "scripts": {
     "build": "pnpm --filter @evolu/scan build",
+    "build:demo": "pnpm --filter @evolu/scan-demo build",
     "dev": "pnpm --filter @evolu/scan dev",
+    "dev:demo": "pnpm --filter @evolu/scan-demo dev",
     "lint": "pnpm -r lint",
     "lint:all": "oxlint .",
     "test:e2e": "playwright test",
