@@ -1,6 +1,6 @@
 import { type Page } from '@playwright/test';
 
-export const FIXTURE_URL = '/?example=e2e-fixture';
+export const FIXTURE_URL = '?example=e2e-fixture';
 
 export async function gotoFixture(page: Page): Promise<void> {
   await page.goto(FIXTURE_URL);

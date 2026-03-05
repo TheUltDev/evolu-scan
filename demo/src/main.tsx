@@ -7,8 +7,8 @@ interface Example {
 }
 
 const examples: Example[] = [
-  { title: 'Todo List', url: '/?example=todo-list' },
-  { title: 'Sierpinski Triangle', url: '/?example=sierpinski' },
+  { title: 'Todo List', url: '?example=todo-list' },
+  { title: 'Sierpinski Triangle', url: '?example=sierpinski' },
 ];
 
 export default function Home(): JSX.Element {
