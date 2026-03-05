@@ -27,6 +27,126 @@ let lastComponentType: unknown = null;
 
 const STATE_NAME_REGEX = /\[(?<name>\w+),\s*set\w+\]/g;
 const PROPS_ORDER_REGEX = /\(\s*{\s*(?<props>[^}]+)\s*}\s*\)/;
+const EVOLU_USEQUERY_REGEX =
+  /(?:(?:const|let|var)\s+(\w+)\s*=\s*)?useQuery\s*\(\s*(\w+)\s*\)/g;
+
+export interface EvoluQueryResult {
+  rowCount: number;
+  columns: Array<string>;
+  rows: Array<Record<string, unknown>>;
+}
+
+export interface EvoluHookInfo {
+  hookName: string;
+  queryVariable: string;
+  resultVariable: string | null;
+  queryResult: EvoluQueryResult | null;
+}
+
+const isEvoluRowArray = (value: unknown): value is Array<Record<string, unknown>> => {
+  if (!Array.isArray(value) || value.length === 0) return false;
+  const first = value[0];
+  return (
+    first !== null &&
+    typeof first === 'object' &&
+    !Array.isArray(first) &&
+    !(first instanceof Date) &&
+    !(first instanceof RegExp) &&
+    !(first instanceof Error) &&
+    !(first instanceof Map) &&
+    !(first instanceof Set) &&
+    'id' in first
+  );
+};
+
+const collectQueryResultsFromHookChain = (
+  memoizedState: MemoizedState | null,
+): Array<EvoluQueryResult> => {
+  const results: Array<EvoluQueryResult> = [];
+
+  while (memoizedState) {
+    const value = memoizedState.memoizedState;
+
+    if (isEvoluRowArray(value)) {
+      results.push({
+        rowCount: value.length,
+        columns: Object.keys(value[0]),
+        rows: value,
+      });
+    } else if (Array.isArray(value)) {
+      for (const inner of value) {
+        if (isEvoluRowArray(inner)) {
+          results.push({
+            rowCount: inner.length,
+            columns: Object.keys(inner[0]),
+            rows: inner,
+          });
+          break;
+        }
+      }
+    }
+
+    memoizedState = memoizedState.next;
+  }
+
+  return results;
+};
+
+const extractEvoluQueryResults = (fiber: Fiber): Array<EvoluQueryResult> => {
+  if (
+    fiber.tag !== FunctionComponentTag &&
+    fiber.tag !== ForwardRefTag &&
+    fiber.tag !== SimpleMemoComponentTag &&
+    fiber.tag !== MemoComponentTag
+  ) {
+    return [];
+  }
+
+  if (!fiber.alternate) {
+    return collectQueryResultsFromHookChain(fiber.memoizedState);
+  }
+
+  const fiberTime = fiber.actualStartTime ?? 0;
+  const altTime = fiber.alternate.actualStartTime ?? 0;
+
+  if (altTime > fiberTime) {
+    return collectQueryResultsFromHookChain(fiber.alternate.memoizedState);
+  }
+  if (fiberTime > altTime) {
+    return collectQueryResultsFromHookChain(fiber.memoizedState);
+  }
+
+  const fiberResults = collectQueryResultsFromHookChain(fiber.memoizedState);
+  if (fiberResults.length > 0) return fiberResults;
+  return collectQueryResultsFromHookChain(fiber.alternate.memoizedState);
+};
+
+export const detectEvoluHooks = (fiber: Fiber): Array<EvoluHookInfo> => {
+  const componentSource = fiber.type?.toString?.() || '';
+  if (!componentSource) return [];
+
+  const hooks: Array<EvoluHookInfo> = [];
+  EVOLU_USEQUERY_REGEX.lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = EVOLU_USEQUERY_REGEX.exec(componentSource)) !== null) {
+    hooks.push({
+      hookName: 'useQuery',
+      resultVariable: match[1] || null,
+      queryVariable: match[2],
+      queryResult: null,
+    });
+  }
+
+  if (hooks.length > 0) {
+    const queryResults = extractEvoluQueryResults(fiber);
+    for (let i = 0; i < hooks.length && i < queryResults.length; i++) {
+      hooks[i].queryResult = queryResults[i];
+    }
+  }
+
+  return hooks;
+};
 
 export const getStateNames = (fiber: Fiber): Array<string> => {
   const componentSource = fiber.type?.toString?.() || '';

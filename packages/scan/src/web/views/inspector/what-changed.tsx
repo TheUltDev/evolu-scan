@@ -24,6 +24,11 @@ import {
 } from './whats-changed/use-change-store';
 import { getDisplayName, getType } from 'bippy';
 import { Store } from '../../../core/index';
+import {
+  type EvoluHookInfo,
+  type EvoluQueryResult,
+  detectEvoluHooks,
+} from './timeline/utils';
 
 export type Setter<T> = Dispatch<StateUpdater<T>>;
 
@@ -64,17 +69,18 @@ export const WhatChanged = /* @__PURE__ */ memo(() => {
     // invariant
     return;
   }
+
+  const evoluHooks = detectEvoluHooks(fiber);
+
   return (
     <>
       <WhatsChangedHeader />
 
       <div className="overflow-hidden h-full flex flex-col gap-y-2">
         <div className="flex flex-col gap-2 px-3 pt-2">
-          <span className="text-sm font-medium text-[#888]">
-            Why did{' '}
-            <span className="text-[#A855F7]">{getDisplayName(fiber)}</span>{' '}
-            render?
-          </span>
+          {evoluHooks.length > 0 && (
+            <EvoluHooksSection hooks={evoluHooks} />
+          )}
           {!hasAnyChanges && (
             <div className="text-sm text-[#737373] bg-[#1E1E1E] rounded-md p-4 flex flex-col gap-4">
               <div>No changes detected since selecting</div>
@@ -697,6 +703,131 @@ const ReferenceOnlyChange = ({
         </div>
       )}
     </>
+  );
+};
+
+const formatCellValue = (value: unknown): string => {
+  if (value === null || value === undefined) return 'null';
+  if (typeof value === 'string') return value.length > 30 ? `${value.slice(0, 30)}...` : value;
+  if (typeof value === 'boolean') return value ? 'true' : 'false';
+  if (typeof value === 'number') return String(value);
+  if (typeof value === 'object') return JSON.stringify(value).slice(0, 40);
+  return String(value);
+};
+
+const QueryResultPreview = ({ result }: { result: EvoluQueryResult }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+    const previewRows = result.rows.slice(0, 5);
+
+    return (
+      <div className="flex flex-col gap-1 mt-1">
+        <button
+          type="button"
+          onClick={() => setIsExpanded((v) => !v)}
+          className="flex items-center gap-1.5 text-[10px] text-[#888] bg-transparent border-none p-0 cursor-pointer"
+        >
+          <Icon
+            name="icon-chevron-right"
+            size={10}
+            className={cn(
+              'text-[#666] transition-transform duration-200',
+              isExpanded && 'rotate-90',
+            )}
+          />
+          <span className="text-[#4ade80]">{result.rowCount}</span>
+          <span>row{result.rowCount !== 1 ? 's' : ''}</span>
+          <span className="text-[#555]">&middot;</span>
+          <span className="text-[#a5b4fc]">
+            {result.columns.join(', ')}
+          </span>
+        </button>
+        <div
+          className={cn('evolu-scan-expandable', {
+            'evolu-scan-expanded': isExpanded,
+          })}
+        >
+          <div className="overflow-x-auto ml-3.5 mt-1 border border-[#2d2b55] rounded">
+            <table className="text-[10px] font-mono border-collapse w-full">
+              <thead>
+                <tr>
+                  {result.columns.map((col) => (
+                    <th
+                      key={col}
+                      className="text-left text-[#8e61e3] font-medium px-2 py-1 border-b border-[#2d2b55] bg-[#12122a] whitespace-nowrap"
+                    >
+                      {col}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {previewRows.map((row, i) => (
+                  <tr
+                    key={i}
+                    className={i % 2 === 0 ? 'bg-[#13132b]' : 'bg-[#16163a]'}
+                  >
+                    {result.columns.map((col) => (
+                      <td
+                        key={col}
+                        className="px-2 py-0.5 text-[#ccc] whitespace-nowrap max-w-[150px] overflow-hidden text-ellipsis"
+                      >
+                        {formatCellValue(row[col])}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {result.rowCount > 5 && (
+              <div className="text-[10px] text-[#555] px-2 py-1 border-t border-[#2d2b55] bg-[#12122a]">
+                +{result.rowCount - 5} more row{result.rowCount - 5 !== 1 ? 's' : ''}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+};
+
+const EvoluHooksSection = ({
+  hooks,
+}: { hooks: Array<EvoluHookInfo> }) => {
+  return (
+    <div className="flex flex-col gap-1.5 bg-[#1a1a2e] border border-[#2d2b55] rounded-md p-3">
+      <div className="flex items-center gap-1.5">
+        <Icon name="icon-database" size={13} className="text-[#8e61e3]" />
+        <span className="text-xs font-medium text-[#8e61e3]">
+          Evolu Queries
+        </span>
+      </div>
+      {hooks.map((hook) => (
+        <div
+          key={`${hook.hookName}-${hook.queryVariable}`}
+          className="flex flex-col pl-5"
+        >
+          <div className="flex items-center gap-1.5 text-xs font-mono">
+            <span className="text-[#7dd3fc]">{hook.hookName}</span>
+            <span className="text-[#666]">(</span>
+            <span className="text-[#fbbf24]">{hook.queryVariable}</span>
+            <span className="text-[#666]">)</span>
+            {hook.resultVariable && (
+              <>
+                <span className="text-[#666] mx-0.5">{'\u2192'}</span>
+                <span className="text-[#a5b4fc]">{hook.resultVariable}</span>
+              </>
+            )}
+          </div>
+          {hook.queryResult && (
+            <QueryResultPreview result={hook.queryResult} />
+          )}
+          {!hook.queryResult && (
+            <div className="text-[10px] text-[#555] mt-1 ml-3.5 italic">
+              No rows (empty result or suspended)
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
   );
 };
 
