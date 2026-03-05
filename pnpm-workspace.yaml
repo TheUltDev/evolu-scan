@@ -1,4 +1,3 @@
 packages:
-  - 'packages/*'
-  - 'kitchen-sink'
-  
+  - "packages/*"
+  - "demo"

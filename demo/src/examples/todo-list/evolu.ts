@@ -14,7 +14,7 @@ export const Schema = {
 };
 
 export const evolu = Evolu.createEvolu(evoluReactWebDeps)(Schema, {
-  name: Evolu.SimpleName.orThrow("kitchen-sink-evolu"),
+  name: Evolu.SimpleName.orThrow("demo-evolu"),
 });
 
 export const useEvolu = createUseEvolu(evolu);
