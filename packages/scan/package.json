@@ -25,7 +25,6 @@
   ],
   "scripts": {
     "build": "pnpm run build:css && cross-env NODE_ENV=production rolldown -c rolldown.config.ts",
-    "build:copy": "pnpm run build:css && cross-env NODE_ENV=production rolldown -c rolldown.config.ts && cat dist/install-hook.global.js | pbcopy",
     "dev:css": "postcss ./src/web/assets/css/styles.tailwind.css -o ./src/web/assets/css/styles.css --watch",
     "dev:rolldown": "cross-env NODE_ENV=development rolldown -c rolldown.config.ts --watch",
     "dev": "pnpm run --parallel \"/^dev:(css|rolldown)/\"",
@@ -45,15 +44,7 @@
       "types": "./dist/core/all-environments.d.ts",
       "import": "./dist/core/all-environments.mjs",
       "require": "./dist/core/all-environments.js"
-    },
-    "./install-hook": {
-      "types": "./dist/install-hook.d.ts",
-      "import": "./dist/install-hook.mjs",
-      "require": "./dist/install-hook.js"
-    },
-    "./dist/*": "./dist/*.js",
-    "./dist/*.js": "./dist/*.js",
-    "./dist/*.mjs": "./dist/*.mjs"
+    }
   },
   "main": "dist/index.js",
   "module": "dist/index.mjs",

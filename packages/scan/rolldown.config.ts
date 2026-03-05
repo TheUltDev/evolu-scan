@@ -34,7 +34,6 @@ if (fs.existsSync(distPath)) {
 fs.mkdirSync(distPath, { recursive: true });
 
 const nodeEnv = process.env.NODE_ENV ?? 'development';
-const isProduction = nodeEnv === 'production';
 
 const sharedOptions = {
   platform: 'browser',
@@ -49,22 +48,10 @@ const sharedOptions = {
 
 const libraryInput = {
   index: './src/index.ts',
-  'install-hook': './src/install-hook.ts',
   'core/all-environments': './src/core/all-environments.ts',
 };
 
 export default defineConfig([
-  {
-    ...sharedOptions,
-    input: './src/install-hook.ts',
-    output: {
-      file: `${distPath}/install-hook.global.js`,
-      format: 'iife',
-      name: 'evoluScanInstallHook',
-      banner: license,
-      minify: isProduction,
-    },
-  },
   {
     ...sharedOptions,
     input: libraryInput,

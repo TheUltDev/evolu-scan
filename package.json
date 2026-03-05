@@ -2,14 +2,12 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "build": "node scripts/workspace.mjs build",
-    "dev": "node scripts/workspace.mjs dev",
+    "build": "pnpm --filter @evolu/scan build",
+    "dev": "pnpm --filter @evolu/scan dev",
     "lint": "pnpm -r lint",
     "lint:all": "oxlint .",
     "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui",
-    "pack": "node scripts/workspace.mjs pack",
-    "pack:bump": "pnpm --filter scan pack:bump"
+    "test:e2e:ui": "playwright test --ui"
   },
   "devDependencies": {
     "@evolu/common": "catalog:",
