@@ -23,19 +23,24 @@ First off, thanks for taking the time to contribute! ❤️
    pnpm install
    ```
 
-2. **Build all packages**
+2. **Build packages**
    ```bash
    pnpm build
    ```
 
-3. **Testing Evolu Scan**
+3. **Build and watch packages**
    ```bash
-   cd packages/scan
-   pnpm build:copy
+   pnpm dev
    ```
-   - This will build the package and then copy it to your clipboard as an IIFE (immedietely invoked function expression). This will allow you to paste it into the browser console to test it on any website
+   - This starts the scan package build in watch mode (CSS + rolldown).
 
-https://github.com/user-attachments/assets/f279e664-479f-4e39-bff4-1bbfee30af22
+4. **Running the demo app**
+   ```bash
+   cd demo
+   pnpm dev
+   ```
+   - Opens a Vite dev server with a React app that imports `@evolu/scan`. Use this to test changes locally.
+   - Make sure to run `pnpm build` (or `pnpm dev` from the root) at least once before starting the demo so the scan package is built.
 
 ## Contributing Guidelines
 
