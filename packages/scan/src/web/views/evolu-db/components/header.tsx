@@ -65,7 +65,7 @@ export const Header = ({
           title="Refresh database"
           className={cn(
             "button rounded w-6 h-6 flex items-center justify-center hover:text-neutral-300",
-            spinning ? "text-green-400" : "text-neutral-500"
+            spinning ? "text-[#8e61e3]" : "text-neutral-500"
           )}
         >
           <Icon name="icon-refresh-cw" size={14} className={spinning ? "animate-spin" : ""} />
@@ -75,7 +75,7 @@ export const Header = ({
           onClick={onFollowToggle}
           title={followActive ? 'Stop following changes' : 'Follow changes'}
           className="button rounded w-6 h-6 flex items-center justify-center text-neutral-500 hover:text-neutral-300"
-          style={{ color: followActive ? '#8e61e3' : undefined }}
+          style={{ color: followActive ? '#4ade80' : undefined }}
         >
           <Icon name="icon-crosshair" size={14} />
         </button>
